@@ -410,7 +410,7 @@ header h2 {
   background: -ms-linear-gradient(top, #ffffff 0%, #edf6ff 100%);
   background: linear-gradient(to bottom, #ffffff 0%, #edf6ff 100%);
   float: left;
-  height: 590px;
+  height: 200px;
   width: 100%;
 }
 .supporting {
@@ -641,7 +641,7 @@ aside .wrapper .zen-resources {
 }
 @media (max-width: 1040px) {
   .intro {
-    height: 700px;
+    height: 200px;
   }
   .intro .summary {
     left: auto;
@@ -745,7 +745,7 @@ aside .wrapper .zen-resources {
 }
 @media (max-width: 650px) {
   .intro {
-    height: 985px;
+    height: 200px;
     position: relative;
   }
   .intro .preamble {
