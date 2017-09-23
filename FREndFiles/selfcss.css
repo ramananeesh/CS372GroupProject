@@ -6,27 +6,78 @@
 setting font-family for the entire webpage
 */
 html{
-    font-family:'Sedgwick Ave Display';
+    font-family:'Monoton';
 }
 
 h1{
+    
     font-family:'Monoton', cursive;
     font-size: 4em;
     text-align: center;
-    
+    color: #333333
 }
 
 body{
     
-    background-color: #BAA898;
+    background-color: #F2F4F2;
 
 }
 
 nav{
     text-align:right;
-    color:#848586;
+   /* color:#848586;
+    background-color: #436436*/
+    
 }
 
 a{
     color:#280003;
+}
+/*
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    overflow:hidden;
+    background-color: #436436
+    
+}
+li{
+    float:left;
+}
+li a{
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center
+    
+}
+*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #233252;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #333333;
+}
+
+#infoTabs{
+    background-color: #B55F13;
 }
