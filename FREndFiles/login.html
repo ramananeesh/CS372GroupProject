@@ -19,25 +19,27 @@
         </div>
         <div>
             <nav>
-              <a href="./index.html">Home</a>
-              <a href="./login.html">Login</a>
-              <a href="./about.html">About</a>
-              <a href="./contact.html">Contact</a>
-              <a href="./ur-user.html" target="_blank">Quick Send</a>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./ur-user.html" target="_blank">Quick Send</a></li>
+                    <li><a href="./login.html">Login</a></li>
+                    <li style="float:right" id="infoTabs"><a href="./contact.html">Contact</a></li>
+                    <li style="float:right" id="infoTabs"><a href="./about.html">About</a></li>
+                </ul>
             </nav>
         </div>
         <div class="page-login">
             <fieldset>
-                <legend>Login:</legend>
+                
                 <form>
                     <label>Username</label>
-                    <input name="username" type="text"/>
-                    <br/>
+                    <input name="username" type="text" class="inputFields" id="usernameInput"/>
+                    <br/><br>
                     <label>Password</label>
-                    <input name="password" type="password"/>
-                    <br/>
-                    <input type="submit" value="Login"/>
-                    <a href="#">Forgot password?</a>
+                    <input name="password" type="password" class="inputFields" id="passwordInput"/>
+                    <br/><br>
+                    <input type="submit" value="Login" class="inputFields" id="loginBtn"/><br>
+                    <a href="#" id="forgotPass">Forgot password?</a>
                 </form>
             </fieldset>
         </div>

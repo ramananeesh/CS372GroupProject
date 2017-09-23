@@ -14,7 +14,8 @@ h1{
     font-family:'Monoton', cursive;
     font-size: 4em;
     text-align: center;
-    color: #333333
+    color: #333333;
+    background-color:#F2F4F2;
 }
 
 body{
@@ -23,37 +24,11 @@ body{
 
 }
 
-nav{
-    text-align:right;
-   /* color:#848586;
-    background-color: #436436*/
-    
-}
 
 a{
     color:#280003;
 }
-/*
-ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    overflow:hidden;
-    background-color: #436436
-    
-}
-li{
-    float:left;
-}
-li a{
-    display: block;
-    padding: 8px 16px;
-    text-decoration: none;
-    text-align: center
-    
-}
-*/
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -75,9 +50,55 @@ li a {
 }
 
 li a:hover {
-    background-color: #333333;
+    background-color: #436436;
 }
 
 #infoTabs{
     background-color: #B55F13;
+}
+
+fieldset { 
+    margin-top: 1em;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    padding-left: auto;
+    padding-right: auto;
+    border:none;
+    font-size: 2em;
+    /*border: 0px groove (internal value);*/
+}
+
+form{
+    text-align:center;
+    font-size: 1em;
+    color:#333333;
+}
+
+.inputFields{
+    color:#333333;
+    font-family: "Press Start 2P";
+    text-align: center;
+    font-size: 0.4em;
+    margin-left: 5px;
+    padding: 12px;
+    border-radius: 28px;
+    outline: none;
+}
+
+#loginBtn{
+    font-family: "Monoton";
+    font-size: 1em;
+}
+
+#loginBtn:hover{
+    background-color: #436436;
+    color:white;
+}
+
+#forgotPass:hover{
+    color:#B55F13;
 }
