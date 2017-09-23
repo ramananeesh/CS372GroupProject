@@ -6,27 +6,112 @@
 setting font-family for the entire webpage
 */
 html{
-    font-family:'Sedgwick Ave Display';
+    font-family:'Monoton';
+    
 }
 
 h1{
+    
     font-family:'Monoton', cursive;
     font-size: 4em;
     text-align: center;
-    
+    color: #333333;
+    background-color:#F2F4F2;
+    cursor: pointer;
 }
+
+
 
 body{
     
-    background-color: #BAA898;
+    background-color: #F2F4F2;
 
 }
 
-nav{
-    text-align:right;
-    color:#848586;
+#titleID{
+    text-decoration:none;
+    color:#333333;
 }
+
+
 
 a{
     color:#280003;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #233252;
+    
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+li a:hover {
+    background-color: #436436;
+}
+
+#infoTabs{
+    background-color: #B55F13;
+}
+
+fieldset { 
+    margin-top: 1em;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    padding-left: auto;
+    padding-right: auto;
+    border:none;
+    font-size: 2em;
+    /*border: 0px groove (internal value);*/
+}
+
+form{
+    text-align:center;
+    font-size: 1em;
+    color:#333333;
+}
+
+.inputFields{
+    color:#333333;
+    font-family: "Press Start 2P";
+    text-align: center;
+    font-size: 0.4em;
+    margin-left: 5px;
+    padding: 12px;
+    border-radius: 28px;
+    outline: none;
+}
+
+#loginBtn{
+    font-family: "Monoton";
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#loginBtn:hover{
+    background-color: #436436;
+    color:white;
+}
+
+#forgotPass:hover{
+    color:#B55F13;
 }
