@@ -7,6 +7,7 @@ setting font-family for the entire webpage
 */
 html{
     font-family:'Monoton';
+    
 }
 
 h1{
@@ -16,13 +17,22 @@ h1{
     text-align: center;
     color: #333333;
     background-color:#F2F4F2;
+    cursor: pointer;
 }
+
+
 
 body{
     
     background-color: #F2F4F2;
 
 }
+
+#titleID{
+    text-decoration:none;
+    color:#333333;
+}
+
 
 
 a{
@@ -35,6 +45,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #233252;
+    
 }
 
 li {
@@ -47,6 +58,7 @@ li a {
     text-align: center;
     padding: 8px 10px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 li a:hover {
@@ -92,6 +104,7 @@ form{
 #loginBtn{
     font-family: "Monoton";
     font-size: 1em;
+    cursor: pointer;
 }
 
 #loginBtn:hover{
