@@ -59,19 +59,50 @@ li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 8px 10px;
+    padding: 8px 12px;
     text-decoration: none;
     cursor: pointer;
 }
 
 li a:hover {
     background-color: #436436;
+    text-decoration: none;
+    color: white;
+    
 }
 
 #infoTabs{
     background-color: #B55F13;
 }
+.loginPg1{
+    display:inline-block;
+    
+    border-right: groove;
+}
+.loginPg2{
+    font-size: 0.8em;
+    float: right;
+    display:inline-block;
+  
+}
 
+#loginOpts{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signBtns{
+    font-family: 'Gloria Hallelujah', cursive;
+    font-weight: bolder;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.signBtns:hover{
+    background-color: #436436;
+    color:white;
+}
 fieldset { 
     margin-top: 1em;
     text-align: center;
