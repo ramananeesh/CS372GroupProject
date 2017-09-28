@@ -140,7 +140,21 @@ form{
     background-color: #B55F13;
 }
 
-h3{
+#note{
     font-size: 0.4em;
     font-family: 'Gloria Hallelujah', cursive;
+}
+
+
+h2{
+   font-size: 2em;
+    font-family: 'Gloria Hallelujah', cursive; 
+}
+h3{
+   font-size: 1em;
+    font-family: 'Gloria Hallelujah', cursive; 
+}
+p{
+    font-size: 0.8em;
+    font-family: 'Gloria Hallelujah', cursive; 
 }
