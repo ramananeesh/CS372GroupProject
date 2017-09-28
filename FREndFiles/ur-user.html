@@ -6,14 +6,16 @@
        <!-- To add image to title bar-->
        <link rel="tempbox icon" href="./Nemone-Stacks-Stacks-temp.ico"/>
        <!-- To add CSS style for entire project-->
+       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
        <link rel="stylesheet" media="screen" href="./selfcss.css">
     </head>
     
     <body>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
         <div class="page-wrapper">
             <section class="intro" id="home-intro">
                 <header role="banner">
-                    <h1><img src="./Nemone-Stacks-Stacks-temp.ico" width="70" height="70"/><label>TempBox</label></h1>
+                    <h1><a href="./index.html"><img id="logoImg" src="./Nemone-Stacks-Stacks-temp.ico" width="70" height="70"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
                 </header>
             </section>
         </div>
@@ -36,9 +38,10 @@
                 <form>
                     <input name="file" type="file"/>
                     <br/>
-                    <input type="submit" value="Upload"/>
+                    
+                    <input type="submit" id="uploadBtn" value="Upload"/>
                     <br/>
-                    <h2>File has successfully been uploaded. It can be accessed at https://tempbox.com/ur-user-files/10sdfa-123dsa-213lnf/fileToShare.pdf</h2>
+                    
                     <h3>Note that your file will be deleted after download or after 24 hours. If you wish to have more downloads or longer file time
                     retention you can register as a user.</h3>
                 </form>
