@@ -92,7 +92,8 @@
               <span class="text-muted">Extend Auto-Delete Period</span>
             </div>
           </section>
-
+          
+          <!--Active File Table -->
           <h2>Active File List</h2>
           <div class="table-responsive" id="fileList">
             <table class="table table-striped">
@@ -133,7 +134,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Select</th>
+                  <th><input type="checkbox" name="selected"/>Select All</th>
                   <th>Name</th>
                   <th>Size (Kb)</th>
                   <th>Expiration Date</th>
@@ -160,6 +161,11 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          
+          <!--Setting Management-->
+          <div id="setting-data">
+            
           </div>
         </main>
       </div>
