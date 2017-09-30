@@ -68,31 +68,68 @@
                   <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
               <h4>Download</h4>
-              <span class="text-muted">Something else</span>
+              <span class="text-muted">Download Selected File(s)</span>
             </div>
             <div class="col-6 col-sm-3 placeholder">
               <a href="#Delete">
                 <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
               <h4>Delete</h4>
-              <span class="text-muted">Something else</span>
+              <span class="text-muted">Delete Selected File(s)</span>
             </div>
             <div class="col-6 col-sm-3 placeholder">
               <a href="#Share">
                   <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
               <h4>Share</h4>
-              <span class="text-muted">Something else</span>
+              <span class="text-muted">Share or Modify File Access</span>
             </div>
             <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              <a href="#Extend">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              </a>
               <h4>Extend</h4>
-              <span class="text-muted">Something else</span>
+              <span class="text-muted">Extend Auto-Delete Period</span>
             </div>
           </section>
 
-          <h2>Section title</h2>
-          <div hidden class="table-responsive">
+          <h2>Active File List</h2>
+          <div class="table-responsive" id="fileList">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Select</th>
+                  <th>Name</th>
+                  <th>Size (Kb)</th>
+                  <th>Expiration Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" name="selected"/></td>
+                  <td>Profile Picture</td>
+                  <td>128</td>
+                  <td>06-Dec-2017</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="selected"/></td>
+                  <td>Video</td>
+                  <td>amet</td>
+                  <td>consectetur</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="selected"/></td>
+                  <td>1,003</td>
+                  <td>Integer</td>
+                  <td>nec</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!--File History Table -->
+          <h2 hidden>File History List</h2>
+          <div hidden class="table-responsive" id="history">
             <table class="table table-striped">
               <thead>
                 <tr>
