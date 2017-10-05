@@ -76,21 +76,11 @@ li a:hover {
 #infoTabs{
     background-color: #B55F13;
 }
-.loginPg1{
-    display:inline-block;
-    
-    border-right: groove;
-}
-.loginPg2{
-    font-size: 0.8em;
-    float: right;
-    display:inline-block;
-  
-}
 
-#loginOpts{
+.loginPg1, .loginPg2{
     margin-left: auto;
     margin-right: auto;
+    font-size: 0.8em;
 }
 
 .signBtns{
@@ -190,4 +180,9 @@ h3{
 p{
     font-size: 0.8em;
     font-family: 'Gloria Hallelujah', cursive; 
+}
+
+#logoImg{
+    width: 70;
+    height: 47;
 }

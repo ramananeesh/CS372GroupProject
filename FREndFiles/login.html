@@ -14,7 +14,7 @@
         <div  class="container">
             <section class="intro" id="home-intro">
                 <header role="banner">
-                    <h1><a href="./index.html"><img id="logoImg" src="./Nemone-Stacks-Stacks-temp.ico" width="70" height="70"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
+                    <h1><a href="./index.html"><img id="logoImg" src="./logo.ico"  width="70" height="47"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
                 </header>
             </section>
         </div>
@@ -30,24 +30,27 @@
                 </ul>
             </nav>
         </div>
-        <div class="container" id="loginOpts">
+      
+        <fieldset>
             <div class="container">
-                <fieldset>
-                    <form  class="loginPg1">
-                        <div class="container">
-                        <label class="inputLbls">Username</label>
-                        <input name="username" type="text" class="inputFields" id="usernameInput"/>
-                        <br/><br>
-                        <label class="inputLbls">Password</label>
-                        <input name="password" type="password" class="inputFields" id="passwordInput"/>
-                        <br/><br>
-                        <input type="submit" value="Login" class="signBtns" id="loginBtn"/><br>
-                        <a href="#" class="inputFields" id="forgotPass">Forgot password?</a>
-                        </div>
-                    </form>
-                
-                    <form class="loginPg2">
-                        <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <form  class="loginPg1">
+
+                            <label class="inputLbls">Username</label>
+                            <input name="username" type="text" class="inputFields" id="usernameInput"/>
+                            <br/><br>
+                            <label class="inputLbls">Password</label>
+                            <input name="password" type="password" class="inputFields" id="passwordInput"/>
+                            <br/><br>
+                            <input type="submit" value="Login" class="signBtns" id="loginBtn"/><br>
+                            <a href="#" class="inputFields" id="forgotPass">Forgot password?</a>
+                  
+                        </form>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-6">
+                        <form class="loginPg2">
                             <table>
                                 <tr>
                                     <td><label class="inputLbls">First Name</label></td>
@@ -68,12 +71,10 @@
                             </table>
                             <br>
                             <input type="submit" class="signBtns" id="signupBtn">
-                        
-                        </div>
-                    </form>
-                </fieldset>
-            </div>   
-        </div>
-        
+                        </form>
+                    </div>
+                </div>   
+            </div>
+        </fieldset>
     </body>
 </html>
