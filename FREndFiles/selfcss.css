@@ -3,6 +3,7 @@
 */
 @import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Gloria+Hallelujah|Press+Start+2P|Cabin+Sketch|Monoton|Sedgwick+Ave+Display');
 
+
 /*
 setting font-family for the entire webpage
 */
@@ -32,6 +33,7 @@ body{
 #titleID{
     text-decoration:none;
     color:#333333;
+    font-weight: bolder;
 }
 
 
