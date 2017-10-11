@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html>
+    <head>
+       <title>Login</title>
+       <!-- To add image to title bar-->
+       <link rel="tempbox icon" href="./Nemone-Stacks-Stacks-temp.ico"/>
+       <!-- To add CSS style for entire project-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+       <link rel="stylesheet" media="screen" href="./selfcss.css">
+    </head>
+    
+    <body>
+        <div  class="container">
+            <section class="intro" id="home-intro">
+                <header role="banner">
+                    <h1><a href="./index.html"><img id="logoImg" src="./logo.ico"  width="70" height="47"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
+                </header>
+            </section>
+        </div>
+        
+        <div class="conatainer">
+            <nav>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./ur-user.html" target="_blank">Quick Send</a></li>
+                    <li><a href="./login.html">Login</a></li>
+                    <li style="float:right" id="infoTabs"><a href="./contact.html">Contact</a></li>
+                    <li style="float:right" id="infoTabs"><a href="./about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+      
+        <fieldset>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <form  class="loginPg1">
+
+                            <label class="inputLbls">Username</label>
+                            <input name="username" type="text" class="inputFields" id="usernameInput"/>
+                            <br/><br>
+                            <label class="inputLbls">Password</label>
+                            <input name="password" type="password" class="inputFields" id="passwordInput"/>
+                            <br/><br>
+                            <input type="submit" value="Login" class="signBtns" id="loginBtn"/><br>
+                            <a href="#" class="inputFields" id="forgotPass">Forgot password?</a>
+                  
+                        </form>
+                    </div>
+                    
+                    <div class="col-sm-12 col-md-6">
+                        <form class="loginPg2">
+                            <table>
+                                <tr>
+                                    <td><label class="inputLbls">First Name</label></td>
+                                    <td><input name="firstName" type="text" class="inputFields" id="fName_Sign"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="inputLbls">Last Name</label></td>
+                                    <td><input name="lastName" type="text" class="inputFields" id="lName_Sign"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="inputLbls">Email</label></td>
+                                    <td><input name="email" type="text" class="inputFields" id="email_sign"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="inputLbls">Password</label></td>
+                                    <td><input name="password" type="text" class="inputFields" id="password_Sign"/></td>
+                                </tr>
+                            </table>
+                            <br>
+                            <input type="submit" class="signBtns" id="signupBtn">
+                        </form>
+                    </div>
+                </div>   
+            </div>
+        </fieldset>
+    </body>
+</html>
