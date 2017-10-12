@@ -127,7 +127,7 @@
 
   <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="index.html" id="dashboardLogo">Doc -> Dash</a>
+      <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
       <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -145,8 +145,8 @@
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-          <ul class="nav nav-pills flex-column" id="sideNav">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="sideNav">
+          <ul class="nav nav-pills flex-column">
             <li class="nav-item">
               <a class="nav-link" onclick="filesClick()" href="index.html" id="home">Home</a>
             </li>
@@ -173,21 +173,21 @@
               <a class="nav-link" onclick='historyClick()' id="hisLink" href="#History">History</a>
             </li>
           </ul>
-
+  
           <section class="row text-center placeholders">
+            <div class="col-6 col-sm-3 placeholder" id="divExtend">
+              <a href="#Extend">
+                <img src="uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              </a>
+              <h4>Upload</h4>
+              <span class="text-muted">Upload File</span>
+            </div>
             <div class="col-6 col-sm-3 placeholder" id="divDownload">
               <a href="#Download">
                   <img src="downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
               <h4>Download</h4>
               <span class="text-muted">Download Selected File(s)</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder" id="divDelete">
-              <a href="#Delete">
-                <img src="delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              </a>
-              <h4>Delete</h4>
-              <span class="text-muted">Delete Selected File(s)</span>
             </div>
             <div class="col-6 col-sm-3 placeholder" id="divModify">
               <a href="#Share">
@@ -196,12 +196,12 @@
               <h4>Share</h4>
               <span class="text-muted">Share or Modify File Access</span>
             </div>
-            <div class="col-6 col-sm-3 placeholder" id="divExtend">
-              <a href="#Extend">
-                <img src="extendicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+            <div class="col-6 col-sm-3 placeholder" id="divDelete">
+              <a href="#Delete">
+                <img src="delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
-              <h4>Extend</h4>
-              <span class="text-muted">Extend Auto-Delete Period</span>
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected File(s)</span>
             </div>
           </section>
           

@@ -20,6 +20,7 @@ h1{
     text-align: center;
     color: #333333;
     /*background-color:#F2F4F2;*/
+    background-color: white;
     cursor: pointer;
 }
 
@@ -28,7 +29,7 @@ h1{
 body{
     
     /*background-color: #F2F4F2;*/
-
+    background-color:white;
 }
 
 #titleID{
