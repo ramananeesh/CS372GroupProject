@@ -10,6 +10,7 @@ setting font-family for the entire webpage
 html{
     /*font-family:'Quicksand';
     */
+    
 }
 
 h1{
@@ -18,7 +19,7 @@ h1{
     font-size: 4em;
     text-align: center;
     color: #333333;
-    background-color:#F2F4F2;
+    /*background-color:#F2F4F2;*/
     cursor: pointer;
 }
 
@@ -26,7 +27,7 @@ h1{
 
 body{
     
-    background-color: #F2F4F2;
+    /*background-color: #F2F4F2;*/
 
 }
 
@@ -57,11 +58,11 @@ li {
 }
 
 li a {
-    font-family: "Monoton";
+    /*font-family: "Monoton";*/
     display: block;
     color: white;
     text-align: center;
-    padding: 8px 12px;
+    padding: 8px 14px;
     text-decoration: none;
     cursor: pointer;
 }
