@@ -27,6 +27,14 @@
           }
       }
       
+      function checkAll(eName, source) {
+        var checkboxes = document.getElementsByName(eName);
+        var check = document.getElementById(source).checked;
+        for(var i=0;i < checkboxes.length;i++) {
+          checkboxes[i].checked = check;
+        }
+      }
+      
       function changeClass(element, newClass){
         var x = document.getElementById(element);
         x.setAttribute("class", newClass);
@@ -80,6 +88,22 @@
         }
       }
       
+      function filesClick(){
+        switchVis(["Settings","Dashboard"]);
+        changeClass("settingListLink","nav-link"); 
+        changeClass("fileListLink","nav-link active");
+        document.getElementById("settingListLink").onclick = function(){ settingsClick();};
+        document.getElementById("fileListLink").onclick = null;
+      }
+      
+      function settingsClick(){
+        switchVis(["Dashboard","Settings"]);
+        changeClass("settingListLink","nav-link active"); 
+        changeClass("fileListLink","nav-link");
+        document.getElementById("fileListLink").onclick = function(){ filesClick();};
+        document.getElementById("settingListLink").onclick = null;
+      }
+      
       function historyClick(){
         switchVis(["fileList","fileListTitle","history","historyTitle"]); 
         switchVis(["divDownload","divExtend","divModify"]); 
@@ -124,18 +148,18 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Files <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" onclick="filesClick()" href="#Files" id="fileListLink">Files <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Settings</a>
+              <a class="nav-link" onclick="settingsClick()" href="#Settings" id="settingListLink">Settings</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Go Pro!</a>
+              <a class="nav-link" href="#GoPro">Go Pro!</a>
             </li>
           </ul>
         </nav>
 
-        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Dashboard">
           <h1>Dashboard</h1>
           
           <ul class="nav nav-tabs">
@@ -184,7 +208,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th><input type="checkbox" name="selected"/>&nbsp&nbspSelect All</th>
+                  <th><input type="checkbox" onclick="checkAll('fileSelected','fileAll')" id="fileAll"/>&nbsp&nbspSelect All</th>
                   <th>Name</th>
                   <th>Size (Kb)</th>
                   <th>Expiration Date</th>
@@ -192,22 +216,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
+                  <td><input type="checkbox" name="fileSelected"/></td>
                   <td>Profile Picture</td>
                   <td>128</td>
                   <td>06-Dec-2017</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
+                  <td><input type="checkbox" name="fileSelected"/></td>
                   <td>Video</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
+                  <td>258</td>
+                  <td>10-Dec-2017</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
+                  <td><input type="checkbox" name="fileSelected"/></td>
+                  <td>Checklist</td>
+                  <td>185</td>
+                  <td>07-Dec-2017</td>
                 </tr>
               </tbody>
             </table>
@@ -219,7 +243,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th><input type="checkbox" name="selected"/>&nbsp&nbspSelect All</th>
+                  <th><input type="checkbox" onclick="checkAll('entrySelected','histAll')" id="histAll"/>&nbsp&nbspSelect All</th>
                   <th>Name</th>
                   <th>Size (Kb)</th>
                   <th>Expiration Date</th>
@@ -227,32 +251,37 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
-                  <td>Profile Picture</td>
+                  <td><input type="checkbox" name="entrySelected"/></td>
+                  <td>Puppy Picture</td>
                   <td>128</td>
-                  <td>06-Dec-2017</td>
+                  <td>06-Oct-2017</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
-                  <td>Video</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
+                  <td><input type="checkbox" name="entrySelected"/></td>
+                  <td>Skyline</td>
+                  <td>558</td>
+                  <td>10-Oct-2017</td>
                 </tr>
                 <tr>
-                  <td><input type="checkbox" name="selected"/></td>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
+                  <td><input type="checkbox" name="entrySelected"/></td>
+                  <td>Fall Picture</td>
+                  <td>728</td>
+                  <td>06-Sept-2017</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </main>
+        
+        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Settings" style="display:none;">
+          <h1>Settings</h1>
           
           <!--Setting Management-->
           <div id="setting-data">
             
           </div>
         </main>
+        
       </div>
     </div>
 
