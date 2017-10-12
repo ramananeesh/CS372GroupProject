@@ -8,13 +8,13 @@
     <link rel="icon" href="../../../../favicon.ico">
 
     <title>Doc Track</title>
-
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
-    
+
     <script>
       function validate(e){
         if ((typeof e !== "undefined") && (e !== null)) 
@@ -106,7 +106,7 @@
       
       function historyClick(){
         switchVis(["fileList","fileListTitle","history","historyTitle"]); 
-        switchVis(["divDownload","divExtend","divModify"]); 
+        switchVis(["divDownload","divUpload","divModify"]); 
         changeClass("hisLink","nav-link active"); 
         changeClass("actLink","nav-link");
         document.getElementById("actLink").onclick = function(){ activeClick();};
@@ -115,7 +115,7 @@
       
       function activeClick(){
         switchVis(["fileList","fileListTitle","history","historyTitle"]);
-        switchVis(["divDownload","divExtend","divModify"]);
+        switchVis(["divDownload","divUpload","divModify"]);
         changeClass("hisLink","nav-link"); 
         changeClass("actLink","nav-link active");
         document.getElementById("actLink").onclick = null;
@@ -162,7 +162,7 @@
           </ul>
         </nav>
 
-        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Dashboard">
+        <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Dashboard">
           <h1>Dashboard</h1>
           
           <ul class="nav nav-tabs">
@@ -175,8 +175,8 @@
           </ul>
   
           <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder" id="divExtend">
-              <a href="#Extend">
+            <div class="col-6 col-sm-3 placeholder" id="divUpload">
+              <a href="#Upload">
                 <img src="uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
               <h4>Upload</h4>
@@ -274,17 +274,68 @@
               </tbody>
             </table>
           </div>
-        </main>
+        </section>
         
-        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Settings" style="display:none;">
+        <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="Settings" style="display:none;">
           <h1>Settings</h1>
-          
           <!--Setting Management-->
-          <div id="setting-data">
-            
+          <div class="card">
+            <div class="card-header">
+              User Information
+            </div>
+            <div class="card-body" style="padding:1.5em;">
+              <p class="card-text">Email:</p>
+              <p class="card-text">Password:</p>
+              <a href="#" class="btn btn-primary">Change Password</a>
+            </div>
           </div>
-        </main>
-        
+          <br>
+          <div class="card">
+            <div class="card-header">
+               File Defaults
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+              <div class="form-group">
+                <label for="sel1">Delete Preference: </label>
+                <select class="form-control" id="sel1">
+                  <option>Whichever First</option>
+                  <option>Time Expiration</option>
+                  <option>Download Expiration</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sel1">File Retention: </label>
+                <select class="form-control" id="sel1">
+                  <option>1 Day</option>
+                  <option>1 Week</option>
+                  <option>1 Month</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sel1">Download Limit: </label>
+                <select class="form-control" id="sel1">
+                  <option>1 Download</option>
+                  <option>5 Downloads</option>
+                  <option>10 Downloads</option>
+                </select>
+              </div>
+              
+              </p>
+              <a href="#" class="btn btn-primary">Save Changes</a>
+            </div>
+          </div>
+          <br>
+          <div class="card">
+            <div class="card-header">
+               Pro Status
+            </div>
+            <div class="card-body">
+              <p class="card-text" style="color:red;">Disabled</p>
+              <a href="#" class="btn btn-primary">Upgrade</a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
