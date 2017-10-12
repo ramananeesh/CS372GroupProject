@@ -1,308 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Doc Track</title>
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
 
-    <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="783497289681-md44u43oh563o2jrf0gjsfbtgr6oh2qg.apps.googleusercontent.com.apps.googleusercontent.com">
-    <script>
-      function validate(e){
-        if ((typeof e !== "undefined") && (e !== null)) 
-          { 
-            return true; 
-          } 
-        else 
-          { 
-            return false; 
-          }
+  <title>Doc Track</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="dashboard.css" rel="stylesheet">
+
+  <script>
+    function validate(e) {
+      if ((typeof e !== "undefined") && (e !== null)) {
+        return true;
       }
-      window.onload=function(){
-    //This sessionStorage.getItem(); is also a predefined function in javascript
-    //will retrieve session and get the value;
+      else {
+        return false;
+      }
+    }
+    window.onload = function() {
+      //This sessionStorage.getItem(); is also a predefined function in javascript
+      //will retrieve session and get the value;
       var a = sessionStorage.getItem("userName");
-      
-        document.getElementById("usern").innerHTML="Hello, "+ a;
-}     
-      function checkAll(eName, source) {
-        var checkboxes = document.getElementsByName(eName);
-        var check = document.getElementById(source).checked;
-        for(var i=0;i < checkboxes.length;i++) {
-          checkboxes[i].checked = check;
-        }
-      }
-      
-      function changeClass(element, newClass){
-        var x = document.getElementById(element);
-        x.setAttribute("class", newClass);
-      }
-      
-      function switchClasses(elements, newClass){
-        if(!validate(newClass)){
-          return false;
-        }
-        
-        for (var e in elements){
-          if(validate(e) && typeof e == "string"){
-            changeClass(elements[e], newClass);
-          }
-        }
-      }
-    
-      function toggleVisibilty(element) {
-       var x = document.getElementById(element);
-       if (x.style.display === "none") {
-        x.style.display = "block";
-       } 
-       else {
-        x.style.display = "none";
-       }
-      }
-      
-      function switchVis(elements){
-        for (var e in elements){
-          if(validate(e) && typeof e == "string"){
-            toggleVisibilty(elements[e]);
-          }
-        }
-      }
-      
-      function tHide(e){
-        var x = document.getElementById(e);
-        if (x.style.visibility === "collapse") {
-          x.style.visibility = "visible";
-        } 
-        else {
-          x.style.visibility = "collapse";
-        }
-      }
-      
-      function hideElements(elements){
-        for (var e in elements){
-          if(validate(e) && typeof e == "string"){
-            tHide(elements[e]);
-          }
-        }
-      }
-      
-      function filesClick(){
-        switchVis(["Settings","Dashboard"]);
-        changeClass("settingListLink","nav-link"); 
-        changeClass("fileListLink","nav-link active");
-        document.getElementById("settingListLink").onclick = function(){ settingsClick();};
-        document.getElementById("fileListLink").onclick = null;
-      }
-      
-      function settingsClick(){
-        switchVis(["Dashboard","Settings"]);
-        changeClass("settingListLink","nav-link active"); 
-        changeClass("fileListLink","nav-link");
-        document.getElementById("fileListLink").onclick = function(){ filesClick();};
-        document.getElementById("settingListLink").onclick = null;
-      }
-      
-      function historyClick(){
-        switchVis(["fileList","fileListTitle","history","historyTitle"]); 
-        switchVis(["divDownload","divUpload","divModify"]); 
-        changeClass("hisLink","nav-link active"); 
-        changeClass("actLink","nav-link");
-        document.getElementById("actLink").onclick = function(){ activeClick();};
-        document.getElementById("hisLink").onclick = null;
-      }
-      
-      function activeClick(){
-        switchVis(["fileList","fileListTitle","history","historyTitle"]);
-        switchVis(["divDownload","divUpload","divModify"]);
-        changeClass("hisLink","nav-link"); 
-        changeClass("actLink","nav-link active");
-        document.getElementById("actLink").onclick = null;
-        document.getElementById("hisLink").onclick = function(){ historyClick(); };
-      }
-      
-    </script>
-  </head>
 
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
-      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      document.getElementById("usern").innerHTML = "Hello, " + a;
+      var emailID = sessionStorage.getItem("emailID");
+      document.getElementById("emailID").innerHTML = emailID;
+      var typeOfLogin=sessionStorage.getItem("typeofLogin");
+      
+      if (typeOfLogin == "FacebookLogin") {
+        document.getElementById("passwordField").innerHTML = "Account logged" +
+          " in from Facebook. Cannot change password " +
+          "locally";
+      }
+      else if (typeOfLogin == "gmailLogin") {
+        document.getElementById("passwordField").innerHTML = "Account logged" +
+          " in from Google Account. Cannot change password " +
+          "locally";
+      }
+      else{
+        document.getElementById("passwordField").innerHTML=sessionStorage.getItem("password");
+      }
+    }
+
+    function checkAll(eName, source) {
+      var checkboxes = document.getElementsByName(eName);
+      var check = document.getElementById(source).checked;
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = check;
+      }
+    }
+
+    function changeClass(element, newClass) {
+      var x = document.getElementById(element);
+      x.setAttribute("class", newClass);
+    }
+
+    function switchClasses(elements, newClass) {
+      if (!validate(newClass)) {
+        return false;
+      }
+
+      for (var e in elements) {
+        if (validate(e) && typeof e == "string") {
+          changeClass(elements[e], newClass);
+        }
+      }
+    }
+
+    function toggleVisibilty(element) {
+      var x = document.getElementById(element);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      }
+      else {
+        x.style.display = "none";
+      }
+    }
+
+    function switchVis(elements) {
+      for (var e in elements) {
+        if (validate(e) && typeof e == "string") {
+          toggleVisibilty(elements[e]);
+        }
+      }
+    }
+
+    function tHide(e) {
+      var x = document.getElementById(e);
+      if (x.style.visibility === "collapse") {
+        x.style.visibility = "visible";
+      }
+      else {
+        x.style.visibility = "collapse";
+      }
+    }
+
+    function hideElements(elements) {
+      for (var e in elements) {
+        if (validate(e) && typeof e == "string") {
+          tHide(elements[e]);
+        }
+      }
+    }
+
+    function filesClick() {
+      switchVis(["Settings", "Dashboard"]);
+      changeClass("settingListLink", "nav-link");
+      changeClass("fileListLink", "nav-link active");
+      document.getElementById("settingListLink").onclick = function() { settingsClick(); };
+      document.getElementById("fileListLink").onclick = null;
+    }
+
+    function settingsClick() {
+      switchVis(["Dashboard", "Settings"]);
+      changeClass("settingListLink", "nav-link active");
+      changeClass("fileListLink", "nav-link");
+      document.getElementById("fileListLink").onclick = function() { filesClick(); };
+      document.getElementById("settingListLink").onclick = null;
+    }
+
+    function historyClick() {
+      switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
+      switchVis(["divDownload", "divUpload", "divModify"]);
+      changeClass("hisLink", "nav-link active");
+      changeClass("actLink", "nav-link");
+      document.getElementById("actLink").onclick = function() { activeClick(); };
+      document.getElementById("hisLink").onclick = null;
+    }
+
+    function activeClick() {
+      switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
+      switchVis(["divDownload", "divUpload", "divModify"]);
+      changeClass("hisLink", "nav-link");
+      changeClass("actLink", "nav-link active");
+      document.getElementById("actLink").onclick = null;
+      document.getElementById("hisLink").onclick = function() { historyClick(); };
+    }
+  </script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
 
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">           </label></a>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
+      </form>
+    </div>
+  </nav>
+  <br>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="sideNav">
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link" onclick="filesClick()" href="index.html" id="home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" onclick="filesClick()" href="#Files" id="fileListLink">Files <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="settingsClick()" href="#Settings" id="settingListLink">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#GoPro">Go Pro!</a>
+          </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">           </label></a>
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
-        </form>
-      </div>
-    </nav>
-    <br>
-    <div class="container-fluid">
-      <div class="row">
-        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="sideNav">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" onclick="filesClick()" href="index.html" id="home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" onclick="filesClick()" href="#Files" id="fileListLink">Files <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" onclick="settingsClick()" href="#Settings" id="settingListLink">Settings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#GoPro">Go Pro!</a>
-            </li>
-          </ul>
-        </nav>
+      </nav>
 
-        <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Dashboard">
-          <h1>Dashboard</h1>
-          
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" onclick='activeClick()' id="actLink" href="#Active">Active</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" onclick='historyClick()' id="hisLink" href="#History">History</a>
-            </li>
-          </ul>
-  
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder" id="divUpload">
-              <a href="#Upload">
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="Dashboard">
+        <h1>Dashboard</h1>
+
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" onclick='activeClick()' id="actLink" href="#Active">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick='historyClick()' id="hisLink" href="#History">History</a>
+          </li>
+        </ul>
+
+        <section class="row text-center placeholders">
+          <div class="col-6 col-sm-3 placeholder" id="divUpload">
+            <a href="#Upload">
                 <img src="uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
-              <h4>Upload</h4>
-              <span class="text-muted">Upload File</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder" id="divDownload">
-              <a href="#Download">
+            <h4>Upload</h4>
+            <span class="text-muted">Upload File</span>
+          </div>
+          <div class="col-6 col-sm-3 placeholder" id="divDownload">
+            <a href="#Download">
                   <img src="downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
-              <h4>Download</h4>
-              <span class="text-muted">Download Selected File(s)</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder" id="divModify">
-              <a href="#Share">
+            <h4>Download</h4>
+            <span class="text-muted">Download Selected File(s)</span>
+          </div>
+          <div class="col-6 col-sm-3 placeholder" id="divModify">
+            <a href="#Share">
                   <img src="shareicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
-              <h4>Share</h4>
-              <span class="text-muted">Share or Modify File Access</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder" id="divDelete">
-              <a href="#Delete">
+            <h4>Share</h4>
+            <span class="text-muted">Share or Modify File Access</span>
+          </div>
+          <div class="col-6 col-sm-3 placeholder" id="divDelete">
+            <a href="#Delete">
                 <img src="delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
-              <h4>Delete</h4>
-              <span class="text-muted">Delete Selected File(s)</span>
-            </div>
-          </section>
-          
-          <!--Active File Table -->
-          <h2 id="fileListTitle">Active File List</h2>
-          <div class="table-responsive" id="fileList">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th><input type="checkbox" onclick="checkAll('fileSelected','fileAll')" id="fileAll"/>&nbsp&nbspSelect All</th>
-                  <th>Name</th>
-                  <th>Size (Kb)</th>
-                  <th>Expiration Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" name="fileSelected"/></td>
-                  <td>Profile Picture</td>
-                  <td>128</td>
-                  <td>06-Dec-2017</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="fileSelected"/></td>
-                  <td>Video</td>
-                  <td>258</td>
-                  <td>10-Dec-2017</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="fileSelected"/></td>
-                  <td>Checklist</td>
-                  <td>185</td>
-                  <td>07-Dec-2017</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-          <!--File History Table -->
-          <h2 id="historyTitle" style="display:none;">File History List</h2>
-          <div class="table-responsive" id="history" style="display:none;">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th><input type="checkbox" onclick="checkAll('entrySelected','histAll')" id="histAll"/>&nbsp&nbspSelect All</th>
-                  <th>Name</th>
-                  <th>Size (Kb)</th>
-                  <th>Expiration Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" name="entrySelected"/></td>
-                  <td>Puppy Picture</td>
-                  <td>128</td>
-                  <td>06-Oct-2017</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="entrySelected"/></td>
-                  <td>Skyline</td>
-                  <td>558</td>
-                  <td>10-Oct-2017</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="entrySelected"/></td>
-                  <td>Fall Picture</td>
-                  <td>728</td>
-                  <td>06-Sept-2017</td>
-                </tr>
-              </tbody>
-            </table>
+            <h4>Delete</h4>
+            <span class="text-muted">Delete Selected File(s)</span>
           </div>
         </section>
-        
-        <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="Settings" style="display:none;">
-          <h1>Settings</h1>
-          <!--Setting Management-->
-          <div class="card">
-            <div class="card-header">
-              User Information
-            </div>
-            <div class="card-body" style="padding:1.5em;">
-              <p class="card-text">Email:</p>
-              <p class="card-text">Password:</p>
-              <a href="#" class="btn btn-primary">Change Password</a>
-            </div>
+
+        <!--Active File Table -->
+        <h2 id="fileListTitle">Active File List</h2>
+        <div class="table-responsive" id="fileList">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><input type="checkbox" onclick="checkAll('fileSelected','fileAll')" id="fileAll" />&nbsp&nbspSelect All</th>
+                <th>Name</th>
+                <th>Size (Kb)</th>
+                <th>Expiration Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" name="fileSelected" /></td>
+                <td>Profile Picture</td>
+                <td>128</td>
+                <td>06-Dec-2017</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="fileSelected" /></td>
+                <td>Video</td>
+                <td>258</td>
+                <td>10-Dec-2017</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="fileSelected" /></td>
+                <td>Checklist</td>
+                <td>185</td>
+                <td>07-Dec-2017</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!--File History Table -->
+        <h2 id="historyTitle" style="display:none;">File History List</h2>
+        <div class="table-responsive" id="history" style="display:none;">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th><input type="checkbox" onclick="checkAll('entrySelected','histAll')" id="histAll" />&nbsp&nbspSelect All</th>
+                <th>Name</th>
+                <th>Size (Kb)</th>
+                <th>Expiration Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" name="entrySelected" /></td>
+                <td>Puppy Picture</td>
+                <td>128</td>
+                <td>06-Oct-2017</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="entrySelected" /></td>
+                <td>Skyline</td>
+                <td>558</td>
+                <td>10-Oct-2017</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" name="entrySelected" /></td>
+                <td>Fall Picture</td>
+                <td>728</td>
+                <td>06-Sept-2017</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="Settings" style="display:none;">
+        <h1>Settings</h1>
+        <!--Setting Management-->
+        <div class="card">
+          <div class="card-header">
+            User Information
           </div>
-          <br>
-          <div class="card">
-            <div class="card-header">
-               File Defaults
-            </div>
-            <div class="card-body">
-              <p class="card-text">
+          <div class="card-body" style="padding:1.5em;">
+            <p class="card-text">Email: <label id="emailID"></label></p>
+            <p class="card-text">Password: <label id="passwordField"></label></p>
+            <a href="#" class="btn btn-primary">Change Password</a>
+          </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header">
+            File Defaults
+          </div>
+          <div class="card-body">
+            <p class="card-text">
               <div class="form-group">
                 <label for="sel1">Delete Preference: </label>
                 <select class="form-control" id="sel1">
@@ -327,30 +342,31 @@
                   <option>10 Downloads</option>
                 </select>
               </div>
-              
-              </p>
-              <a href="#" class="btn btn-primary">Save Changes</a>
-            </div>
+
+            </p>
+            <a href="#" class="btn btn-primary">Save Changes</a>
           </div>
-          <br>
-          <div class="card">
-            <div class="card-header">
-               Pro Status
-            </div>
-            <div class="card-body">
-              <p class="card-text" style="color:red;">Disabled</p>
-              <a href="#" class="btn btn-primary">Upgrade</a>
-            </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header">
+            Pro Status
           </div>
-        </section>
-      </div>
+          <div class="card-body">
+            <p class="card-text" style="color:red;">Disabled</p>
+            <a href="#" class="btn btn-primary">Upgrade</a>
+          </div>
+        </div>
+      </section>
     </div>
+  </div>
 
-        <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
-  </body>
+</body>
+
 </html>
