@@ -73,9 +73,13 @@ h1 {
 
 #dashboardLogo{
   font-family: "Monoton";
+  font-size: 1.6em;
 }
 
 #sideNav{
-  background: black;
+  background: #343a40 !important;
   
+}
+#usernameDisplay{
+  font-size: 1em;
 }
