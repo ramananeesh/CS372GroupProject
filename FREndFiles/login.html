@@ -13,7 +13,42 @@
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<script>
 		function login(f){
-			window.open("dashboard.html");
+			if(validate(this))
+				window.open("dashboard.html");
+			else 
+				return false;
+		}
+		function validate(f){
+			var userList =["ramaa02@students.ipfw.edu", 
+						"huntmj01@students.ipfw.edu", "staudj01@students.ipfw.edu"];
+			var password="adminLogin"
+			    if (!(f.username.value.match(/.+@.+\.edu$/)))
+				{
+					alert("Invalid username. Remember: The username is the email id"+
+								" being used. It should be a .edu email");
+					return false;
+				}
+				else{
+					if(!(f.username.value==userList[0]) &&
+						!(f.username.value==userList[1]) &&
+						!(f.username.value==userList[2])){
+						alert("Invalid username. Due to lack of Database, only"+
+						" admin credentials will work");
+						return false;
+					}
+					else{
+						if(f.password.value.length<6){
+				    		alert("Password length too small");
+				    		return false;
+						}
+						else if(!(f.password.value==password)){
+							alert("Incorrect Password. Due to lack of Database, only"+ 
+							" only admin credentials will work");
+							return false;
+						}
+					}
+				}
+				return true;
 		}
 	</script>
 </head>
@@ -73,14 +108,14 @@
 					<form class="omb_loginForm" action="" autocomplete="off" method="POST">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="username" placeholder="xyz@example.edu">
+							<input type="text" class="form-control" name="username" id="username" placeholder="xyz@example.edu">
 						</div>
 						<br>
 						<span class="help-block"></span>
 
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" name="password" placeholder="Password">
+							<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 						</div>
 						<span class="help-block">Password error</span>
 
