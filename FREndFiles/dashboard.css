@@ -3,6 +3,7 @@
  */
 
 /* Move down content because we have a fixed navbar that is 3.5rem tall */
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Gloria+Hallelujah|Press+Start+2P|Cabin+Sketch|Monoton|Sedgwick+Ave+Display');
 body {
   padding-top: 3.5rem;
 }
@@ -31,6 +32,7 @@ h1 {
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
+  
 }
 
 /* Sidebar navigation */
@@ -67,4 +69,12 @@ h1 {
 .placeholder img {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+#dashboardLogo{
+  font-family: "Monoton";
+}
+
+#sideNav{
+  background-color: black;
 }
