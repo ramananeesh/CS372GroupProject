@@ -14,7 +14,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 	<script src="bootbox-new.js"></script>
 	<script>
+	
   // This is called with the results from from FB.getLoginStatus().
+  
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
@@ -22,13 +24,23 @@
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
+    var user=" ";
+		FB.api('/me', {fields: 'first_name'}, function(response) {
+			//alert(response.first_name);
+			sessionStorage.setItem("userName",response.first_name);
+});
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      //testAPI();
+      
+      
+      window.open("dashboard.html", "_self");
+      //window.close();
     } else {
       // The person is not logged into your app or we are unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' +
+     document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
+        //alert("Please log in to the app");
     }
   }
 
@@ -36,7 +48,9 @@
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
   function checkLoginState() {
+  	
     FB.getLoginStatus(function(response) {
+    
       statusChangeCallback(response);
     });
   }
@@ -83,14 +97,16 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      //alert("Thanks for logging in");
+      document.getElementById('status').innerHTML ='Thanks for logging in, ' + response.name + '!';
     });
   }
 </script>
 	<script>
+		
 		function login(f){
 			if(validate(this)){
+				
 				window.open("dashboard.html");
 			}
 			else 
@@ -133,6 +149,14 @@
 				}
 				return true;
 		}
+		function proceed(){
+			FB.login(function(response){
+				 if (response.authResponse=='connected') {
+				 	window.top.location = "dashboard.html";
+				 }
+			});
+		}
+		
 	</script>
 </head>
 
@@ -157,12 +181,13 @@
 	</div>
 	<div class="container">
 		<div class="omb_login">
-			<h2 class="omb_authTitle">Login / <a href="#">Sign up</a></h2>
+			<h2 class="omb_authTitle" id="status">Login / <a href="#">Sign up</a></h2>
 			
 			<div class="row omb_row-sm-offset-3 omb_socialButtons" >
 				<!--remove this for previous look. this is added from FB website -->
 				<div class="col-xs-4 col-sm-4.5">
-						<div class="fb-login-button" data-width="90px" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+						<div class="fb-login-button" data-max-rows="1" onlogin="checkLoginState();" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+						<!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>-->
 				</div>
 			
 				<!--<div class="col-xs-4 col-sm-2" onlogin="checkLoginState();">
@@ -171,12 +196,12 @@
 			        <span class="hidden-xs">Facebook</span>
 		        </a>
 				</div>-->
-				<div class="col-xs-4 col-sm-4.5">
+				<!--<div class="col-xs-4 col-sm-4.5">
 					<a href="#" class="btn btn-lg btn-block omb_btn-twitter">
 			        <i class="fa fa-twitter visible-xs"></i>
 			        <span class="hidden-xs">Twitter</span>
 		        </a>
-				</div>
+				</div>-->
 				<div class="col-xs-4 col-sm-4.5">
 					<a href="#" class="btn btn-lg btn-block omb_btn-google">
 			        <i class="fa fa-google-plus visible-xs"></i>
