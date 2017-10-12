@@ -254,3 +254,7 @@ p{
 		margin-top:10px;
  	}		
 }
+
+.help-block{
+    visibility:  hidden;
+}
