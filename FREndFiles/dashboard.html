@@ -30,7 +30,8 @@
     //This sessionStorage.getItem(); is also a predefined function in javascript
     //will retrieve session and get the value;
       var a = sessionStorage.getItem("userName");
-        document.getElementById("usern").innerHTML=a;
+      
+        document.getElementById("usern").innerHTML="Hello, "+ a;
 }     
       function checkAll(eName, source) {
         var checkboxes = document.getElementsByName(eName);
@@ -142,7 +143,7 @@
 
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-          <a class="navbar-brand" href="#" id="usernameDisplay">Hello, <label id="usern"></label></a>
+          <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">           </label></a>
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
         </form>
       </div>
