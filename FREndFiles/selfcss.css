@@ -167,8 +167,10 @@ form{
 
 #note{
     font-size: 0.4em;
+    color: red !important;
     /*font-family: 'Gloria Hallelujah', cursive;*/
 }
+
 
 
 h2{
@@ -176,7 +178,7 @@ h2{
     /*font-family: 'Gloria Hallelujah', cursive; */
 }
 h3{
-   font-size: 1em;
+   font-size: 0.8em;
     /*font-family: 'Gloria Hallelujah', cursive; */
 }
 p{
