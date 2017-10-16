@@ -111,11 +111,29 @@
         x.style.display = "none";
       }
     }
+    
+    function setVisibilty(element, visible) {
+      var x = document.getElementById(element);
+      if (x.style.display === "none" && visible) {
+        x.style.display = "block";
+      }
+      else {
+        x.style.display = "none";
+      }
+    }
 
     function switchVis(elements) {
       for (var e in elements) {
         if (validate(e) && typeof e == "string") {
           toggleVisibilty(elements[e]);
+        }
+      }
+    }
+    
+    function setVis(elements, visible) {
+      for (var e in elements) {
+        if (validate(e) && typeof e == "string") {
+            setVisibilty(elements[e], visible);
         }
       }
     }
@@ -137,9 +155,54 @@
         }
       }
     }
+    
+    /* Think this should stay here, since its global and very page specific, but everything else
+        should be good to go... */
+    var collection = new bind(["Dashboard","settings","uploadFile"]);
+    
+    function bind(elements){
+      var collect = {};
+      collect.folder = elements;
+      collect.open = function(index){
+        for(var i = 0; i < collect.folder.length; i++){
+          if(index == i){
+            setVisibilty(collect.folder[i], true);
+          }
+          else{
+            setVisibilty(collect.folder[i], false);
+          }
+        }
+      };
+      return collect;
+    }
+    
+    function attachCallback(){
+      var items = document.getElementsByClassName("hidden-xs");
+       for(var i = 0; i < items.length; i++){
+        if(items[i].textContent == "Remove"){
+         var clickClear = function() { items[i].onclick(); } ;
+        }
+      }
+      for(var i = 0; i < items.length; i++){
+        if(items[i].textContent == "Upload"){
+          items[i].onclick = function() { docUpload();changeClass("input-b2","file-caption form-control kv-fileinput-caption"); } ;
+        }
+        else if(items[i].textContent == "Cancel"){
+          items[i].onclick = function() { docCancel();changeClass("input-b2","file-caption form-control kv-fileinput-caption"); } ;
+        }
+      }
+    }
+    
+    function docUpload(){
+      filesClick();
+    }
+    
+    function docCancel(){
+      filesClick();
+    }
 
     function filesClick() {
-      switchVis(["Settings", "Dashboard"]);
+      collection.open(0)
       changeClass("settingListLink", "nav-link");
       changeClass("fileListLink", "nav-link active");
       document.getElementById("settingListLink").onclick = function() { settingsClick(); };
@@ -147,16 +210,25 @@
     }
 
     function settingsClick() {
-      switchVis(["Dashboard", "Settings"]);
+      collection.open(1);
       changeClass("settingListLink", "nav-link active");
       changeClass("fileListLink", "nav-link");
       document.getElementById("fileListLink").onclick = function() { filesClick(); };
       document.getElementById("settingListLink").onclick = null;
     }
+    
+    function uploadClick() {
+      collection.open(2);
+      attachCallback();
+      changeClass("settingListLink", "nav-link");
+      changeClass("fileListLink", "nav-link active");
+      document.getElementById("settingListLink").onclick = function() { settingsClick(); };
+      document.getElementById("fileListLink").onclick = function() { filesClick(); };
+    }
 
     function historyClick() {
       switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
-      switchVis(["divDownload", "divUpload", "divModify"]);
+      switchVis(["divDownload","divUpload","divShare"]);
       changeClass("hisLink", "nav-link active");
       changeClass("actLink", "nav-link");
       document.getElementById("actLink").onclick = function() { activeClick(); };
@@ -165,30 +237,16 @@
 
     function activeClick() {
       switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
-      switchVis(["divDownload", "divUpload", "divModify"]);
+      switchVis(["divDownload","divUpload","divShare"]);
       changeClass("hisLink", "nav-link");
       changeClass("actLink", "nav-link active");
       document.getElementById("actLink").onclick = null;
       document.getElementById("hisLink").onclick = function() { historyClick(); };
     }
-
-    function uploadClick() {
-
-      document.getElementById("fileList").style.display = 'none';
-      document.getElementById("uploadFile").style.display = 'block';
-    }
-    
-    function docUpload(f){
-      //document.querySelector('btn btn-default btn-secondary fileinput-upload fileinput-upload-button').id = 'uploadDoc';
-      document.getElementsByClassName('btn btn-default btn-secondary fileinput-upload fileinput-upload-button')[0].onclick=function(){
-        alert("File has been uploaded");
-        window.open("dashboard.html","_self");
-      };
-    }
   </script>
 </head>
 
-<body>
+<body onload="attachCallback()">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -247,12 +305,12 @@
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divDownload">
             <a href="#Download">
-                  <img src="downloadicon.png" onclick="uploadClick();" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                  <img src="downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
             <h4>Download</h4>
             <span class="text-muted">Download Selected File(s)</span>
           </div>
-          <div class="col-6 col-sm-3 placeholder" id="divModify">
+          <div class="col-6 col-sm-3 placeholder" id="divShare">
             <a href="#Share">
                   <img src="shareicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
               </a>
@@ -340,7 +398,7 @@
         </div>
       </section>
 
-      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="Settings" style="display:none;">
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="settings" style="display:none;">
         <h1>Settings</h1>
         <!--Setting Management-->
         <div class="card">
@@ -404,7 +462,7 @@
         <div>
           <h2>Upload a File</h2><br>
           <div class="container" id="uploadDiv">
-            <input id="input-b2" name="input-b2" onclick="docUpload(this);" type="file" size="40" class="file" data-show-preview="false">
+            <input id="input-b2" name="input-b2" type="file" size="40" class="file" data-show-preview="false">
           </div><br>
         </div>
       </section>
