@@ -45,6 +45,7 @@
 
   <script>
     function validate(e) {
+      
       if ((typeof e !== "undefined") && (e !== null)) {
         return true;
       }
@@ -52,11 +53,12 @@
         return false;
       }
     }
-    window.onload = function() {
+    //window.onload = function() {
       //This sessionStorage.getItem(); is also a predefined function in javascript
       //will retrieve session and get the value;
+      function initialize(){
       var a = sessionStorage.getItem("userName");
-
+      
       document.getElementById("usern").innerHTML = "Hello, " + a;
       var emailID = sessionStorage.getItem("emailID");
       document.getElementById("emailID").innerHTML = emailID;
@@ -177,6 +179,7 @@
     }
     
     function attachCallback(){
+      initialize();
       var items = document.getElementsByClassName("hidden-xs");
        for(var i = 0; i < items.length; i++){
         if(items[i].textContent == "Remove"){
@@ -258,7 +261,7 @@
         
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">           </label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
       </form>
     </div>

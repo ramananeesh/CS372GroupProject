@@ -77,11 +77,12 @@ h1 {
 }
 
 #sideNav{
-  background: #343a40 !important;
-  
+ /* background: #343a40 !important;
+  */
 }
 #usernameDisplay{
   font-size: 1em;
+  color:white !important;
 }
 
 #noteForFile{
