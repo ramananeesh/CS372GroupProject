@@ -13,14 +13,14 @@ html{
     
 }
 
-h1{
+/*h1{
     
     font-family:'Monoton', cursive;
     font-size: 4em;
     text-align: center;
     color: #333333;
     /*background-color:#F2F4F2;*/
-    background-color: white;
+    /*background-color: white;
     cursor: pointer;
 }
 
@@ -29,18 +29,18 @@ h1{
 body{
     
     /*background-color: #F2F4F2;*/
-    background-color:white;
-}
+    /*background-color:white;
+}*/
 
-#titleID{
+/*#titleID{
     text-decoration:none;
     color:#333333;
     font-weight: bolder;
-}
+}*/
 
 
 
-a{
+/*a{
     color:#280003;
 }
 
@@ -60,7 +60,7 @@ li {
 
 li a {
     /*font-family: "Monoton";*/
-    display: block;
+   /* display: block;
     color: white;
     text-align: center;
     padding: 8px 14px;
@@ -77,7 +77,7 @@ li a:hover {
 
 #infoTabs{
     background-color: #B55F13;
-}
+}*/
 
 .loginPg1, .loginPg2{
     margin-left: auto;
@@ -112,15 +112,15 @@ fieldset {
     /*border: 0px groove (internal value);*/
 }
 
-form{
+/*form{
     text-align:center;
     font-size: 1em;
     color:#333333;
-}
-
+}*/
+/*
 .inputFields{
     color:#333333;
-    /*font-family: 'Gloria Hallelujah', cursive;*/
+    
     text-align: center;
     font-size: 0.7em;
     margin-left: 5px;
@@ -130,7 +130,7 @@ form{
 }
 
 #loginBtn{
-    /*font-family: 'Gloria Hallelujah', cursive;*/
+    
     font-weight: bolder;
     font-size: 1em;
     cursor: pointer;
@@ -148,11 +148,11 @@ form{
 }
 
 .inputLbls{
-    /*font-family: 'Gloria Hallelujah', cursive;*/
-}
+    
+}*/
 
-#uploadBtn{
-    /*font-family: 'Gloria Hallelujah', cursive;*/
+/*#uploadBtn{
+   
     font-size: 0.6em;
     background-color:#233252;
     color:white;
@@ -163,29 +163,29 @@ form{
     font-weight: bolder;
     cursor: pointer;
     background-color: #B55F13;
-}
+}*/
 
 #note{
     font-size: 0.4em;
     color: red !important;
     /*font-family: 'Gloria Hallelujah', cursive;*/
 }
-
+/*
 
 
 h2{
    font-size: 2em;
-    /*font-family: 'Gloria Hallelujah', cursive; */
+    
 }
 h3{
    font-size: 0.8em;
-    /*font-family: 'Gloria Hallelujah', cursive; */
+    
 }
 p{
     font-size: 0.8em;
-    /*font-family: 'Gloria Hallelujah', cursive;*/ 
-}
 
+}*/
+/*
 #logoImg{
     width: 70;
     height: 47;
@@ -260,3 +260,4 @@ p{
 .help-block{
     visibility:  hidden;
 }
+*/

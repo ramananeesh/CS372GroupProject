@@ -4,3 +4,7 @@
   font-family: "Monoton";
   font-size: 1.6em;
 }
+
+.nav-link hover{
+  color:blue !important;
+}

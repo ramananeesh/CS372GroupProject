@@ -13,7 +13,7 @@
     <link href="/FREndFiles/kartik-v-bootstrap-fileinput-84979dc/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="/FREndFiles/kartik-v-bootstrap-fileinput-84979dc/themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" media="screen" href="./selfcss.css">
+    <link href="dashboard.css" rel="stylesheet" type="text/css" />
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
@@ -39,12 +39,12 @@
     <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/themes/fa/theme.js"></script>
     <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-
+    <link href="dashboard.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 
-    <div class="page-wrapper">
+    <!--<div class="page-wrapper">
         <section class="intro" id="home-intro">
             <header role="banner">
                 <h1><a href="./index.html"><img id="logoImg" src="./logo.ico" width="70" height="70"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
@@ -63,15 +63,41 @@
 
 
         </nav>
+    </div>-->
+    <div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+             </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto" id="links1">
+                    <li class="nav-item">
+                        <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+                        <a class="nav-link" href="#">Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./ur-user.html" target="_blank">Quick Send</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="links2">
+                <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-sign-in" aria-hidden="true"></i> Login/Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-address-book" aria-hidden="true"></i>Contact Us</a>
+                    </li>
+        </nav>
     </div>
     <div class="page-login">
         <fieldset>
-            <h3>Upload a file:</h3><br>
+            <br>
             <form>
+                <legend>Upload a File</legend>
                 <div class="container" id="uploadDiv">
                     <input id="input-b2" name="input-b2" type="file" size="40" class="file" data-show-preview="false">
                 </div><br>
-            <h3 id="note">Note that your file will be deleted after download or after 24 hours. If you wish to have more downloads or longer file time retention you can register as a user.</h3>
+            <h3 id="noteForFile" style="font-size:0.8em">Note that your file will be deleted after download or after 24 hours. If you wish to have more downloads or longer file time retention you can register as a user.</h3>
             </form>
         </fieldset>
     </div>
