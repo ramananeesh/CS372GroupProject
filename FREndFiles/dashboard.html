@@ -34,7 +34,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="../../../../favicon.ico">
-
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="783497289681-md44u43oh563o2jrf0gjsfbtgr6oh2qg.apps.googleusercontent.com">
   <title>Doc Track</title>
 
   <!-- Bootstrap CSS -->
@@ -81,52 +82,38 @@
 
     }
 
-    
+
     function logoutFB() {
       window.fbAsyncInit = function() {
-      FB.init({
-        appId: '152162102051722', // App ID
-        channelUrl: 'https://docdash-aneeshraman.c9users.io/FREndFiles/login.html', // Channel File
-        status: true, // check login status
-        cookie: true, // enable cookies to allow the server to access the session
-        xfbml: true // parse XFBML
-      });
+        FB.init({
+          appId: '152162102051722', // App ID
+          channelUrl: 'https://docdash-aneeshraman.c9users.io/FREndFiles/login.html', // Channel File
+          status: true, // check login status
+          cookie: true, // enable cookies to allow the server to access the session
+          xfbml: true // parse XFBML
+        });
 
-      // Additional initialization code here
-    };
+        // Additional initialization code here
+      };
 
-    // Load the SDK Asynchronously
-    (function(d) {
-      var js, id = 'facebook-jssdk',
-        ref = d.getElementsByTagName('script')[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement('script');
-      js.id = id;
-      js.async = true;
-      js.src = "//connect.facebook.net/en_US/all.js";
-      ref.parentNode.insertBefore(js, ref);
-    }(document));
+      // Load the SDK Asynchronously
+      (function(d) {
+        var js, id = 'facebook-jssdk',
+          ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement('script');
+        js.id = id;
+        js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+      }(document));
 
       FB.logout(function(response) {
         // user is now logged out
-        
+
       });
     }
 
-    function signOut() {
-
-      var typeOfLogin = sessionStorage.getItem("typeofLogin");
-      alert(typeOfLogin);
-      if (typeOfLogin == "FacebookLogin") {
-        FB.logout(function(response) {
-          FB.Auth.setAuthResponse(null, 'unknown');
-
-        });
-        alert("Signed out of FB");
-        //window.open("./login.html","_self");
-      }
-
-    }
 
     function checkAll(eName, source) {
       var checkboxes = document.getElementsByName(eName);
@@ -237,12 +224,16 @@
       }
       for (var i = 0; i < items.length; i++) {
         if (items[i].textContent == "Upload") {
-          items[i].onclick = function() { docUpload();
-            changeClass("input-b2", "file-caption form-control kv-fileinput-caption"); };
+          items[i].onclick = function() {
+            docUpload();
+            changeClass("input-b2", "file-caption form-control kv-fileinput-caption");
+          };
         }
         else if (items[i].textContent == "Cancel") {
-          items[i].onclick = function() { docCancel();
-            changeClass("input-b2", "file-caption form-control kv-fileinput-caption"); };
+          items[i].onclick = function() {
+            docCancel();
+            changeClass("input-b2", "file-caption form-control kv-fileinput-caption");
+          };
         }
       }
     }
@@ -302,7 +293,7 @@
   </script>
 </head>
 
-<body onload="attachCallback()">
+<body onload="attachCallback();onLoad();">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,7 +306,42 @@
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signOut();">Sign Out</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO;" onload="onLoad();">Sign Out</button>
+        <script>
+          function signO() {
+
+            var typeOfLogin = sessionStorage.getItem("typeofLogin");
+            // /alert(typeOfLogin);
+            if (typeOfLogin == "FacebookLogin") {
+              FB.logout(function(response) {
+                FB.Auth.setAuthResponse(null, 'unknown');
+
+              });
+              alert("Signed out of FB");
+              //window.open("./login.html","_self");
+            }
+            else if (typeOfLogin == "gmailLogin") {
+              signOut();
+            }
+          }
+
+          function signOut() {
+            
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function() {
+              alert('User signed out.');
+              window.open("./login.html","_self");
+            });
+          }
+          
+          function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+    
+        </script>
+
       </form>
     </div>
   </nav>
