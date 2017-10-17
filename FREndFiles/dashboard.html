@@ -43,6 +43,13 @@
 
   <!-- Custom styles for this template -->
   <link href="dashboard.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
+
+  <!-- If you're using Stripe for payments -->
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
   <script>
     function validate(e) {
@@ -70,13 +77,13 @@
         document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Facebook. Cannot change password " +
           "locally";
-          document.getElementById("changePassword").disabled=true;
+        document.getElementById("changePassword").disabled = true;
       }
       else if (typeOfLogin == "gmailLogin") {
         document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Google Account. Cannot change password " +
           "locally";
-           document.getElementById("changePassword").disabled=true;
+        document.getElementById("changePassword").disabled = true;
       }
       else {
         document.getElementById("passwordField").innerHTML = sessionStorage.getItem("password");
@@ -325,26 +332,25 @@
             else if (typeOfLogin == "gmailLogin") {
               signOut();
             }
-            else{
-              window.open("./login.html","_self");
+            else {
+              window.open("./login.html", "_self");
             }
           }
 
           function signOut() {
-            
+
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function() {
               alert('User signed out.');
-              window.open("./login.html","_self");
+              window.open("./login.html", "_self");
             });
           }
-          
+
           function onLoad() {
-      gapi.load('auth2', function() {
-        gapi.auth2.init();
-      });
-    }
-    
+            gapi.load('auth2', function() {
+              gapi.auth2.init();
+            });
+          }
         </script>
 
       </form>
@@ -554,7 +560,113 @@
           </div><br>
         </div>
       </section>
+      <!--payment stuff-->
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro">
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <div class="container">
+          <div class="row">
+            <!-- You can make it whatever width you want. I'm making it full width
+             on <= small devices and 4/12 page width on >= medium devices -->
+            <div class="col-xs-12 col-md-4">
 
+
+              <!-- CREDIT CARD FORM STARTS HERE -->
+              <div class="panel panel-default credit-card-box">
+                <div class="panel-heading display-table">
+                  <div class="row display-tr">
+                    <div class="page-title text-center">
+                      <h3>Payment Details</h1>
+                        <hr class="pg-titl-bdr-btm" style="background-color:blue"></hr>
+                    </div>
+                  </div>
+                  <!--<h3 class="panel-title display-td">Payment Details</h3>-->
+                  <div class="row display-tr">
+                    <div class="page-title text-center">
+                      <div class="display-td">
+                        <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                          <label for="cardNumber">CARD NUMBER</label>
+                          <div class="input-group">
+                            <input type="tel" class="form-control" name="cardNumber" placeholder="Valid Card Number" autocomplete="cc-number" required autofocus />
+                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-7 col-md-7">
+                        <div class="form-group">
+                          <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                          <input type="tel" class="form-control" name="cardExpiry" placeholder="MM / YY" autocomplete="cc-exp" required />
+                        </div>
+                      </div>
+                      <div class="col-xs-5 col-md-5 pull-right">
+                        <div class="form-group">
+                          <label for="cardCVC">CV CODE</label>
+                          <input type="tel" class="form-control" name="cardCVC" placeholder="CVC" autocomplete="cc-csc" required />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                          <label for="couponCode">COUPON CODE</label>
+                          <input type="text" class="form-control" name="couponCode" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <button class="subscribe btn btn-success btn-lg btn-block" type="button">Start Subscription</button>
+                      </div>
+                    </div>
+                    <div class="row" style="display:none;">
+                      <div class="col-xs-12">
+                        <p class="payment-errors"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- CREDIT CARD FORM ENDS HERE -->
+
+
+            </div>
+
+            <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
+              <p>
+                <div class="page-title text-center">
+                      <h3>Features</h1>
+                        <hr class="pg-titl-bdr-btm" style="background-color:blue"></hr>
+                    </div>
+                <ul>
+                  <li>As-you-type, input formatting</li>
+                  <li>Form field validation (also as you type)</li>
+                  <li>Graceful error feedback for declined card, etc</li>
+                  <li>AJAX form submission w/ visual feedback</li>
+                  <li>Creates a Stripe credit card token</li>
+                </ul>
+              </p>
+              <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
+
+              <p>Built upon: Bootstrap, jQuery,
+                <a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a>,
+                <a href="https://github.com/stripe/jquery.payment">jQuery.payment library</a>, and <a href="https://stripe.com/docs/stripe.js">Stripe.js</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
     </div>
   </div>
 
