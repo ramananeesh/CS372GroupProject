@@ -200,3 +200,9 @@ fieldset{
   margin-right: auto;
   
 }
+
+.pg-titl-bdr-btm {
+    width: 100px !important;
+    height: 3px !important;
+    background-color: blue !important;
+}
