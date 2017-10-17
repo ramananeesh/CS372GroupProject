@@ -27,7 +27,7 @@
   <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/themes/fa/theme.js"></script>
   <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-  
+
   <!--Other normal HTML Stuff -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -45,7 +45,7 @@
 
   <script>
     function validate(e) {
-      
+
       if ((typeof e !== "undefined") && (e !== null)) {
         return true;
       }
@@ -54,13 +54,14 @@
       }
     }
     //window.onload = function() {
-      //This sessionStorage.getItem(); is also a predefined function in javascript
-      //will retrieve session and get the value;
-      function initialize(){
+    //This sessionStorage.getItem(); is also a predefined function in javascript
+    //will retrieve session and get the value;
+    function initialize() {
       var a = sessionStorage.getItem("userName");
-      
+
       document.getElementById("usern").innerHTML = "Hello, " + a;
       var emailID = sessionStorage.getItem("emailID");
+
       document.getElementById("emailID").innerHTML = emailID;
       var typeOfLogin = sessionStorage.getItem("typeofLogin");
 
@@ -77,6 +78,54 @@
       else {
         document.getElementById("passwordField").innerHTML = sessionStorage.getItem("password");
       }
+
+    }
+
+    
+    function logoutFB() {
+      window.fbAsyncInit = function() {
+      FB.init({
+        appId: '152162102051722', // App ID
+        channelUrl: 'https://docdash-aneeshraman.c9users.io/FREndFiles/login.html', // Channel File
+        status: true, // check login status
+        cookie: true, // enable cookies to allow the server to access the session
+        xfbml: true // parse XFBML
+      });
+
+      // Additional initialization code here
+    };
+
+    // Load the SDK Asynchronously
+    (function(d) {
+      var js, id = 'facebook-jssdk',
+        ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement('script');
+      js.id = id;
+      js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+      FB.logout(function(response) {
+        // user is now logged out
+        
+      });
+    }
+
+    function signOut() {
+
+      var typeOfLogin = sessionStorage.getItem("typeofLogin");
+      alert(typeOfLogin);
+      if (typeOfLogin == "FacebookLogin") {
+        FB.logout(function(response) {
+          FB.Auth.setAuthResponse(null, 'unknown');
+
+        });
+        alert("Signed out of FB");
+        //window.open("./login.html","_self");
+      }
+
     }
 
     function checkAll(eName, source) {
@@ -113,7 +162,7 @@
         x.style.display = "none";
       }
     }
-    
+
     function setVisibilty(element, visible) {
       var x = document.getElementById(element);
       if (x.style.display === "none" && visible) {
@@ -131,11 +180,11 @@
         }
       }
     }
-    
+
     function setVis(elements, visible) {
       for (var e in elements) {
         if (validate(e) && typeof e == "string") {
-            setVisibilty(elements[e], visible);
+          setVisibilty(elements[e], visible);
         }
       }
     }
@@ -157,50 +206,52 @@
         }
       }
     }
-    
+
     /* Think this should stay here, since its global and very page specific, but everything else
         should be good to go... */
-    var collection = new bind(["Dashboard","settings","uploadFile"]);
-    
-    function bind(elements){
+    var collection = new bind(["Dashboard", "settings", "uploadFile"]);
+
+    function bind(elements) {
       var collect = {};
       collect.folder = elements;
-      collect.open = function(index){
-        for(var i = 0; i < collect.folder.length; i++){
-          if(index == i){
+      collect.open = function(index) {
+        for (var i = 0; i < collect.folder.length; i++) {
+          if (index == i) {
             setVisibilty(collect.folder[i], true);
           }
-          else{
+          else {
             setVisibilty(collect.folder[i], false);
           }
         }
       };
       return collect;
     }
-    
-    function attachCallback(){
+
+    function attachCallback() {
       initialize();
       var items = document.getElementsByClassName("hidden-xs");
-       for(var i = 0; i < items.length; i++){
-        if(items[i].textContent == "Remove"){
-         var clickClear = function() { items[i].onclick(); } ;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].textContent == "Remove") {
+          var clickClear = function() { items[i].onclick(); };
         }
       }
-      for(var i = 0; i < items.length; i++){
-        if(items[i].textContent == "Upload"){
-          items[i].onclick = function() { docUpload();changeClass("input-b2","file-caption form-control kv-fileinput-caption"); } ;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].textContent == "Upload") {
+          items[i].onclick = function() { docUpload();
+            changeClass("input-b2", "file-caption form-control kv-fileinput-caption"); };
         }
-        else if(items[i].textContent == "Cancel"){
-          items[i].onclick = function() { docCancel();changeClass("input-b2","file-caption form-control kv-fileinput-caption"); } ;
+        else if (items[i].textContent == "Cancel") {
+          items[i].onclick = function() { docCancel();
+            changeClass("input-b2", "file-caption form-control kv-fileinput-caption"); };
         }
       }
     }
-    
-    function docUpload(){
+
+    function docUpload() {
       filesClick();
     }
-    
-    function docCancel(){
+
+    function docCancel() {
       filesClick();
     }
 
@@ -219,7 +270,7 @@
       document.getElementById("fileListLink").onclick = function() { filesClick(); };
       document.getElementById("settingListLink").onclick = null;
     }
-    
+
     function uploadClick() {
       collection.open(2);
       attachCallback();
@@ -231,7 +282,7 @@
 
     function historyClick() {
       switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
-      switchVis(["divDownload","divUpload","divShare"]);
+      switchVis(["divDownload", "divUpload", "divShare"]);
       changeClass("hisLink", "nav-link active");
       changeClass("actLink", "nav-link");
       document.getElementById("actLink").onclick = function() { activeClick(); };
@@ -240,12 +291,14 @@
 
     function activeClick() {
       switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
-      switchVis(["divDownload","divUpload","divShare"]);
+      switchVis(["divDownload", "divUpload", "divShare"]);
       changeClass("hisLink", "nav-link");
       changeClass("actLink", "nav-link active");
       document.getElementById("actLink").onclick = null;
       document.getElementById("hisLink").onclick = function() { historyClick(); };
     }
+  </script>
+  <script>
   </script>
 </head>
 
@@ -258,11 +311,11 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
-        
+
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Out</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signOut();">Sign Out</button>
       </form>
     </div>
   </nav>
