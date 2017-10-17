@@ -207,8 +207,8 @@
 							console.log(response.work);*/
 							sessionStorage.setItem("userName", response.name); 
 							sessionStorage.setItem("emailID",response.email);
-							//alert("Hi"+ " "+response.email);
-						}, {scope: 'email, id'}
+							alert("Hi"+ " "+response.email);
+						}, {scope:'email'}
 						);
 						
 						//sessionStorage.setItem("emailID",response.email);
@@ -359,7 +359,7 @@
 				sessionStorage.setItem("userName", name);
 				sessionStorage.setItem("userID", uid);
 				sessionStorage.setItem("emailID", emailID);
-				
+				alert(emailID);
 				var type = "gmailLogin";
 				sessionStorage.setItem("typeofLogin", type);
 				window.open("dashboard.html", "_self");
