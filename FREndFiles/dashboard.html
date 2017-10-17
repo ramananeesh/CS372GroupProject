@@ -70,11 +70,13 @@
         document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Facebook. Cannot change password " +
           "locally";
+          document.getElementById("changePassword").disabled=true;
       }
       else if (typeOfLogin == "gmailLogin") {
         document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Google Account. Cannot change password " +
           "locally";
+           document.getElementById("changePassword").disabled=true;
       }
       else {
         document.getElementById("passwordField").innerHTML = sessionStorage.getItem("password");
@@ -490,7 +492,8 @@
           <div class="card-body" style="padding:1.5em;">
             <p class="card-text">Email: <label id="emailID"></label></p>
             <p class="card-text">Password: <label id="passwordField"></label></p>
-            <a href="#" class="btn btn-primary">Change Password</a>
+            <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
+            <button class="btn btn-primary" id="changePassword">Change Password</button>
           </div>
         </div>
         <br>
