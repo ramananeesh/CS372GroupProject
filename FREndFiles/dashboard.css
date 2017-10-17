@@ -71,11 +71,16 @@ h1 {
   padding-bottom: 1.5rem;
 }
 
-#dashboardLogo{
-  font-family: "Monoton";
+#dashboardLogo {
+  font-family: "Monoton" ;
   font-size: 1.6em;
+  font-weight: lighter;
 }
-
+.bold{
+  font-family: "Monoton";
+  font-size:0.9em;
+  font-weight: normal;
+}
 #sideNav{
  /* background: #343a40 !important;
   */
