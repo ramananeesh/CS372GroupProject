@@ -571,9 +571,9 @@
         </div>
       </section>
       <!--payment stuff-->
-      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro" style="display:none;">
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro" style="display:none !important">
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <div class="container">
+        <div class="container" style="margin-left:5%">
           <div class="row">
             <!-- You can make it whatever width you want. I'm making it full width
              on <= small devices and 4/12 page width on >= medium devices -->
@@ -653,26 +653,23 @@
 
             <div class="col-xs-12 col-md-8" style="font-size: 12pt; line-height: 2em;">
               <p>
-                <div class="page-title text-center">
+                <div>
+                <div class="page-title text-center" style="margin-left:2%">
                       <h3>Features</h1>
                         <hr class="pg-titl-bdr-btm" style="background-color:blue"></hr>
                     </div>
-                <ul>
-                  <li>As-you-type, input formatting</li>
-                  <li>Form field validation (also as you type)</li>
-                  <li>Graceful error feedback for declined card, etc</li>
-                  <li>AJAX form submission w/ visual feedback</li>
-                  <li>Creates a Stripe credit card token</li>
+                <div style="margin-left:18%; border-radius:20px; margin-right:20%" class="card">
+                <ul style="margin-left:2%">
+                  <li>Upload/Share more files</li>
+                  <li>Extend the storage space</li>
+                  <li>Keep files for a longer time in the dashboard</li>
                 </ul>
+                
               </p>
-              <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
-
-              <p>Built upon: Bootstrap, jQuery,
-                <a href="https://jqueryvalidation.org/">jQuery Validation Plugin</a>,
-                <a href="https://github.com/stripe/jquery.payment">jQuery.payment library</a>, and <a href="https://stripe.com/docs/stripe.js">Stripe.js</a>
-              </p>
+              <p style="margin-left:2%; font-size:1.5em; font-weight:bold">Can cancel your membership anytime!</p>
+                </div>
             </div>
-
+            </div>
           </div>
         </div>
 
