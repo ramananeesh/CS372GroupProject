@@ -43,7 +43,7 @@
 
   <!-- Custom styles for this template -->
   <link href="dashboard.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
@@ -88,6 +88,10 @@
       else {
         document.getElementById("passwordField").innerHTML = sessionStorage.getItem("password");
       }
+      
+       gapi.load('auth2', function() {
+              gapi.auth2.init();
+            });
 
     }
 
@@ -202,29 +206,34 @@
         }
       }
     }
-
-    /* Think this should stay here, since its global and very page specific, but everything else
-        should be good to go... */
-    var collection = new bind(["Dashboard", "settings", "uploadFile"]);
-
-    function bind(elements) {
-      var collect = {};
-      collect.folder = elements;
-      collect.open = function(index) {
-        for (var i = 0; i < collect.folder.length; i++) {
-          if (index == i) {
-            setVisibilty(collect.folder[i], true);
-          }
-          else {
-            setVisibilty(collect.folder[i], false);
-          }
-        }
-      };
-      return collect;
+    
+    function signO() {
+      var typeOfLogin = sessionStorage.getItem("typeofLogin");
+      //alert(typeOfLogin);
+      if (typeOfLogin == "FacebookLogin") {
+        FB.logout(function(response) {
+          FB.Auth.setAuthResponse(null, 'unknown');
+        });
+        alert("Signed out of FB");
+        //window.open("./login.html","_self");
+      }
+      else if (typeOfLogin == "gmailLogin") {
+        signOut();
+      }
+      else {
+        window.open("./login.html", "_self");
+      }
     }
-
+   
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function() {
+        alert('User signed out.');
+        window.open("./login.html", "_self");
+      });
+    }
+    
     function attachCallback() {
-      initialize();
       var items = document.getElementsByClassName("hidden-xs");
       for (var i = 0; i < items.length; i++) {
         if (items[i].textContent == "Remove") {
@@ -254,55 +263,93 @@
     function docCancel() {
       filesClick();
     }
+    
+    /* Think this should stay here, since its global and very page specific, but everything else
+        should be good to go... */
+    
 
+    function bind(elements) {
+      var collect = {};
+      var activate = false;
+      var classChange = "";
+      
+      collect.folder = elements;
+      collect.open = function(index) {
+        var indexIT= false;
+        for (var i = 0; i < collect.folder.length; i++) {
+          if (index == i) {
+            activate = true;
+            classChange = "nav-link active"
+          }
+          else {
+            activate = false;
+            classChange = "nav-link"
+          }
+          indexIT = false;
+          switch(collect.folder[i].length){
+            case 0:
+              continue;
+            case 3:
+              if(activate){
+                document.getElementById(collect.folder[i][1]).onclick = null;
+              }
+              else{
+                document.getElementById(collect.folder[i][1]).onclick = collect.folder[i][2];
+              }
+            case 2:
+              changeClass(collect.folder[i][1], classChange) // 1
+              indexIT = true;
+            case 1:
+              if(indexIT){setVisibilty(collect.folder[i][0], activate);}
+              else {setVisibilty(collect.folder[i], activate);}
+          }
+        }
+      };
+      return collect;
+    }
+    
+    var collection = new bind([["Dashboard","fileListLink", function() { filesClick(); }], 
+                                ["settings","settingListLink",function(){ settingsClick();}],
+                                ["uploadFile"],
+                                ["goPro","goProLink",function(){proClick();}]]);
+    
+    var tabs = new bind([["fileList","actLink", function() { activeClick(); }],
+                          ["history","hisLink", function() { historyClick(); }]]);
+
+    // Nav Functions
     function filesClick() {
       collection.open(0)
-      changeClass("settingListLink", "nav-link");
-      changeClass("fileListLink", "nav-link active");
-      document.getElementById("settingListLink").onclick = function() { settingsClick(); };
-      document.getElementById("fileListLink").onclick = null;
     }
 
     function settingsClick() {
       collection.open(1);
-      changeClass("settingListLink", "nav-link active");
-      changeClass("fileListLink", "nav-link");
-      document.getElementById("fileListLink").onclick = function() { filesClick(); };
-      document.getElementById("settingListLink").onclick = null;
     }
 
     function uploadClick() {
       collection.open(2);
       attachCallback();
-      changeClass("settingListLink", "nav-link");
-      changeClass("fileListLink", "nav-link active");
-      document.getElementById("settingListLink").onclick = function() { settingsClick(); };
-      document.getElementById("fileListLink").onclick = function() { filesClick(); };
+    }
+    
+    function proClick(){
+      collection.open(3);
     }
 
+    // Tab Functions
     function historyClick() {
-      switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
+      tabs.open(1);
+      switchVis(["fileListTitle", "historyTitle"]);
       switchVis(["divDownload", "divUpload", "divShare"]);
-      changeClass("hisLink", "nav-link active");
-      changeClass("actLink", "nav-link");
-      document.getElementById("actLink").onclick = function() { activeClick(); };
-      document.getElementById("hisLink").onclick = null;
     }
 
     function activeClick() {
-      switchVis(["fileList", "fileListTitle", "history", "historyTitle"]);
+      tabs.open(0);
+      switchVis(["fileListTitle", "historyTitle"]);
       switchVis(["divDownload", "divUpload", "divShare"]);
-      changeClass("hisLink", "nav-link");
-      changeClass("actLink", "nav-link active");
-      document.getElementById("actLink").onclick = null;
-      document.getElementById("hisLink").onclick = function() { historyClick(); };
     }
-  </script>
-  <script>
   </script>
 </head>
 
-<body onload="attachCallback();onLoad();">
+<body onload="attachCallback(); initialize();">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,44 +362,7 @@
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();" onload="onLoad();">Sign Out</button>
-        <script>
-          function signO() {
-
-            var typeOfLogin = sessionStorage.getItem("typeofLogin");
-            //alert(typeOfLogin);
-            if (typeOfLogin == "FacebookLogin") {
-              FB.logout(function(response) {
-                FB.Auth.setAuthResponse(null, 'unknown');
-
-              });
-              alert("Signed out of FB");
-              //window.open("./login.html","_self");
-            }
-            else if (typeOfLogin == "gmailLogin") {
-              signOut();
-            }
-            else {
-              window.open("./login.html", "_self");
-            }
-          }
-
-          function signOut() {
-
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function() {
-              alert('User signed out.');
-              window.open("./login.html", "_self");
-            });
-          }
-
-          function onLoad() {
-            gapi.load('auth2', function() {
-              gapi.auth2.init();
-            });
-          }
-        </script>
-
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
   </nav>
@@ -362,7 +372,7 @@
       <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar" id="sideNav">
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
-            <a class="nav-link" onclick="filesClick()" href="index.html" id="home">Home</a>
+            <a class="nav-link" href="index.html" id="home">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" onclick="filesClick()" href="#Files" id="fileListLink">Files <span class="sr-only">(current)</span></a>
@@ -371,7 +381,7 @@
             <a class="nav-link" onclick="settingsClick()" href="#Settings" id="settingListLink">Settings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#GoPro">Go Pro!</a>
+            <a class="nav-link" onclick="proClick()" id="goProLink" href="#GoPro">Go Pro!</a>
           </li>
         </ul>
       </nav>
@@ -561,7 +571,7 @@
         </div>
       </section>
       <!--payment stuff-->
-      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro">
+      <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro" style="display:none;">
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <div class="container">
           <div class="row">
@@ -583,7 +593,7 @@
                   <div class="row display-tr">
                     <div class="page-title text-center">
                       <div class="display-td">
-                        <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                        <img class="img-responsive pull-right" src="https://i76.imgup.net/accepted_c22e0.png">
                       </div>
                     </div>
                   </div>
@@ -658,7 +668,7 @@
               <p>Be sure to replace the dummy API key with a valid Stripe API key.</p>
 
               <p>Built upon: Bootstrap, jQuery,
-                <a href="http://jqueryvalidation.org/">jQuery Validation Plugin</a>,
+                <a href="https://jqueryvalidation.org/">jQuery Validation Plugin</a>,
                 <a href="https://github.com/stripe/jquery.payment">jQuery.payment library</a>, and <a href="https://stripe.com/docs/stripe.js">Stripe.js</a>
               </p>
             </div>
