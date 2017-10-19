@@ -207,3 +207,8 @@ fieldset{
     background-color: blue !important;
 }
 
+.nav-link:hover{
+    border-style: solid;
+    border-radius: 20px;
+    border-width: 1.5px;
+}
