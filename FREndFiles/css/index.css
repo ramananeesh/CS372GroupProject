@@ -1,0 +1,15 @@
+#contact-submit:hover {
+    font-size: 1.3em;
+    font-weight: bolder;
+}
+
+#learnMore:hover {
+    border-color: blue;
+    background-color: blue;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+#learnMore {
+    margin-top: 4%;
+}
