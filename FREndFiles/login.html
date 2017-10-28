@@ -3,6 +3,7 @@
 <html>
 
 	<head>
+		
 		<title>Login</title>
 		
 		<meta charset="utf-8">
@@ -18,59 +19,48 @@
 	    <!-- Bootstrap and font awesome-->
 	    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		
 	</head>
 
-<body>
-	<!--<div class="container">
-		<section class="intro" id="home-intro">
-			<header role="banner">
-				<h1><a href="./index.html"><img id="logoImg" src="./logo.ico"  width="70" height="47"/></a><label><a href="./index.html" id="titleID">Doc->Dash</a></label></h1>
-			</header>
-		</section>
-	</div>
-	<div class="conatainer">
-		<nav>
-			<ul>
-				<li><a href="./index.html">Home</a></li>
-				<li><a href="./ur-user.html" target="_blank">Quick Send</a></li>
-				<li><a href="./login.html">Login</a></li>
-				<li style="float:right" id="infoTabs"><a href="./contact.html">Contact</a></li>
-				<li style="float:right" id="infoTabs"><a href="./about.html">About</a></li>
-			</ul>
-		</nav>
-	</div>-->
-	<div>
-		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" href="index.html" id="dashboardLogo"><img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash</a>
-			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-             </button>
-			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-				<ul class="navbar-nav mr-auto" id="links1">
-					<li class="nav-item">
-						<!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
-						<a class="nav-link" href="./index.html"><i class="fa fa-home" aria-hidden="true"></i> Home </a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="./ur-user.html" target="_blank"><i class="fa fa-paper-plane" aria-hidden="true"></i> Quick Send</a>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right" id="links2">
-					<li class="nav-item">
-						<a class="nav-link" href="./login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Login/Sign Up</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="./about.html"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="./contact.html"><i class="fa fa-address-book" aria-hidden="true"></i> Contact Us</a>
-					</li>
-
-		</nav>
-		</div>
+	<body>
+	
+		<!-- BEGIN NAVBAR -->
+	            
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="index.html" id="dashboardLogo">
+                <img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto" id="links1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html"><i class="fa fa-home" aria-hidden="true"></i> Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./ur-user.html" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> Quick Send</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="links2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Login/Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.html"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contact.html"><i class="fa fa-address-book" aria-hidden="true"></i> Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+            
+        <!-- END NAVBAR -->
+        
+        
+        
 		<div class="container">
 			<div class="omb_login">
 				<h2 class="omb_authTitle" id="status">Login / <a href="#">Sign up</a></h2>
@@ -145,6 +135,10 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		<!--- Facebook and Google Login Scripts-->
+		
 		<script>
 			function fbLog() {
 				//onlogin="checkLoginState();"
@@ -338,6 +332,6 @@
 				window.open("dashboard.html", "_self");
 			}
 		</script>
-</body>
+	</body>
 
 </html>
