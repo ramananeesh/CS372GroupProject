@@ -64,7 +64,7 @@
         
 		<div class="container">
 			<div class="omb_login">
-				<h2 class="omb_authTitle" id="status">Login / <a href="#">Sign up</a></h2>
+				<h2 class="omb_authTitle" id="status">Login / <a href="#signup" onclick="signupValidate(this)">Sign up</a></h2>
 
 				<div class="row omb_row-sm-offset-3 omb_socialButtons">
 					<!--remove this for previous look. this is added from FB website -->
@@ -89,7 +89,7 @@
 						<form class="omb_loginForm" action="" autocomplete="off" method="POST">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="fa fa-user"></i></span>
-								<input type="text" class="form-control" name="username" id="username" placeholder="xyz@example.edu">
+								<input type="text" class="form-control" name="username" id="username" placeholder="username">
 							</div>
 
 							<span class="help-block" id="usernameError">Username error</span>
@@ -99,6 +99,12 @@
 								<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 							</div>
 							<span class="help-block" id="passwordError">Password error</span>
+							<div class="input-group" style="visibility:hidden;" id="emailDiv">
+								<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="email" id="email" placeholder="email@example.com">
+								
+							</div>
+							<span class="help-block" id="emailError">Email error</span>
 
 							<button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login(this)">Login</button>
 						</form>
@@ -252,15 +258,15 @@
 				var userList = ["ramaa02",
 					"huntmj01", "staudj01"
 				];
-				var password = "adminLogin"
-				if (!(f.username.value.match(/.+@.+\.edu$/))) {
+				var password = "adminLogin";
+				/*if ((f.username.value.match(/.+@.+\.edu$/))) {
 					alert("Invalid username. Remember: The username is the email id" +
 						" being used. It should be a .edu email");
 					/*f.usernameError.value="Invalid username. Remember: The username is the email id"+
-								" being used. It should be a .edu email";*/
+								" being used. It should be a .edu email";
 					return false;
-				}
-				else {
+				}*/
+				//else {
 					if (!(f.username.value == userList[0]) &&
 						!(f.username.value == userList[1]) &&
 						!(f.username.value == userList[2])) {
@@ -279,15 +285,62 @@
 							return false;
 						}
 					}
-				}
+				//}
 				var userN = f.username.value.split("@")[0];
 				sessionStorage.setItem("userName", userN);
-				sessionStorage.setItem("emailID", f.username.value);
+				sessionStorage.setItem("emailID", f.emailID.value);
 				sessionStorage.setItem("password", f.password.value);
 
 				return true;
 			}
+			function signupValidate(f){
+				//alert('hi');
+				//f.emailDiv.style.display='inline';
+				//document.getElementById("emailDiv").style.display='inline';
+				document.getElementById("emailDiv").style.visibility='visible';
+				
+				var userList = ["ramaa02",
+					"huntmj01", "staudj01"
+				];
+				var password = "adminLogin";
+				if ((f.email.value.match(/.+@.+\.edu$/))) {
+					//alert("Invalid username. Remember: The username is the email id" +
+					//	" being used. It should be a .edu email");
+					f.usernameError.innerHTML="Invalid email. Remember: The email is the email id"+
+								" being used. It should be a .edu email";
+					return false;
+				}
+				else {
+					if (!(f.username.value == userList[0]) &&
+						!(f.username.value == userList[1]) &&
+						!(f.username.value == userList[2])) {
+						//alert("Invalid username. Due to lack of Database, only" +
+						//	" admin credentials will work");
+						f.usernameError.innerHTML="Invalid username";
+						return false;
+					}
+					else {
+						if (f.password.value.length < 6) {
+							//alert("Password length too small");
+							f.passwordError.innerHTML="Password length too small";
+							return false;
+						}
+						else if (!(f.password.value == password)) {
+							//alert("Incorrect Password. Due to lack of Database, only" +
+							//	" only admin credentials will work");
+							f.passwordError.innerHTML="Incorrect Password. Due to lack of Database, only" +
+								" only admin credentials will work";
+							return false;
+						}
+					}
+				}
+				var userN = f.username.value.split("@")[0];
+				sessionStorage.setItem("userName", f.username.value);
+				sessionStorage.setItem("emailID", f.email.value);
+				sessionStorage.setItem("password", f.password.value);
 
+				return true;
+			}
 			function proceed() {
 				FB.login(function(response) {
 					if (response.authResponse == 'connected') {
