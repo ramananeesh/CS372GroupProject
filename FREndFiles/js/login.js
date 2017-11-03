@@ -152,20 +152,23 @@ function validate(f) {
                 " only admin credentials will work");
             return false;
         }
+        else {
+            
+            sessionStorage.setItem("userName", f.username.value);
+            //sessionStorage.setItem("emailID", f.emailID.value);
+            sessionStorage.setItem("password", f.password.value);
+            window.open("dashboard.html", "_self");
+            return true;
+        }
     }
     //}
-    var userN = f.username.value.split("@")[0];
-    sessionStorage.setItem("userName", userN);
-    sessionStorage.setItem("emailID", f.emailID.value);
-    sessionStorage.setItem("password", f.password.value);
 
-    return true;
 }
 
 function signupValidate(f) {
     //alert('hi');
     //f.emailDiv.style.display='inline';
-    document.getElementById("emailDiv").style.display='inline';
+    document.getElementById("emailDiv").style.display = 'inline';
     //document.getElementById("emailDiv").style.visibility = 'visible';
 
     var userList = ["ramaa02",
