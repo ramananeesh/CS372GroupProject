@@ -165,8 +165,8 @@ function validate(f) {
 function signupValidate(f) {
     //alert('hi');
     //f.emailDiv.style.display='inline';
-    //document.getElementById("emailDiv").style.display='inline';
-    document.getElementById("emailDiv").style.visibility = 'visible';
+    document.getElementById("emailDiv").style.display='inline';
+    //document.getElementById("emailDiv").style.visibility = 'visible';
 
     var userList = ["ramaa02",
         "huntmj01", "staudj01"
