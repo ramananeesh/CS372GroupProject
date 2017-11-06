@@ -1,15 +1,16 @@
+<?php
+    require 'html-builder.php';
+?>
+
 <!DOCTYPE html>
 <html>
     
     <head>
         
-        <title>About</title>
+        <!-- PHP Header call [Title, Charset, and Icon Link] -->
+        <?php insertHeader("About"); ?>
         
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        <!-- Tab Image -->
-        <link rel="tempbox icon" href="./images/logo.ico" />
        
         <!-- Custom CSS -->
         <link href="dashboard.css" rel="stylesheet" type="text/css">
@@ -24,35 +25,7 @@
         
         <!-- BEGIN NAVBAR -->
         
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="index.html" id="dashboardLogo">
-                <img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash
-            </a>
-            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto" id="links1">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html"><i class="fa fa-home" aria-hidden="true"></i> Home </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./ur-user.html" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> Quick Send</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" id="links2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./login.html"><i class="fa fa-sign-in" aria-hidden="true"></i> Login/Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.html"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact.html"><i class="fa fa-address-book" aria-hidden="true"></i> Contact Us</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <?php insertNav(); ?>
         
         <!-- END NAVBAR -->
         
