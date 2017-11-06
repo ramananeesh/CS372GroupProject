@@ -60,23 +60,39 @@
 				<div class="row omb_row-sm-offset-3">
 					<div class="col-xs-12 col-sm-6">
 						<form class="omb_loginForm" action="" autocomplete="off" method="POST">
+							
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<span class="input-group-addon">
+									<i class="fa fa-user">
+									</i>
+								</span>
 								<input type="text" class="form-control" name="username" id="username" placeholder="username">
 							</div>
 
 							<span class="help-block" id="usernameError">Username error</span>
 
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<span class="input-group-addon"><i class="fa fa-lock"></i>
+								</span>
 								<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 							</div>
+							
 							<span class="help-block" id="passwordError">Password error</span>
-							<div class="input-group" style="display:none;" id="emailDiv">
-								<span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-								<input type="text" class="form-control" name="email" id="email" placeholder="email@example.com">
-								
+							
+							<div class="input-group" style="display:none;" id="passwordDiv">
+								<span class="input-group-addon"><i class="fa fa-lock"></i>
+								</span>
+								<input type="password" class="form-control" name="passwordReenter" id="passwordReenter" placeholder="Re-enter Password">
 							</div>
+							
+							<span class="help-block" id="passwordReenterError">Password Doesn't Match</span>
+							
+							<div class="input-group" style="display:none;" id="emailDiv">
+								<span class="input-group-addon"><i class="fa fa-envelope"></i>
+								</span>
+								<input type="text" class="form-control" name="email" id="email" placeholder="email@example.com">
+							</div>
+							
 							<span class="help-block" id="emailError">Email error</span>
 
 							<button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login(this)">Login</button>
