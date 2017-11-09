@@ -53,11 +53,7 @@
 		 <!-- PHP Header call [Title, Charset, and Icon Link] -->
         <?php insertHeader("Login"); ?>
         
-	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <meta name="google-signin-client_id" content="783497289681-md44u43oh563o2jrf0gjsfbtgr6oh2qg.apps.googleusercontent.com">
-	    
-	    <!-- Custom CSS -->
-	    <link href="dashboard.css" rel="stylesheet" type="text/css">
 	    
 	    <!-- Bootstrap and font awesome-->
 	    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">

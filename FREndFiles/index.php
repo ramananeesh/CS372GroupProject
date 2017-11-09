@@ -9,10 +9,7 @@
          <!-- PHP Header call [Title, Charset, and Icon Link] -->
         <?php insertHeader("DocDash"); ?>
         
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
         <!-- Custom CSS -->
-        <link href="dashboard.css" rel="stylesheet" type="text/css">
         <link href="./css/index.css" rel="stylesheet" type="text/css">
         
         <!-- Bootstrap and font awesome-->

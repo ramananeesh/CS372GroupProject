@@ -7,13 +7,8 @@
     
     <head>
         
-        <!-- PHP Header call [Title, Charset, and Icon Link] -->
+        <!-- PHP Header call [Title, Charset, CSS and Icon Link] -->
         <?php insertHeader("About"); ?>
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-       
-        <!-- Custom CSS -->
-        <link href="dashboard.css" rel="stylesheet" type="text/css">
         
         <!-- Bootstrap and font awesome-->
         <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
