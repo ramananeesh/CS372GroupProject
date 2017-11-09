@@ -166,8 +166,6 @@ function validate(f) {
 }
 
 function signupValidate(f) {
-    //alert('hi');
-    //f.emailDiv.style.display='inline';
     document.getElementById("emailDiv").style.display = '';
     document.getElementById("passwordDiv").style.display = '';
     //document.getElementById("emailDiv").style.visibility = 'visible';
@@ -177,32 +175,28 @@ function signupValidate(f) {
     ];
     var password = "adminLogin";
     if ((f.email.value.match(/.+@.+\.edu$/))) {
-        //alert("Invalid username. Remember: The username is the email id" +
-        //	" being used. It should be a .edu email");
-        f.usernameError.innerHTML = "Invalid email. Remember: The email is the email id" +
-            " being used. It should be a .edu email";
+        alert("Invalid username. Remember: The username is the email id" +
+    	" being used. It should be a .edu email");
+        
         return false;
     }
     else {
         if (!(f.username.value == userList[0]) &&
             !(f.username.value == userList[1]) &&
             !(f.username.value == userList[2])) {
-            //alert("Invalid username. Due to lack of Database, only" +
-            //	" admin credentials will work");
-            f.usernameError.innerHTML = "Invalid username";
+            alert("Invalid username. Due to lack of Database, only" +
+            	" admin credentials will work");
             return false;
         }
         else {
             if (f.password.value.length < 6) {
-                //alert("Password length too small");
-                f.passwordError.innerHTML = "Password length too small";
+                alert("Password length too small");
+                
                 return false;
             }
             else if (!(f.password.value == password)) {
-                //alert("Incorrect Password. Due to lack of Database, only" +
-                //	" only admin credentials will work");
-                f.passwordError.innerHTML = "Incorrect Password. Due to lack of Database, only" +
-                    " only admin credentials will work";
+                alert("Incorrect Password. Due to lack of Database, only" +
+                	" only admin credentials will work");
                 return false;
             }
         }

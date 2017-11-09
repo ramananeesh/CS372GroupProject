@@ -1,0 +1,8 @@
+[09-Nov-2017 16:06:12 UTC] PHP Fatal error:  Can't use function return value in write context in /home/ubuntu/workspace/FREndFiles/login.php on line 31
+[09-Nov-2017 16:15:09 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:15:37 UTC] PHP Parse error:  syntax error, unexpected 'name' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:15:46 UTC] PHP Parse error:  syntax error, unexpected 'name' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:16:44 UTC] PHP Parse error:  syntax error, unexpected 'username' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:17:23 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:25:21 UTC] PHP Parse error:  syntax error, unexpected '<' in /home/ubuntu/workspace/FREndFiles/login.php on line 33
+[09-Nov-2017 16:28:16 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/ubuntu/workspace/FREndFiles/login.php on line 167

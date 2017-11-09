@@ -1,5 +1,47 @@
 <?php 
 	require 'html-builder.php';
+	
+	//enable sessions
+	session_start();
+	
+	define("USER","aneeshraman");
+	define("PASS","cs372DBLogin");
+	define("DB","project");
+	
+	//connect to DB
+	$connection=new mysqli('localhost',USER,PASS,DB);
+	
+	if($connection->connect_error){
+		die('Connect Error (' .$connection->connect_errno . ') '
+			. $connection->connect_error);
+	}
+	
+	//if username and password were submitted, check them
+	if(isset($_POST["username"])&&isset($_POST["password"])){
+		//prepare sql
+		$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
+						$connection->real_escape_string($_POST["username"]),
+						$connection->real_escape_string($_POST["password"]));
+		
+		//execute query
+		$result=$connection->query($sql) or die(mysqli_error());
+		
+		//check whether we found a row
+		if($result->num_rows==1){
+			$_SESSION["authenticated"]=true;
+			$row=mysqli_fetch_assoc($result);
+			//echo '<script type=\'text/javascript\'>sessionStorage.setItem(\"userName\",'. $row['username'] . '); </script>';
+			$_SESSION['userName'] = $row['username'];
+			$_SESSION['password']=$row['password'];
+			$_SESSION['emailID']=$row['email'];
+			//reditect user to dashboard, using absolute path
+			$host=$_SERVER["HTTP_HOST"];
+			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+			header("Location: ./dashboard.html");
+			exit;
+		}
+	}
+	
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +76,7 @@
         
         
         <!-- BEGIN MAIN -->
-        
+        <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
 		<div class="container">
 			<div class="omb_login">
 				<h2 class="omb_authTitle" id="status">Login / <a href="#signup" onclick="signupValidate(this)">Sign up</a></h2>
@@ -95,7 +137,7 @@
 							
 							<span class="help-block" id="emailError">Email error</span>
 
-							<button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login(this)">Login</button>
+							<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 						</form>
 					</div>
 				</div>
@@ -113,7 +155,7 @@
 				</div>
 			</div>
 		</div>
-		
+		</form>
 		<!-- END MAIN -->
 		
 		
