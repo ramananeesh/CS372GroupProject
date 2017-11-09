@@ -25,7 +25,6 @@
 		
 		//execute query
 		$result=$connection->query($sql) or die(mysqli_error());
-		
 		//check whether we found a row
 		if($result->num_rows==1){
 			$_SESSION["authenticated"]=true;
@@ -34,10 +33,11 @@
 			$_SESSION['userName'] = $row['username'];
 			$_SESSION['password']=$row['password'];
 			$_SESSION['emailID']=$row['email'];
+			$_SESSION['typeOfLogin']=$row['normalLogin'];
 			//reditect user to dashboard, using absolute path
 			$host=$_SERVER["HTTP_HOST"];
 			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-			header("Location: ./dashboard.html");
+			header("Location: ./dashboard.php");
 			exit;
 		}
 	}

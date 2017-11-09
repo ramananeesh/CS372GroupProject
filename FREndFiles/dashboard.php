@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  $username=$_SESSION['userName'];
+  
+  $password=$_SESSION['password'];
+  $typeOfLogin=$_SESSION['typeOfLogin'];
+  $emailID=$_SESSION['emailID'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,14 +73,12 @@
     //This sessionStorage.getItem(); is also a predefined function in javascript
     //will retrieve session and get the value;
     function initialize() {
-      var a = sessionStorage.getItem("userName");
-
-      document.getElementById("usern").innerHTML = "Hello, " + a;
-      var emailID = sessionStorage.getItem("emailID");
-
-      document.getElementById("emailID").innerHTML = emailID;
-      var typeOfLogin = sessionStorage.getItem("typeofLogin");
-
+      //var a = sessionStorage.getItem("userName");
+      document.getElementById("usern").innerHTML = "Hello, " + "<?php echo $username ; ?>";
+      //var emailID = sessionStorage.getItem("emailID");
+      document.getElementById("emailID").innerHTML = "<?php echo $emailID ;?>";
+      //var typeOfLogin = sessionStorage.getItem("typeofLogin");
+      var typeOfLogin="<?php echo $typeOfLogin; ?>"
       if (typeOfLogin == "FacebookLogin") {
         document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Facebook. Cannot change password " +
@@ -85,9 +91,9 @@
           "locally";
         document.getElementById("changePassword").disabled = true;
       }
-      else {
-        document.getElementById("passwordField").innerHTML = sessionStorage.getItem("password");
-      }
+      /*else {
+        document.getElementById("passwordField").innerHTML = "<?php echo $password; ?>";//sessionStorage.getItem("password");
+      }*/
       
        gapi.load('auth2', function() {
               gapi.auth2.init();
@@ -510,7 +516,7 @@
           </div>
           <div class="card-body" style="padding:1.5em;">
             <p class="card-text">Email: <label id="emailID"></label></p>
-            <p class="card-text">Password: <label id="passwordField"></label></p>
+            <!--<p class="card-text">Password: <label id="passwordField" type></label></p>-->
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
             <button class="btn btn-primary" id="changePassword">Change Password</button>
           </div>
