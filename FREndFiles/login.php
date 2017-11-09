@@ -4,12 +4,12 @@
 	//enable sessions
 	session_start();
 	
-	define("USER","aneeshraman");
+	define("USER","administrator");
 	define("PASS","cs372DBLogin");
-	define("DB","project");
+	define("DB","docdashDB");
 	
 	//connect to DB
-	$connection=new mysqli('localhost',USER,PASS,DB);
+	$connection=new mysqli('rds-mysql-docdash.cza6uneofziy.us-west-2.rds.amazonaws.com:3306',USER,PASS,DB);
 	
 	if($connection->connect_error){
 		die('Connect Error (' .$connection->connect_errno . ') '
