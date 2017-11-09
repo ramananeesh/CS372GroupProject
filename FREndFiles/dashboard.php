@@ -2,6 +2,14 @@
   require 'html-builder.php';
   
   session_start();
+  
+  
+  
+  if($_SESSION['userName'] == ""){
+   
+    header("./login.php");
+  }
+  
   $username=$_SESSION['userName'];
   
   $password=$_SESSION['password'];
@@ -12,6 +20,9 @@
 <html lang="en">
 
 <head>
+  
+  <?php echo 'Session:' .  $_SESSION['userName']; ?>
+  
   <!-- This is for the file upload stuff -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
   <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
@@ -40,15 +51,15 @@
 
   <!--Other normal HTML Stuff -->
   
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  
   <?php
     insertHeader("Doc Track");
   ?>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <meta name="google-signin-client_id" content="783497289681-md44u43oh563o2jrf0gjsfbtgr6oh2qg.apps.googleusercontent.com">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-
+  
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
