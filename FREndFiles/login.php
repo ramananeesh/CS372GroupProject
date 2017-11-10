@@ -24,7 +24,7 @@
 						$connection->real_escape_string($_POST["password"]));
 		
 		//execute query
-		$result=$connection->query($sql) or die(mysqli_error());
+			$result=$connection->query($sql) or die(mysqli_error());
 		//check whether we found a row
 		if($result->num_rows==1){
 			$_SESSION["authenticated"]=true;
@@ -39,6 +39,9 @@
 			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
 			header("Location: ./dashboard.php");
 			exit;
+		}
+		else{
+			echo "<script type=\'text/javascript'>alert(\'Username and Password Math failed\');</script>";
 		}
 	}
 	
