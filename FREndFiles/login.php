@@ -62,7 +62,8 @@
 	    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-		<script src="/FREndFiles/js/login.js"></script>
+		<script src="./js/login.js"></script>
+		
 	</head>
 
 	<body>
@@ -136,7 +137,7 @@
 							
 							<span class="help-block" id="emailError">Email error</span>
 
-							<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+							<button class="btn btn-lg btn-primary btn-block" id="login_b" type="submit">Login</button>
 						</form>
 					</div>
 				</div>
