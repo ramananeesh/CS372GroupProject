@@ -153,7 +153,7 @@ function validate(f) {
             return false;
         }
         else {
-            
+
             sessionStorage.setItem("userName", f.username.value);
             //sessionStorage.setItem("emailID", f.emailID.value);
             sessionStorage.setItem("password", f.password.value);
@@ -168,46 +168,34 @@ function validate(f) {
 function signupValidate(f) {
     document.getElementById("emailDiv").style.display = '';
     document.getElementById("passwordDiv").style.display = '';
+    document.getElementById("nameDiv").style.display = '';
     document.getElementById("login_b").innerHTML = "Sign Up";
     //document.getElementById("emailDiv").style.visibility = 'visible';
 
     var userList = ["ramaa02",
         "huntmj01", "staudj01"
     ];
-    var password = "adminLogin";
+
     if ((f.email.value.match(/.+@.+\.edu$/))) {
         alert("Invalid username. Remember: The username is the email id" +
-    	" being used. It should be a .edu email");
-        
+            " being used. It should be a .edu email");
+
         return false;
     }
-    else {
-        if (!(f.username.value == userList[0]) &&
-            !(f.username.value == userList[1]) &&
-            !(f.username.value == userList[2])) {
-            alert("Invalid username. Due to lack of Database, only" +
-            	" admin credentials will work");
-            return false;
-        }
-        else {
-            if (f.password.value.length < 6) {
-                alert("Password length too small");
-                
-                return false;
-            }
-            else if (!(f.password.value == password)) {
-                alert("Incorrect Password. Due to lack of Database, only" +
-                	" only admin credentials will work");
-                return false;
-            }
-        }
-    }
-    var userN = f.username.value.split("@")[0];
-    sessionStorage.setItem("userName", f.username.value);
-    sessionStorage.setItem("emailID", f.email.value);
-    sessionStorage.setItem("password", f.password.value);
 
-    return true;
+    if (f.password.value.length < 6) {
+        alert("Password length too small");
+
+        return false;
+    }
+   
+
+var userN = f.username.value.split("@")[0];
+sessionStorage.setItem("userName", f.username.value);
+sessionStorage.setItem("emailID", f.email.value);
+sessionStorage.setItem("password", f.password.value);
+
+return true;
 }
 
 function proceed() {

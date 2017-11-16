@@ -40,9 +40,17 @@
 			header("Location: ./dashboard.php");
 			exit;
 		}
-		else{
-			echo "<script type=\'text/javascript'>alert(\'Username and Password Math failed\');</script>";
+		
+	}
+	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
+		$username=$_POST["username"];
+		if(!($_POST["password"]==$_POST["passwordReenter"])){
+			echo "<script type='text/javascript'> alert(\"Passwords don't match\"); </script>";
+			return false;
 		}
+		$password=$_POST["password"];
+		$email=$_POST["email"];
+		$name=$_POST["name"];
 	}
 	
 ?>
@@ -128,6 +136,12 @@
 							</div>
 							
 							<span class="help-block" id="passwordReenterError">Password Doesn't Match</span>
+							
+							<div class="input-group" style="display:none;" id="nameDiv">
+								<span class="input-group-addon"><i class="fa fa-envelope"></i>
+								</span>
+								<input type="text" class="form-control" name="name" id="name" placeholder="i.e. John Doe">
+							</div><br>
 							
 							<div class="input-group" style="display:none;" id="emailDiv">
 								<span class="input-group-addon"><i class="fa fa-envelope"></i>
