@@ -3,8 +3,8 @@
   
   session_start();
   
-  if($_SESSION['userName'] == ""){
-    header("./login.php");
+  if(!$_SESSION['userName']){
+    header('Location: login.php');
   }
   
   $username=$_SESSION['userName'];
