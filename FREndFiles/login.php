@@ -1,20 +1,12 @@
 <?php 
 	require 'html-builder.php';
+	require_once 'db_connect.php';
 	
 	//enable sessions
 	session_start();
 	
-	define("USER","administrator");
-	define("PASS","cs372DBLogin");
-	define("DB","docdashDB");
-	
 	//connect to DB
-	$connection=new mysqli('rds-mysql-docdash.cza6uneofziy.us-west-2.rds.amazonaws.com:3306',USER,PASS,DB);
-	
-	if($connection->connect_error){
-		die('Connect Error (' .$connection->connect_errno . ') '
-			. $connection->connect_error);
-	}
+	$connection= connect_to_db();
 	
 	//if username and password were submitted, check them
 	if(isset($_POST["username"])&&isset($_POST["password"])){
