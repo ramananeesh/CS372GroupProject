@@ -1,5 +1,24 @@
 <?php 
     require 'html-builder.php';
+    require_once 'db_connect.php';
+    
+	//connect to DB
+	$connection= connect_to_db();
+
+	//if username and password were submitted, check them
+	if(isset($_POST["name"])&&isset($_POST["email"])&&isset($_POST["comments"])){
+		//prepare sql
+		$sql=sprintf("INSERT INTO contact VALUES ('%s', '%s', ' ', '%s');;",
+						$connection->real_escape_string($_POST["name"]),
+						$connection->real_escape_string($_POST["email"]),
+						$connection->real_escape_string($_POST["comments"]));
+		
+		//execute query
+		$result=$connection->query($sql) or die(mysqli_error($connection));
+		
+		// TODO: Make this not suck
+		echo "<br><br> <div style='color:green'>Your message has been submitted! We will contact you within 2-3 business days.</div>";
+	}
 ?>
 
 <!DOCTYPE html>
@@ -55,24 +74,24 @@
                     </div>
                     
                     <div class="col-sm-7">
-                        
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                        <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                                </div>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                            
+                            <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                            
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <button class="btn btn-default pull-right" type="submit" id="sendContact">Send</button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-                        
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <button class="btn btn-default pull-right" type="submit" id="sendContact">Send</button>
-                            </div>
-                        </div>
-                        
+                        </form>
                     </div>
                     
                 </div>
