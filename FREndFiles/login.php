@@ -1,18 +1,13 @@
 <?php 
 	require 'html-builder.php';
-<<<<<<< HEAD
 	require 'database.php';
 	
 	// Sign up indicator
 	$signup = 1;
-=======
-	require_once 'db_connect.php';
->>>>>>> 86d317222a8269415be083f7760ba10c0a27552f
 	
 	//enable sessions
 	session_start();
 	
-<<<<<<< HEAD
 	$connection = dbConnect();
 	
 	// Check if user is signing Up or signing in
@@ -21,10 +16,6 @@
 			isset($_POST["email"]) && $_POST["email"] != ''){
 		$signup = 0;
 	}
-=======
-	//connect to DB
-	$connection= connect_to_db();
->>>>>>> 86d317222a8269415be083f7760ba10c0a27552f
 	
 	//if username and password were submitted, check them
 	if(isset($_POST["username"])&&isset($_POST["password"]) && $signup == 1 ){
