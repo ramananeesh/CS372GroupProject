@@ -1,6 +1,10 @@
 <?php
   require_once 'html-builder.php';
-  
+  require ('database.php');
+   session_start();
+    $connection=dbConnect();
+    
+   
   session_start();
   
   if(!$_SESSION['userName']){
@@ -12,6 +16,30 @@
   $password=$_SESSION['password'];
   $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
+  
+   if($_POST["submit"]){
+            $file = $_FILES['input-b3'];
+            //addFile($connection,$file,$username);
+            $file_name = $file['name'];
+        $file_type = $file ['type'];
+        $file_size = $file ['size'];
+        $file_path = $file ['tmp_name'];
+        
+        $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
+        $row=mysqli_fetch_assoc($r);
+        $userid=$row['id'];
+        $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
+        $row=mysqli_fetch_assoc($r);
+        $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
+        $cur=$row['CURDATE()'];
+        $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
+        //echo $data;
+        $user=   $username;
+        //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
+        $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
+        //echo $sql;
+        $result=$connection->query($sql) or die(mysqli_error($connection));
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +108,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username"><?php echo $username ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
@@ -283,10 +311,15 @@
       </section>
       <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="uploadFile" style="display:none">
         <div>
-          <h2>Upload a File</h2><br>
+          <form method="POST" action="" enctype="multipart/form-data">
+            <h2>Upload a File</h2><br>
           <div class="container" id="uploadDiv">
-            <input id="input-b2" name="input-b2" type="file" size="40" class="file" data-show-preview="false">
+             <input id="input-b3" name="input-b3" type="file" class="file" multiple 
+                            data-show-upload="false" data-show-caption="true" data-show-preview="false" data-msg-placeholder="Select {files} for upload...">
+                            <br><input type="submit" name="submit" class="btn btn-primary" value="upload">
           </div><br>
+          </form>
+          
         </div>
       </section>
       <!--payment stuff-->

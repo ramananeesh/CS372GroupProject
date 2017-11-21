@@ -44,6 +44,16 @@ function addUser($connection, $details){
         if ($result === false)
             die("Could not query database");
     }
+    
+    function addFile($connection, $file,$username){
+        //$file=$file = $_FILES['file'];
+        $file_name = $file['name'];
+        $file_type = $file ['type'];
+        $file_size = $file ['size'];
+        $file_path = $file ['tmp_name'];
+        
+        $sql="INSERT into files (uuid(),$file_name,$file_size,DATE_ADD(now(),INTERVAL 1 WEEK), CURDATE(),$username,5,$file)";
+    }
 }
 
 
