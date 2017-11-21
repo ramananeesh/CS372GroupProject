@@ -31,6 +31,11 @@
     <link rel="stylesheet" type="text/css" href="cssL/style.css">
     <link href="dashboard.css" rel="stylesheet">
     
+    <style>
+      body, th,td {
+        color: white;
+      }
+    </style>
     
     <script>
       
@@ -111,6 +116,9 @@
         </nav>
     </header> 
     
+   
+    
+    
     <br/>
     <div class="d-flex align-items-stretch">
       <nav id="sidebar">
@@ -132,8 +140,10 @@
       </nav>
       <div class="page-content">
         
+      
+        
         <!-- Begin Home Section-->
-        <div id="home-section">
+        <div id="home-section" hidden>
           
           <div class="page-header">
             <div class="container-fluid">
@@ -219,7 +229,40 @@
             </section>
         </div>
         <!-- End Home Section -->
-       
+        
+        <br>
+        <br>
+        <br>
+        <br>
+         <!-- Begin Messages-->
+        <div id="message-section">
+         <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Messages</h2>
+            </div>
+          </div>
+            <div class="table-responsive" id="fileList">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" name="selected"/></td>
+                    <td>masterprogrammer200</td>
+                    <td>Matthew</td>
+                    <td>matt@ipfw.edu</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <!-- End Messages -->
        
        
         <!--users list-->
