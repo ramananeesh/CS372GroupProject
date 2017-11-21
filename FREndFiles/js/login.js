@@ -165,37 +165,58 @@ function validate(f) {
 
 }
 
-function signupValidate(f) {
+function showSignUp(){
+
     document.getElementById("emailDiv").style.display = '';
     document.getElementById("passwordDiv").style.display = '';
     document.getElementById("nameDiv").style.display = '';
     document.getElementById("login_b").innerHTML = "Sign Up";
+}
+
+function signupValidate(f) {
+   
     //document.getElementById("emailDiv").style.visibility = 'visible';
-
-    var userList = ["ramaa02",
-        "huntmj01", "staudj01"
-    ];
-
-    if ((f.email.value.match(/.+@.+\.edu$/))) {
+    
+    if ((document.getElementById("login_b").innerHTML + "").toString().trim() == "Login"){
+        // User is signing in and not signing up
+        return true;
+    }
+    
+    if (document.getElementById("email").value.match(/.+@.+\.edu$/)) {
         alert("Invalid username. Remember: The username is the email id" +
             " being used. It should be a .edu email");
-
         return false;
     }
+    
+    if( document.getElementById("username").value == "" ||
+        document.getElementById("password").value == "" ||
+        document.getElementById("passwordReenter").value == "" ||
+        document.getElementById("name").value == "" ||
+        document.getElementById("email").value == ""
+        )
+    {
+         alert("All fields are required!");
+         return false;
+    }
 
-    if (f.password.value.length < 6) {
-        alert("Password length too small");
-
+    if (document.getElementById("password").value.length < 6) {
+        alert("Password length must be at least 6 characters.");
+        
         return false;
     }
-   
+    
+    if(document.getElementById("password").value !== document.getElementById("passwordReenter").value){
+         alert("Passwords don't match!");
+        
+        return false;
+    }
+    
+    //var userN = f.username.value.split("@")[0];
+    //sessionStorage.setItem("userName", f.username.value);
+    //sessionStorage.setItem("emailID", f.email.value);
+    //sessionStorage.setItem("password", f.password.value);
 
-var userN = f.username.value.split("@")[0];
-sessionStorage.setItem("userName", f.username.value);
-sessionStorage.setItem("emailID", f.email.value);
-sessionStorage.setItem("password", f.password.value);
-
-return true;
+    return true;
 }
 
 function proceed() {
