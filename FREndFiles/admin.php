@@ -1,9 +1,16 @@
+<?php
+  
+  require_once('db_connect.php');
+  
+   $connection = connect_to_db();
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dark Bootstrap Admin by Bootstrapious.com</title>
+    <title>Admin</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -242,6 +249,8 @@
             </div>
           </div>
             <div class="table-responsive" id="fileList">
+              
+              
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -252,12 +261,26 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>masterprogrammer200</td>
-                    <td>Matthew</td>
-                    <td>matt@ipfw.edu</td>
-                  </tr>
+                    <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM contact");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($contact= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' name='selected'/></td>";
+                          echo "<td>".$contact["name"]."</td>";
+                          echo "<td>".$contact["email"]."</td>";
+                          echo "<td>".$contact["message"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
                 </tbody>
               </table>
             </div>
