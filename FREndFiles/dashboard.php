@@ -19,8 +19,8 @@
   
    if($_POST["submit"]){
             $file = $_FILES['input-b3'];
-            //addFile($connection,$file,$username);
-            $file_name = $file['name'];
+            addFile($connection,$file,$username);
+            /*$file_name = $file['name'];
         $file_type = $file ['type'];
         $file_size = $file ['size'];
         $file_path = $file ['tmp_name'];
@@ -38,7 +38,7 @@
         //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
         $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
         //echo $sql;
-        $result=$connection->query($sql) or die(mysqli_error($connection));
+        $result=$connection->query($sql) or die(mysqli_error($connection));*/
         }
 ?>
 <!DOCTYPE html>

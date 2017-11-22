@@ -7,7 +7,8 @@
     
     if($_POST["submit"]){
             $file = $_FILES['input-b3'];
-            //addFile($connection,$file);
+            addFile($connection,$file,"NULL");
+            
         }
 ?>
 
