@@ -40,7 +40,7 @@ function statusChangeCallback(response) {
         //sessionStorage.setItem("userName", response.name); 
         //alert(response.email);
         sessionStorage.setItem("typeofLogin", type);
-        window.open("dashboard.html", "_self");
+        window.open("dashboard.php", "_self");
         //window.close();
     }
     else {
@@ -114,7 +114,7 @@ function testAPI() {
 function login(f) {
     if (validate(this)) {
         sessionStorage.setItem("typeofLogin", "normalLogin");
-        window.open("dashboard.html");
+        window.open("dashboard.php");
     }
     else
         return false;
@@ -157,7 +157,7 @@ function validate(f) {
             sessionStorage.setItem("userName", f.username.value);
             //sessionStorage.setItem("emailID", f.emailID.value);
             sessionStorage.setItem("password", f.password.value);
-            window.open("dashboard.html", "_self");
+            window.open("dashboard.php", "_self");
             return true;
         }
     }
@@ -222,7 +222,7 @@ function signupValidate(f) {
 function proceed() {
     FB.login(function(response) {
         if (response.authResponse == 'connected') {
-            window.top.location = "dashboard.html";
+            window.top.location = "dashboard.php";
         }
     });
 }
@@ -243,5 +243,5 @@ function onSignIn(googleUser) {
     //alert(emailID);
     var type = "gmailLogin";
     sessionStorage.setItem("typeofLogin", type);
-    window.open("dashboard.html", "_self");
+    window.open("dashboard.php", "_self");
 }
