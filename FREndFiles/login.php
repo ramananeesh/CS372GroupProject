@@ -19,6 +19,7 @@
 	
 	//if username and password were submitted, check them
 	if(isset($_POST["username"])&&isset($_POST["password"]) && $signup == 1 ){
+		
 		//prepare sql
 		$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
 						$connection->real_escape_string($_POST["username"]),
@@ -29,9 +30,21 @@
 		
 		//check whether we found a row
 		if($result->num_rows==1){
-		
+			
 			$row=mysqli_fetch_assoc($result);
+			
+			// Check if the user is banned
+			if($row['banned'] == 1){
+				echo "<h1>Your account has been deactivated. You may contest the ban through the contact page</h1>";
+				echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
+				exit;
+			}
+			
+			// Check the source IP
+			checkIP($connection);
+			 
 			$_SESSION["authenticated"]=true;
+			$_SESSION['userUuid'] = $row['id'];
 			$_SESSION['userName'] = $row['username'];
 			$_SESSION['password']=$row['password'];
 			$_SESSION['emailID']=$row['email'];

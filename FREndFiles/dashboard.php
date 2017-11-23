@@ -7,39 +7,57 @@
    
   session_start();
   
-  if(!$_SESSION['userName']){
+  if($_SESSION['userName'] === ""){
     header('Location: login.php');
   }
   
-  $username=$_SESSION['userName'];
+  // Check if user is logged in with Gmail or Facebook
+  if($_SESSION['typeofLogin'] == 'gmailLogin' || $_SESSION['typeofLogin'] == 'FacebookLogin'){
+    
+    // Check if the user has a database entry
+    $sql = sprintf("SELECT * from users where id='%s'",$_SESSION['userID']);
+    $result=$connection->query($sql) or die(mysqli_error());
+    
+    if($result->num_rows === 0){
+      // User has not been registered, create database entry
+      addUser($connection,array('password' => "dummy",'email' => $_SESSION['emailID'],'username' => $_SESSION['userName'], 'name' => $_SESSION['userName']), $_SESSION['userID']);
+    }
+    
+    // Overwrite UUID with Google/Facebook ID
+    $_SESSION['userUuid'] = $_SESSION['userID'];
+    
+  }
   
+  $username=$_SESSION['userName'];
+  $userId=$_SESSION['userUuid'];
   $password=$_SESSION['password'];
   $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
   
    if($_POST["submit"]){
-            $file = $_FILES['input-b3'];
-            addFile($connection,$file,$username);
-            /*$file_name = $file['name'];
-        $file_type = $file ['type'];
-        $file_size = $file ['size'];
-        $file_path = $file ['tmp_name'];
-        
-        $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
-        $row=mysqli_fetch_assoc($r);
-        $userid=$row['id'];
-        $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
-        $row=mysqli_fetch_assoc($r);
-        $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
-        $cur=$row['CURDATE()'];
-        $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
-        //echo $data;
-        $user=   $username;
-        //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
-        $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
-        //echo $sql;
-        $result=$connection->query($sql) or die(mysqli_error($connection));*/
-        }
+      $file = $_FILES['input-b3'];
+      addFile($connection,$file,$userId);
+      
+      /*$file_name = $file['name'];
+      $file_type = $file ['type'];
+      $file_size = $file ['size'];
+      $file_path = $file ['tmp_name'];
+      
+      $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
+      $row=mysqli_fetch_assoc($r);
+      $userid=$row['id'];
+      $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
+      $row=mysqli_fetch_assoc($r);
+      $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
+      $cur=$row['CURDATE()'];
+      $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
+      //echo $data;
+      $user=   $username;
+      //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
+      $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
+      //echo $sql;
+      $result=$connection->query($sql) or die(mysqli_error($connection));*/
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
