@@ -4,6 +4,7 @@
 	
 	// Sign up indicator
 	$signup = 1;
+	$passFail = false;
 	
 	//enable sessions
 	session_start();
@@ -56,12 +57,24 @@
 			header("Location: ./dashboard.php");
 			exit;
 		}
+		else{
+			$passFail = true;
+		}
 		
 	}
 	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
 		$username=$_POST["username"];
-		if(!($_POST["password"]==$_POST["passwordReenter"]) || $_POST["password"] === ''){
-			echo "<script type='text/javascript'> alert(\"Passwords don't match\"); </script>";
+		if(!($_POST["password"]==$_POST["passwordReenter"]) || trim($_POST["password"]) === ""){
+			echo "<script type='text/javascript'> alert(\"The passwords you provided are diffferent.\"); </script>";
+		}
+		else if(strlen($_POST['password']) < 6){
+			echo "<script type='text/javascript'> alert(\"The password must be at least 6 characters long.\"); </script>";
+		}
+		else if(trim($_POST["name"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide a name to sign up.\"); </script>";
+		}
+		else if(trim($_POST["email"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide an email to sign up.\"); </script>";
 		}
 		else{
 			$password=$_POST["password"];
@@ -156,8 +169,16 @@
 
 				<div class="row omb_row-sm-offset-3">
 					<div class="col-xs-12 col-sm-6">
-						<!--<form class="omb_loginForm" action="" onsubmit="return signupValidate(this);" autocomplete="off" method="POST">-->
-							<form class="omb_loginForm" action=""  autocomplete="off" method="POST">
+							<form class="omb_loginForm" action="" onsubmit="return signupValidate(this);"  autocomplete="off" method="POST">
+								
+							<!-- Indicate Whether a Sign-in attempt was unsuccessful -->
+							<?php 
+								if($passFail == true){
+									echo '<div style="color:red;">The password and/or username you provided was not found.</div>';
+								}
+							
+							?>
+							
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-user">
@@ -251,7 +272,6 @@
 			</div>
 		</div>
 		<!-- END MAIN -->
-		
 		
 		<!--- Facebook and Google Login Scripts-->
 		<script src="./js/login.js"></script>

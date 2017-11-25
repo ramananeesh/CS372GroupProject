@@ -182,9 +182,8 @@ function signupValidate(f) {
         return true;
     }
     
-    if (document.getElementById("email").value.match(/.+@.+\.edu$/)) {
-        alert("Invalid username. Remember: The username is the email id" +
-            " being used. It should be a .edu email");
+    if (document.getElementById("email").value.match(/.+@.+\..+$/)) {
+        alert("Invalid email format.");
         return false;
     }
     
@@ -200,13 +199,13 @@ function signupValidate(f) {
     }
 
     if (document.getElementById("password").value.length < 6) {
-        alert("Password length must be at least 6 characters.");
+        alert("Your password must be at least 6 characters long.");
         
         return false;
     }
     
     if(document.getElementById("password").value !== document.getElementById("passwordReenter").value){
-         alert("Passwords don't match!");
+         alert("Your passwords don't match!");
         
         return false;
     }
