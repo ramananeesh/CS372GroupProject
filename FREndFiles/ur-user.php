@@ -5,6 +5,9 @@
     session_start();
     $connection=dbConnect();
     
+    // Check if request is comming from a bad IP
+    checkIP($connection);
+    
     if($_POST["submit"]){
             $file = $_FILES['input-b3'];
             addFile($connection,$file,"NULL");
