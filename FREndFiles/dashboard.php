@@ -58,6 +58,9 @@
       //echo $sql;
       $result=$connection->query($sql) or die(mysqli_error($connection));*/
     }
+    
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -207,6 +210,38 @@
                 <th>Expiration Date</th>
               </tr>
             </thead>
+            <?php
+              require_once "database.php";
+              
+              $conn=dbConnect();
+              $sql="select id from users where username=\"$username\"";
+              $result=$conn->query($sql) or die(mysqli_error($conn));
+              if($result->num_rows==1){
+                $row=$result->fetch_assoc();
+                $uId=$row['id'];
+                //echo "id".$uId;
+              }
+              $sql="select fname,size,expire_date from files where user_id=\"$uId\"";
+              $result=$conn->query($sql) or die(mysqli_error());
+              echo "<tbody>";
+              while ($f = $result->fetch_assoc())
+              {
+                $fname=$f['fname'];
+                $fsize=$f['size'];
+                $fexp=$f['expire_date'];
+                
+                echo "<tr>
+                        <td> <input type=\"checkbox\" name=\"fileSelected\" /></td>
+                        <td>$fname</td>
+                        <td>$fsize</td>
+                        <td>$fexp</td>
+                      </tr>";
+              }
+              echo "</table>";
+              echo"done";
+              
+            ?>
+            <!--
             <tbody>
               <tr>
                 <td><input type="checkbox" name="fileSelected" /></td>
@@ -228,6 +263,7 @@
               </tr>
             </tbody>
           </table>
+          -->
         </div>
 
         <!--File History Table -->

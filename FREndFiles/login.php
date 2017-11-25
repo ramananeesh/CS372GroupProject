@@ -84,10 +84,14 @@
 			if($result->num_rows==1){
 				$_SESSION["authenticated"]=true;
 				$row=mysqli_fetch_assoc($result);
-				$_SESSION['userName'] = $row['username'];
-				$_SESSION['password']=$row['password'];
-				$_SESSION['emailID']=$row['email'];
-				$_SESSION['typeOfLogin']=$row['normalLogin'];
+				//$_SESSION['userName'] = $row['username'];
+				$_SESSION['userName']=$username;
+				// $_SESSION['password']=$row['password'];
+				// $_SESSION['emailID']=$row['email'];
+				// $_SESSION['typeOfLogin']=$row['normalLogin'];
+				$_SESSION['password']=$password;
+				$_SESSION['emailID']=$email;
+				$_SESSION['typeOfLogin']=$typeOfLogin;
 				//reditect user to dashboard, using absolute path
 				$host=$_SERVER["HTTP_HOST"];
 				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");

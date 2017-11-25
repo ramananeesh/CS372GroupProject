@@ -83,6 +83,10 @@ function addFile($connection,$file,$userid){
     
 }
 
+function getFilesList(){
+    
+}
+
 function checkIP($connection){
     
     // Check if user is using a banned IP
