@@ -8,7 +8,7 @@
 	//if username and password were submitted, check them
 	if(isset($_POST["name"])&&isset($_POST["email"])&&isset($_POST["comments"])){
 		//prepare sql
-		$sql=sprintf("INSERT INTO contact VALUES ('%s', '%s', ' ', '%s','".date("Y-m-d H:i:s")."', '1');",
+		$sql=sprintf("INSERT INTO contact VALUES (uuid(),'%s', '%s', ' ', '%s','".date("Y-m-d H:i:s")."', '1');",
 						$connection->real_escape_string($_POST["name"]),
 						$connection->real_escape_string($_POST["email"]),
 						$connection->real_escape_string($_POST["comments"]));
