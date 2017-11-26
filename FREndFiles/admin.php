@@ -272,7 +272,7 @@
                       while ($contact= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' name='selected'/></td>";
+                          echo "<td><input type='checkbox' id='".$contact["id"]."' name='".$contact["id"]."'/></td>";
                           echo "<td>".$contact["name"]."</td>";
                           echo "<td>".$contact["email"]."</td>";
                           echo "<td>".$contact["message"]."</td>";
