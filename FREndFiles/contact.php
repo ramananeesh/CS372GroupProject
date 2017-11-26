@@ -18,8 +18,8 @@
 		$result=$connection->query($sql) or die(mysqli_error($connection));
 		
 		// TODO: Make this not suck
-		echo "<br><br> <div style='color:green'>Your message has been submitted! We will contact you within 2-3 business days.</div>";
-	}
+		echo "<script>alert('Your message has been submitted! We will contact you within 2-3 business days.')</script>";
+	} 
 ?>
 
 <!DOCTYPE html>
