@@ -12,9 +12,9 @@ function validate(e) {
 //will retrieve session and get the value;
 function initialize() {
   //var a = sessionStorage.getItem("userName");
-  document.getElementById("usern").innerHTML = "Hello, " + "<?php echo $username ; ?>";
+  // document.getElementById("usern").innerHTML = "Hello, " + "<?php echo $username ; ?>";
   //var emailID = sessionStorage.getItem("emailID");
-  document.getElementById("emailID").innerHTML = "<?php echo $emailID ;?>";
+  //document.getElementById("emailID").innerHTML = "<?php echo $emailID ;?>";
   //var typeOfLogin = sessionStorage.getItem("typeofLogin");
   var typeOfLogin = "<?php echo $typeOfLogin; ?>"
   if (typeOfLogin == "FacebookLogin") {
