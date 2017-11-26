@@ -50,44 +50,65 @@
         hideEverything();
         var homeSection = document.getElementById('home-section');
         homeSection.hidden = false;
+        homeSection.classList.add("active");
+      }
+      
+      function showMessageSection(){
+        hideEverything();
+        var messageSection = document.getElementById('message-section');
+        messageSection.hidden = false;
+        messageSection.classList.add("active");
       }
       
       function showUserSection(){
         hideEverything();
         var userSection = document.getElementById('user-section');
         userSection.hidden = false;
+        userSection.classList.add("active");
       }
       
       function showFileSection(){
         hideEverything();
         var fileSection = document.getElementById('file-section');
         fileSection.hidden = false;
+        fileSection.classList.add("active");
       }
       
       function showIpSection(){
         hideEverything();
         var ipSection = document.getElementById('ip-section');
         ipSection.hidden = false;
+        ipSection.classList.add("active");
       }
       
       function showSettingSection(){
         hideEverything();
         var settingSection = document.getElementById('setting-section');
         settingSection.hidden = false;
+        settingSection.classList.add("active");
       }
       
       function hideEverything(){
         var homeSection = document.getElementById('home-section');
+        var messageSection = document.getElementById('message-section');
         var userSection = document.getElementById('user-section');
         var fileSection = document.getElementById('file-section');
         var ipSection = document.getElementById('ip-section');
         var settingSection = document.getElementById('setting-section');
         
         homeSection.hidden = true;
+        messageSection.hidden = true;
         userSection.hidden = true;
         fileSection.hidden = true;
         ipSection.hidden = true;
         settingSection.hidden = true;
+        
+        homeSection.classList.remove("active");
+        messageSection.classList.remove("active");
+        userSection.classList.remove("active");
+        fileSection.classList.remove("active");
+        ipSection.classList.remove("active");
+        settingSection.classList.remove("active");
       }
       
     </script>
@@ -139,6 +160,7 @@
         <ul class="list-unstyled">
           <li class="active"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
           <li> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
+          <li> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
           <li> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
           <li> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
           <li> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
@@ -150,7 +172,7 @@
       
         
         <!-- Begin Home Section-->
-        <div id="home-section" hidden>
+        <div id="home-section">
           
           <div class="page-header">
             <div class="container-fluid">
@@ -242,7 +264,7 @@
         <br>
         <br>
          <!-- Begin Messages-->
-        <div id="message-section">
+        <div id="message-section" hidden>
          <div class="page-header">
             <div class="container-fluid">
               <h2 class="h5 no-margin-bottom">Messages</h2>
@@ -326,27 +348,31 @@
                     <th>Username</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Join Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>masterprogrammer200</td>
-                    <td>Matthew</td>
-                    <td>matt@ipfw.edu</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>AhhhYeah</td>
-                    <td>Annesh</td>
-                    <td>annesh@ipfw.edu</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>joelIzKing</td>
-                    <td>Joel</td>
-                    <td>joel@ipfw.edu</td>
-                  </tr>
+                   <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM users ORDER BY username");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($contact= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' name='selected'/></td>";
+                          echo "<td>".$contact["username"]."</td>";
+                          echo "<td>".$contact["name"]."</td>";
+                          echo "<td>".$contact["email"]."</td>";
+                          echo "<td>".$contact["dateActive"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
                 </tbody>
               </table>
             </div>
