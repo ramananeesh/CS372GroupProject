@@ -8,9 +8,10 @@
 	//if username and password were submitted, check them
 	if(isset($_POST["name"])&&isset($_POST["email"])&&isset($_POST["comments"])){
 		//prepare sql
-		$sql=sprintf("INSERT INTO contact VALUES (uuid(),'%s', '%s', ' ', '%s','".date("Y-m-d H:i:s")."', '1');",
+		$sql=sprintf("INSERT INTO contact VALUES (uuid(),'%s', '%s', '%s', '%s','".date("Y-m-d H:i:s")."', '1');",
 						$connection->real_escape_string($_POST["name"]),
 						$connection->real_escape_string($_POST["email"]),
+						$connection->real_escape_string($_POST["subject"]),
 						$connection->real_escape_string($_POST["comments"]));
 		
 		//execute query
@@ -81,6 +82,9 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <input class="form-control" id="subject" name="subject" placeholder="Subject" type="text" required>
                                 </div>
                             </div>
                             
