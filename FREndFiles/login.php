@@ -4,6 +4,7 @@
 	
 	// Sign up indicator
 	$signup = 1;
+	$passFail = false;
 	
 	//enable sessions
 	session_start();
@@ -19,6 +20,7 @@
 	
 	//if username and password were submitted, check them
 	if(isset($_POST["username"])&&isset($_POST["password"]) && $signup == 1 ){
+		
 		//prepare sql
 		$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
 						$connection->real_escape_string($_POST["username"]),
@@ -29,9 +31,21 @@
 		
 		//check whether we found a row
 		if($result->num_rows==1){
-		
+			
 			$row=mysqli_fetch_assoc($result);
+			
+			// Check if the user is banned
+			if($row['banned'] == 1){
+				echo "<h1>Your account has been deactivated. You may contest the ban through the contact page</h1>";
+				echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
+				exit;
+			}
+			
+			// Check the source IP
+			checkIP($connection);
+			 
 			$_SESSION["authenticated"]=true;
+			$_SESSION['userUuid'] = $row['id'];
 			$_SESSION['userName'] = $row['username'];
 			$_SESSION['password']=$row['password'];
 			$_SESSION['emailID']=$row['email'];
@@ -43,12 +57,24 @@
 			header("Location: ./dashboard.php");
 			exit;
 		}
+		else{
+			$passFail = true;
+		}
 		
 	}
 	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
 		$username=$_POST["username"];
-		if(!($_POST["password"]==$_POST["passwordReenter"]) || $_POST["password"] === ''){
-			echo "<script type='text/javascript'> alert(\"Passwords don't match\"); </script>";
+		if(!($_POST["password"]==$_POST["passwordReenter"]) || trim($_POST["password"]) === ""){
+			echo "<script type='text/javascript'> alert(\"The passwords you provided are diffferent.\"); </script>";
+		}
+		else if(strlen($_POST['password']) < 6){
+			echo "<script type='text/javascript'> alert(\"The password must be at least 6 characters long.\"); </script>";
+		}
+		else if(trim($_POST["name"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide a name to sign up.\"); </script>";
+		}
+		else if(trim($_POST["email"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide an email to sign up.\"); </script>";
 		}
 		else{
 			$password=$_POST["password"];
@@ -71,10 +97,14 @@
 			if($result->num_rows==1){
 				$_SESSION["authenticated"]=true;
 				$row=mysqli_fetch_assoc($result);
-				$_SESSION['userName'] = $row['username'];
-				$_SESSION['password']=$row['password'];
-				$_SESSION['emailID']=$row['email'];
-				$_SESSION['typeOfLogin']=$row['normalLogin'];
+				//$_SESSION['userName'] = $row['username'];
+				$_SESSION['userName']=$username;
+				// $_SESSION['password']=$row['password'];
+				// $_SESSION['emailID']=$row['email'];
+				// $_SESSION['typeOfLogin']=$row['normalLogin'];
+				$_SESSION['password']=$password;
+				$_SESSION['emailID']=$email;
+				$_SESSION['typeOfLogin']=$typeOfLogin;
 				//reditect user to dashboard, using absolute path
 				$host=$_SERVER["HTTP_HOST"];
 				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
@@ -139,7 +169,15 @@
 
 				<div class="row omb_row-sm-offset-3">
 					<div class="col-xs-12 col-sm-6">
-						<form class="omb_loginForm" action="" onsubmit="return signupValidate(this);" autocomplete="off" method="POST">
+							<form class="omb_loginForm" action="" onsubmit="return signupValidate(this);"  autocomplete="off" method="POST">
+								
+							<!-- Indicate Whether a Sign-in attempt was unsuccessful -->
+							<?php 
+								if($passFail == true){
+									echo '<div style="color:red;">The password and/or username you provided was not found.</div>';
+								}
+							
+							?>
 							
 							<div class="input-group">
 								<span class="input-group-addon">
@@ -234,7 +272,6 @@
 			</div>
 		</div>
 		<!-- END MAIN -->
-		
 		
 		<!--- Facebook and Google Login Scripts-->
 		<script src="./js/login.js"></script>

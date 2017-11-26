@@ -1,17 +1,66 @@
 <?php
   require_once 'html-builder.php';
-  
+  require ('database.php');
+   session_start();
+    $connection=dbConnect();
+    
+   
   session_start();
   
-  if(!$_SESSION['userName']){
+  if($_SESSION['userName'] === ""){
     header('Location: login.php');
   }
   
-  $username=$_SESSION['userName'];
+  // Check if user is logged in with Gmail or Facebook
+  if($_SESSION['typeofLogin'] == 'gmailLogin' || $_SESSION['typeofLogin'] == 'FacebookLogin'){
+    
+    // Check if the user has a database entry
+    $sql = sprintf("SELECT * from users where id='%s'",$_SESSION['userID']);
+    $result=$connection->query($sql) or die(mysqli_error());
+    
+    if($result->num_rows === 0){
+      // User has not been registered, create database entry
+      addUser($connection,array('password' => "dummy",'email' => $_SESSION['emailID'],'username' => $_SESSION['userName'], 'name' => $_SESSION['userName']), $_SESSION['userID']);
+    }
+    
+    // Overwrite UUID with Google/Facebook ID
+    $_SESSION['userUuid'] = $_SESSION['userID'];
+    
+  }
   
+  $username=$_SESSION['userName'];
+  $userId=$_SESSION['userUuid'];
   $password=$_SESSION['password'];
   $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
+  
+   if($_POST["submit"]){
+      $file = $_FILES['input-b3'];
+      addFile($connection,$file,$userId);
+      
+      /*$file_name = $file['name'];
+      $file_type = $file ['type'];
+      $file_size = $file ['size'];
+      $file_path = $file ['tmp_name'];
+      
+      $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
+      $row=mysqli_fetch_assoc($r);
+      $userid=$row['id'];
+      $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
+      $row=mysqli_fetch_assoc($r);
+      $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
+      $cur=$row['CURDATE()'];
+      $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
+      //echo $data;
+      $user=   $username;
+      //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
+      $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
+      //echo $sql;
+      $result=$connection->query($sql) or die(mysqli_error($connection));*/
+    }
+    
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +129,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern">   Hello        </label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username"><?php echo $username ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
@@ -161,6 +210,38 @@
                 <th>Expiration Date</th>
               </tr>
             </thead>
+            <?php
+              require_once "database.php";
+              
+              $conn=dbConnect();
+              $sql="select id from users where username=\"$username\"";
+              $result=$conn->query($sql) or die(mysqli_error($conn));
+              if($result->num_rows==1){
+                $row=$result->fetch_assoc();
+                $uId=$row['id'];
+                //echo "id".$uId;
+              }
+              $sql="select fname,size,expire_date from files where user_id=\"$uId\"";
+              $result=$conn->query($sql) or die(mysqli_error());
+              echo "<tbody>";
+              while ($f = $result->fetch_assoc())
+              {
+                $fname=$f['fname'];
+                $fsize=$f['size'];
+                $fexp=$f['expire_date'];
+                
+                echo "<tr>
+                        <td> <input type=\"checkbox\" name=\"fileSelected\" /></td>
+                        <td>$fname</td>
+                        <td>$fsize</td>
+                        <td>$fexp</td>
+                      </tr>";
+              }
+              echo "</table>";
+              echo"done";
+              
+            ?>
+            <!--
             <tbody>
               <tr>
                 <td><input type="checkbox" name="fileSelected" /></td>
@@ -182,6 +263,7 @@
               </tr>
             </tbody>
           </table>
+          -->
         </div>
 
         <!--File History Table -->
@@ -283,10 +365,15 @@
       </section>
       <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="uploadFile" style="display:none">
         <div>
-          <h2>Upload a File</h2><br>
+          <form method="POST" action="" enctype="multipart/form-data">
+            <h2>Upload a File</h2><br>
           <div class="container" id="uploadDiv">
-            <input id="input-b2" name="input-b2" type="file" size="40" class="file" data-show-preview="false">
+             <input id="input-b3" name="input-b3" type="file" class="file" multiple 
+                            data-show-upload="false" data-show-caption="true" data-show-preview="false" data-msg-placeholder="Select {files} for upload...">
+                            <br><input type="submit" name="submit" class="btn btn-primary" value="upload">
           </div><br>
+          </form>
+          
         </div>
       </section>
       <!--payment stuff-->

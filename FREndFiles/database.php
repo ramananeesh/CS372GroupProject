@@ -16,7 +16,7 @@ function dbConnect(){
 	return $connection;
 }
 
-function addUser($connection, $details){
+function addUser($connection, $details, $idOverride = NULL){
     extract($details);
  
     $sql = sprintf("Select 1 FROM users WHERE username = '%s'",
@@ -32,11 +32,23 @@ function addUser($connection, $details){
     }
     else
     {
-        $sql = sprintf("INSERT INTO `users` VALUES (UUID(),'%s','%s', password('%s'),'%s',1,0,0,SYSDATE())",
+        if($idOverride == NULL){
+            $sql = sprintf("INSERT INTO `users` VALUES (UUID(),'%s','%s', password('%s'),'%s',1,0,0,SYSDATE())",
                    $connection->real_escape_string($username),
                    $connection->real_escape_string($name),
                    $connection->real_escape_string($password),
                    $connection->real_escape_string($email));
+        }
+        else{
+            $sql = sprintf("INSERT INTO `users` VALUES ('%s','%s','%s', password('%s'),'%s',1,0,0,SYSDATE())",
+                   $connection->real_escape_string($idOverride),
+                   $connection->real_escape_string($username),
+                   $connection->real_escape_string($name),
+                   $connection->real_escape_string($password),
+                   $connection->real_escape_string($email));
+        }
+        
+        
         
         // execute query
         $result = $connection->query($sql) or die(mysqli_error($connection));  
@@ -46,5 +58,61 @@ function addUser($connection, $details){
     }
 }
 
+function addFile($connection,$file,$userid){
+
+    $file_name = $file['name'];
+    $file_type = $file ['type'];
+    $file_size = $file ['size'];
+    $file_path = $file ['tmp_name'];
+    
+    $data=mysqli_real_escape_string($connection,file_get_contents($file_path));
+    $n="NULL";
+    
+    //if username is not null - for registered users
+    if(!($userid===$n)){
+        $sql="INSERT into files (id,fname,size,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,\"$userid\",5,'".$data."')";
+    }
+    else{
+        //for ur-users
+         $sql="INSERT into files (id,fname,size,download_count,f_data) values (uuid(),\"$file_name\",$file_size,5,'".$data."')";
+    }
+    
+    //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
+
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    
+}
+
+function getFilesList(){
+    
+}
+
+function checkIP($connection){
+    
+    // Check if user is using a banned IP
+	$sql=sprintf("SELECT * from ip_ban where ipv6='%s'",
+			$connection->real_escape_string($_SERVER['REMOTE_ADDR']));
+			
+	// Execute SQL
+	$result=$connection->query($sql) or die(mysqli_error());
+	if($result->num_rows==1){
+		
+		// Loop through results
+		 while ($row1 = $result->fetch_assoc())
+		 {
+		 	if (time() >= strtotime($row1['time_out'])) {
+				// Over time limit - Delete row
+				$sql=sprintf("DELETE FROM ip_ban
+									WHERE id=%s",$row1['id']);
+				$connection->query($sql) or die(mysqli_error());
+			}
+			else{
+				echo "<h1>Your IP has been flagged as banned. Check back later or contest the ban through the contact page.</h1>";
+				echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
+				exit;
+			}
+		 }
+	}
+}
 
 ?>

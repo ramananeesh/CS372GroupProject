@@ -40,7 +40,7 @@ function statusChangeCallback(response) {
         //sessionStorage.setItem("userName", response.name); 
         //alert(response.email);
         sessionStorage.setItem("typeofLogin", type);
-        window.open("dashboard.html", "_self");
+        window.open("dashboard.php", "_self");
         //window.close();
     }
     else {
@@ -114,7 +114,7 @@ function testAPI() {
 function login(f) {
     if (validate(this)) {
         sessionStorage.setItem("typeofLogin", "normalLogin");
-        window.open("dashboard.html");
+        window.open("dashboard.php");
     }
     else
         return false;
@@ -157,7 +157,7 @@ function validate(f) {
             sessionStorage.setItem("userName", f.username.value);
             //sessionStorage.setItem("emailID", f.emailID.value);
             sessionStorage.setItem("password", f.password.value);
-            window.open("dashboard.html", "_self");
+            window.open("dashboard.php", "_self");
             return true;
         }
     }
@@ -182,9 +182,8 @@ function signupValidate(f) {
         return true;
     }
     
-    if (document.getElementById("email").value.match(/.+@.+\.edu$/)) {
-        alert("Invalid username. Remember: The username is the email id" +
-            " being used. It should be a .edu email");
+    if (document.getElementById("email").value.match(/.+@.+\..+$/)) {
+        alert("Invalid email format.");
         return false;
     }
     
@@ -200,13 +199,13 @@ function signupValidate(f) {
     }
 
     if (document.getElementById("password").value.length < 6) {
-        alert("Password length must be at least 6 characters.");
+        alert("Your password must be at least 6 characters long.");
         
         return false;
     }
     
     if(document.getElementById("password").value !== document.getElementById("passwordReenter").value){
-         alert("Passwords don't match!");
+         alert("Your passwords don't match!");
         
         return false;
     }
@@ -222,7 +221,7 @@ function signupValidate(f) {
 function proceed() {
     FB.login(function(response) {
         if (response.authResponse == 'connected') {
-            window.top.location = "dashboard.html";
+            window.top.location = "dashboard.php";
         }
     });
 }
@@ -243,5 +242,5 @@ function onSignIn(googleUser) {
     //alert(emailID);
     var type = "gmailLogin";
     sessionStorage.setItem("typeofLogin", type);
-    window.open("dashboard.html", "_self");
+    window.open("dashboard.php", "_self");
 }
