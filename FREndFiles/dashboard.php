@@ -58,7 +58,10 @@
       //echo $sql;
       $result=$connection->query($sql) or die(mysqli_error($connection));*/
     }
-    
+    if(isset($_POST['delete'][1])){
+    //if(isset($_POST["delete_x"])||isset($_POST["delete_y"])){
+      echo "Hi delete";
+    }
     
     
 ?>
@@ -189,11 +192,16 @@
             <span class="text-muted">Share or Modify File Access</span>
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divDelete">
+            <form method="POST">
             <a href="#Delete">
-                <img src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              
+                <img src="./images/delete icon.jpg" name="delete[1]" width="100" height="100"  class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              
               </a>
+              </form>
             <h4>Delete</h4>
-            <span class="text-muted">Delete Selected File(s)</span>
+            <span class="text-muted"><a Delete Selected File(s)></a></span>
+              
           </div>
         </section>
 
@@ -231,14 +239,14 @@
                 $fexp=$f['expire_date'];
                 
                 echo "<tr>
-                        <td> <input type=\"checkbox\" name=\"fileSelected\" /></td>
+                        <td> <input type=\"checkbox\" name=\"checkbox[]\" /></td>
                         <td>$fname</td>
                         <td>$fsize</td>
                         <td>$fexp</td>
                       </tr>";
               }
               echo "</table>";
-              echo"done";
+              
               
             ?>
             <!--
