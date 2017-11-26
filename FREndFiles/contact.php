@@ -6,13 +6,13 @@
 	$connection= connect_to_db();
 
 	//if username and password were submitted, check them
-	if(isset($_POST["name"])&&isset($_POST["email"])&&isset($_POST["comments"])){
+	if(isset($_POST["name"])&&isset($_POST["email"])&&isset($_POST["message"])){
 		//prepare sql
 		$sql=sprintf("INSERT INTO contact VALUES (uuid(),'%s', '%s', '%s', '%s','".date("Y-m-d H:i:s")."', '1');",
 						$connection->real_escape_string($_POST["name"]),
 						$connection->real_escape_string($_POST["email"]),
 						$connection->real_escape_string($_POST["subject"]),
-						$connection->real_escape_string($_POST["comments"]));
+						$connection->real_escape_string($_POST["message"]));
 		
 		//execute query
 		$result=$connection->query($sql) or die(mysqli_error($connection));
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                             
-                            <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                            <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea><br>
                             
                             <div class="row">
                                 <div class="col-sm-12 form-group">
