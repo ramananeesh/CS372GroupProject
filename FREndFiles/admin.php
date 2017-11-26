@@ -280,6 +280,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Message</th>
+                    <th>Time stamp</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -287,7 +288,7 @@
                       
                       // read
                     
-                      $sql = sprintf("Select * FROM contact");
+                      $sql = sprintf("Select * FROM contact WHERE active = 1 ORDER BY time_stamp DESC;");
     
                       // execute query
                       $result = $connection->query($sql) or die(mysqli_error());   
@@ -300,6 +301,7 @@
                           echo "<td>".$contact["name"]."</td>";
                           echo "<td>".$contact["email"]."</td>";
                           echo "<td>".$contact["message"]."</td>";
+                          echo "<td>".$contact["time_stamp"]."</td>";
                           echo "</tr>";
                       }
                     ?>
