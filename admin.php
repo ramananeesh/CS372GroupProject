@@ -400,18 +400,12 @@
           
           <!--File section -->
           <div id="file-section" hidden>
-             <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Download">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Delete</h4>
-                <span class="text-muted">Ban Selected File(s)</span>
-              </div>
-            </section>
-            
-            
-            <h2>Files</h2>
+             <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Files</h2>
+            </div>
+          </div>
+          
             <div class="table-responsive" id="fileList">
               <table class="table table-striped">
                 <thead>
@@ -433,13 +427,13 @@
                       $result = $connection->query($sql) or die(mysqli_error());   
     
                       // check whether we found a row
-                      while ($contact= $result->fetch_assoc())
+                      while ($file= $result->fetch_assoc())
                       {
                           echo "<tr>";
                           echo "<td><input type='checkbox' name='selected'/></td>";
-                          echo "<td>".$contact["fname"]."</td>";
-                          echo "<td>".$contact["size"]."</td>";
-                          echo "<td>".$contact["upload_date"]."</td>";
+                          echo "<td>".$file["fname"]."</td>";
+                          echo "<td>".$file["size"]."</td>";
+                          echo "<td>".$file["upload_date"]."</td>";
                           echo "</tr>";
                       }
                     ?>
