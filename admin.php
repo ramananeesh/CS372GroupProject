@@ -418,28 +418,31 @@
                   <tr>
                     <th>Select</th>
                     <th>File Name</th>
-                    <th>User</th>
+                    <th>Size</th>
                     <th>Created Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>img.png</td>
-                    <td>huntmj01</td>
-                    <td>10/06/2017</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>file.txt</td>
-                    <td>AhhhhYeah</td>
-                    <td>10/05/2017</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>animate.gif</td>
-                    <td>TopDawg</td>
-                    <td>10/04/2017</td>
+                   <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM files ORDER BY upload_date DESC");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($contact= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' name='selected'/></td>";
+                          echo "<td>".$contact["fname"]."</td>";
+                          echo "<td>".$contact["size"]."</td>";
+                          echo "<td>".$contact["upload_date"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
                 </tbody>
               </table>
             </div>
