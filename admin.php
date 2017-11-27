@@ -28,7 +28,32 @@
       } else {
           echo "You did not choose a message.";
       }
+    } else if(isset($_POST['action']) && $_POST['action'] == "deleteFile"){
+     
+      $filesToDelete = $_POST['files-id'];
+      
+      if (isset($_POST['files-id'])) {
+          
+          foreach ($messagesToDelete as $message){
+              
+              $sql = sprintf("DELETE FROM file WHERE id = '%s'",
+              $connection->real_escape_string($file));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a file.";
+      }
     }
+    
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -406,6 +431,23 @@
             </div>
           </div>
           
+          <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+          <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+           
+              <a href="#Delete">
+                <!--button id="delete" type="submit"-->
+                <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
+                <input type="hidden" name="action" value="deleteFile">
+                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <!--/button-->
+              </a>
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected Files(s)</span>
+            
+          </div>
+            </section>
+          
             <div class="table-responsive" id="fileList">
               <table class="table table-striped">
                 <thead>
@@ -430,7 +472,7 @@
                       while ($file= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' name='selected'/></td>";
+                          echo "<td><input type='checkbox' id='file-id' name='file-id[]' value='".$file["id"]."'/></td>";
                           echo "<td>".$file["fname"]."</td>";
                           echo "<td>".$file["size"]."</td>";
                           echo "<td>".$file["upload_date"]."</td>";
@@ -440,6 +482,7 @@
                 </tbody>
               </table>
             </div>
+            </form>
           </div>
           <!--End file section -->
           
