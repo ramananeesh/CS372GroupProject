@@ -3,8 +3,32 @@
   require_once 'html-builder.php';
   require_once('db_connect.php');
   
-  
+
    $connection = connect_to_db();
+   
+   if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
+     
+      $messagesToDelete = $_POST['message-id'];
+      
+      if (isset($_POST['message-id'])) {
+          
+          foreach ($messagesToDelete as $message){
+              
+              $sql = sprintf("DELETE FROM contact WHERE id = '%s'",
+              $connection->real_escape_string($message));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -243,6 +267,23 @@
               <h2 class="h5 no-margin-bottom">Messages</h2>
             </div>
           </div>
+          <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+          <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+           
+              <a href="#Delete">
+                <!--button id="delete" type="submit"-->
+                <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
+                <input type="hidden" name="action" value="deleteMessage">
+                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <!--/button-->
+              </a>
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected Message(s)</span>
+            
+          </div>
+            </section>
+          
             <div class="table-responsive" id="fileList">
               
               
@@ -270,7 +311,7 @@
                       while ($contact= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' id='".$contact["id"]."' name='".$contact["id"]."'/></td>";
+                          echo "<td><input type='checkbox' id='message-id' name='message-id[]' value='".$contact["id"]."'/></td>";
                           echo "<td>".$contact["name"]."</td>";
                           echo "<td>".$contact["email"]."</td>";
                           echo "<td>".$contact["message"]."</td>";
@@ -281,7 +322,9 @@
                 </tbody>
               </table>
             </div>
+            </form>
         </div>
+        
         <!-- End Messages -->
        
        
