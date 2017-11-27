@@ -58,9 +58,9 @@
       //echo $sql;
       $result=$connection->query($sql) or die(mysqli_error($connection));*/
     }
-    if(isset($_POST['delete'][1])){
-    //if(isset($_POST["delete_x"])||isset($_POST["delete_y"])){
-      echo "Hi delete";
+
+    if(isset($_POST['action']) && $_POST['action'] == "deleteFiles"){
+      echo '<script> alert("The User would like you to delete the files!");</script>';
     }
     
     
@@ -132,7 +132,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username"><?php echo $username ?></label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo $username ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
@@ -172,36 +172,39 @@
         <section class="row text-center placeholders" id="dashboardElements">
           <div class="col-6 col-sm-3 placeholder" id="divUpload">
             <a href="#uploadFile" onclick="uploadClick();">
-                <img src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                <img src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Upload Button">
               </a>
             <h4>Upload</h4>
             <span class="text-muted"><a href="#uploadFile"></a>Upload File</span>
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divDownload">
             <a href="#Download">
-                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Download Button">
               </a>
             <h4>Download</h4>
             <span class="text-muted">Download Selected File(s)</span>
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divShare">
             <a href="#Share">
-                  <img src="./images/shareicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              </a>
+              <img src="./images/shareicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Share Button">
+            </a>
             <h4>Share</h4>
             <span class="text-muted">Share or Modify File Access</span>
           </div>
+          
+         
           <div class="col-6 col-sm-3 placeholder" id="divDelete">
-            <form method="POST">
-            <a href="#Delete">
-              
-                <img src="./images/delete icon.jpg" name="delete[1]" width="100" height="100"  class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              
+            <form method="POST" action="">
+              <a href="#Delete">
+                <!--button id="delete" type="submit"-->
+                <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
+                <input type="hidden" name="action" value="deleteFiles">
+                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <!--/button-->
               </a>
-              </form>
-            <h4>Delete</h4>
-            <span class="text-muted"><a Delete Selected File(s)></a></span>
-              
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected File(s)</span>
+            </form>
           </div>
         </section>
 
@@ -318,7 +321,7 @@
             User Information
           </div>
           <div class="card-body" style="padding:1.5em;">
-            <p class="card-text">Email: <label id="emailID"></label></p>
+            <p class="card-text">Email: <?php echo $emailID;?><label id="emailID"></label></p>
             <!--<p class="card-text">Password: <label id="passwordField" type></label></p>-->
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
             <button class="btn btn-primary" id="changePassword">Change Password</button>
