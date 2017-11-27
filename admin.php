@@ -33,12 +33,10 @@
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-            <link rel="stylesheet" href="/Landing/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="cssL/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600|Raleway:600,300|Josefin+Slab:400,700,600italic,600,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="cssL/slick-team-slider.css" />
-    <link rel="stylesheet" type="text/css" href="cssL/style.css">
-    <link href="dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/slick-team-slider.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
     
     <style>
       body, th,td {
