@@ -61,6 +61,14 @@
 
     if(isset($_POST['action']) && $_POST['action'] == "deleteFiles"){
       echo '<script> alert("The User would like you to delete the files!");</script>';
+      $deleted = $_POST['checkbox'];
+        foreach ($deleted as $fileID) 
+        {
+	          $query="delete from files where id='$fileID'";
+	          $result= $connection->query($query) or die(mysqli_error($connection));
+        }
+       
+        echo '<script> alert("Done!");</script>';
     }
     
     
@@ -204,7 +212,7 @@
               </a>
               <h4>Delete</h4>
               <span class="text-muted">Delete Selected File(s)</span>
-            </form>
+            <!--</form>-->
           </div>
         </section>
 
@@ -212,6 +220,7 @@
 
         <div class="table-responsive" id="fileList">
           <h2 id="fileListTitle">Active File List</h2>
+          <!--<form method="POST">-->
           <table class="table table-striped">
             <thead>
               <tr>
@@ -232,7 +241,7 @@
                 $uId=$row['id'];
                 //echo "id".$uId;
               }
-              $sql="select fname,size,expire_date from files where user_id=\"$uId\"";
+              $sql="select fname,size,expire_date,id from files where user_id=\"$uId\"";
               $result=$conn->query($sql) or die(mysqli_error());
               echo "<tbody>";
               while ($f = $result->fetch_assoc())
@@ -240,18 +249,19 @@
                 $fname=$f['fname'];
                 $fsize=$f['size'];
                 $fexp=$f['expire_date'];
-                
+                $fid=$f['id'];
                 echo "<tr>
-                        <td> <input type=\"checkbox\" name=\"checkbox[]\" /></td>
+                        <td> <input type=\"checkbox\" name=\"checkbox[]\" value=$fid /></td>
                         <td>$fname</td>
                         <td>$fsize</td>
                         <td>$fexp</td>
                       </tr>";
               }
               echo "</table>";
-              
+              //echo "</form>"
               
             ?>
+            </form>
             <!--
             <tbody>
               <tr>
