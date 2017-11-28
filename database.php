@@ -68,9 +68,17 @@ function addFile($connection,$file,$userid){
     $data=mysqli_real_escape_string($connection,file_get_contents($file_path));
     $n="NULL";
     
+    //for getting uuid before to provide user instead of link
+    $sql="select uuid() as uuid from dual";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    
+    $row=mysqli_fetch_assoc($result);
+    $u=$row["uuid"];
+    //echo "<script>alert(\"Your uuid is : $u\")</script>";
+    
     //if username is not null - for registered users
     if(!($userid===$n)){
-        $sql="INSERT into files (id,fname,size,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,\"$userid\",5,'".$data."')";
+        $sql="INSERT into files ('$u',fname,size,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,\"$userid\",5,'".$data."')";
     }
     else{
         //for ur-users
@@ -80,6 +88,9 @@ function addFile($connection,$file,$userid){
     //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
 
     $result=$connection->query($sql) or die(mysqli_error($connection));
+    
+    
+    return $u;
     
 }
 
