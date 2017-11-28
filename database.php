@@ -81,13 +81,10 @@ function addFile($connection,$file,$userid){
          $sql="INSERT into files (id,fname,size,download_count,f_data) values (\"$uuid\",\"$file_name\",$file_size,5,'".$data."')";
     }
     
-    //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
-
+    // Insert file
     $result=$connection->query($sql) or die(mysqli_error($connection));
     
     // Insert a transaction record
-    // upload = 1, ipv6, file_id, user_id, hidden = 0
-                 
     if(!($userid===$n)){
          $sql = "INSERT into transactions (upload, ipv6, file_id, user_id, hidden)" . 
                 "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\",\"$userid\",0 )";
@@ -96,9 +93,11 @@ function addFile($connection,$file,$userid){
          $sql = "INSERT into transactions (upload, ipv6, file_id, hidden)" . 
                 "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\", 0 )";
     }
-    
+    // Run query
     $result=$connection->query($sql) or die(mysqli_error($connection));
-    
+
+    // Return uuid
+    return $uuid;
 }
 
 function getFilesList(){

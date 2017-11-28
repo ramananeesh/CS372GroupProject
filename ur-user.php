@@ -8,11 +8,7 @@
     // Check if request is comming from a bad IP
     checkIP($connection);
     
-    if($_POST["submit"]){
-            $file = $_FILES['input-b3'];
-            addFile($connection,$file,"NULL");
-            
-        }
+    
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +22,9 @@
         <!-- Bootstrap and font awesome-->
         <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    
+        
+        
+        
     
         <!-- File Input Scripts-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
@@ -38,9 +36,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/themes/fa/theme.js"></script>
+        
+        <!--<script src="./js/sweetalert.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        
     
     </head>
-
+    
     <body>
     
         <!-- BEGIN NAVBAR -->
@@ -76,6 +79,16 @@
         </div>
     
         <!-- END MAIN CONTENT-->
+        <?php
+    
+    if($_POST["submit"]){
+            $file = $_FILES['input-b3'];
+            $u=addFile($connection,$file,"NULL");
+            //echo "<script>alert(\"Your uuid is : $u\")</script>";
+           echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $u \", \"success\")</script>";
+        }
+    
+    ?>
     
     </body>
 
