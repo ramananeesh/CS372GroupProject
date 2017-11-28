@@ -1,6 +1,7 @@
 <?php
   require_once 'html-builder.php';
   require_once 'database.php';
+  $check = false;
   session_start();
     
   // Open Database connection
@@ -15,6 +16,10 @@
     // Check if the user is using an alternate Sign-In method
     if($_SESSION['altLogin'] == false){
       header('Location: login.php');
+    }
+    else{
+      // Force the user to validate since they are using alternate
+      $check = true;
     }
   }
   
@@ -98,7 +103,7 @@
 
 </head>
 
-<body onload="attachCallback();initialize();">
+<body onload="attachCallback();initialize();<?php if($check){ echo 'validateLogin();';} ?>">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.php" id="dashboardLogo"><img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">

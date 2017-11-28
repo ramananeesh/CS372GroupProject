@@ -7,6 +7,14 @@ function validate(e) {
       return false;
   }
 }
+
+/* Function validates that user is signed in */
+function validateLogin(){
+  if(sessionStorage.getItem("userName") == null){
+    window.open("./login.php", "_self");
+  }
+}
+
 //window.onload = function() {
 //This sessionStorage.getItem(); is also a predefined function in javascript
 //will retrieve session and get the value;
