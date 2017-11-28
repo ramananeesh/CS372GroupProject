@@ -11,24 +11,11 @@
   
   // Send empty usernames back to Login
   if(trim($_SESSION['userName']) === ""){
-    header('Location: login.php');
-  }
-  
-  // Check if user is logged in with Gmail or Facebook
-  if($_SESSION['typeofLogin'] == 'gmailLogin' || $_SESSION['typeofLogin'] == 'FacebookLogin'){
     
-    // Check if the user has a database entry
-    $sql = sprintf("SELECT * from users where id='%s'",$_SESSION['userID']);
-    $result=$connection->query($sql) or die(mysqli_error());
-    
-    if($result->num_rows === 0){
-      // User has not been registered, create database entry
-      addUser($connection,array('password' => "dummy",'email' => $_SESSION['emailID'],'username' => $_SESSION['userName'], 'name' => $_SESSION['userName']), $_SESSION['userID']);
+    // Check if the user is using an alternate Sign-In method
+    if($_SESSION['altLogin'] == false){
+      header('Location: login.php');
     }
-    
-    // Overwrite UUID with Google/Facebook ID
-    $_SESSION['userUuid'] = $_SESSION['userID'];
-    
   }
   
   $username=$_SESSION['userName'];
@@ -111,7 +98,7 @@
 
 </head>
 
-<body onload="attachCallback(); initialize();">
+<body onload="attachCallback();initialize();">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.php" id="dashboardLogo"><img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -315,7 +302,7 @@
           </div>
           <div class="card-body" style="padding:1.5em;">
             <p class="card-text">Email: <?php echo $emailID;?><label id="emailID"></label></p>
-            <!--<p class="card-text">Password: <label id="passwordField" type></label></p>-->
+            <p class="card-text"><label id="passwordField" type></label></p>
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
             <button class="btn btn-primary" id="changePassword">Change Password</button>
           </div>

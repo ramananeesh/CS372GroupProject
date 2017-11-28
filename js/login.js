@@ -18,18 +18,9 @@ function statusChangeCallback(response) {
     });
     if (response.status === 'connected') {
         // Logged into your app and Facebook.
-        //testAPI();
         var type = "FacebookLogin";
         FB.api('/me', { locale: 'tr_TR', fields: 'name, email' },
             function(response) {
-                /*console.log(response.email);
-                console.log(response.name);
-                console.log(response.gender);
-                console.log(response.birthday);
-                console.log(response.hometown);
-                console.log(response.education);
-                console.log(response.website);
-                console.log(response.work);*/
                 sessionStorage.setItem("userName", response.name);
                 sessionStorage.setItem("emailID", response.email);
                 alert("Hi" + " " + response.email);
@@ -178,6 +169,10 @@ function signupValidate(f) {
     //document.getElementById("emailDiv").style.visibility = 'visible';
     
     if ((document.getElementById("login_b").innerHTML + "").toString().trim() == "Login"){
+        
+        // Set session variable
+        sessionStorage.setItem("typeofLogin", "standard");
+        
         // User is signing in and not signing up
         return true;
     }
@@ -221,7 +216,7 @@ function signupValidate(f) {
 function proceed() {
     FB.login(function(response) {
         if (response.authResponse == 'connected') {
-            window.top.location = "dashboard.php";
+            window.top.location = "verify.php";
         }
     });
 }
@@ -239,8 +234,7 @@ function onSignIn(googleUser) {
     sessionStorage.setItem("userName", name);
     sessionStorage.setItem("userID", uid);
     sessionStorage.setItem("emailID", emailID);
-    //alert(emailID);
     var type = "gmailLogin";
     sessionStorage.setItem("typeofLogin", type);
-    window.open("dashboard.php", "_self");
+    window.open("verify.php", "_self");
 }
