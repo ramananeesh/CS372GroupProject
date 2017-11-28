@@ -86,12 +86,12 @@ function addFile($connection,$file,$userid){
     
     // Insert a transaction record
     if(!($userid===$n)){
-         $sql = "INSERT into transactions (upload, ipv6, file_id, user_id, hidden)" . 
-                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\",\"$userid\",0 )";
+         $sql = "INSERT into transactions (upload, ipv6, file_id, user_id, hidden, fname, fsize, fuploadDate)" . 
+                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\",\"$userid\",0,\"$file_name\",$file_size, CURRENT_TIMESTAMP )";
     }
     else{
-         $sql = "INSERT into transactions (upload, ipv6, file_id, hidden)" . 
-                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\", 0 )";
+         $sql = "INSERT into transactions (upload, ipv6, file_id, hidden, fname, fsize, fuploadDate)" . 
+                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\", 0,\"$file_name\",$file_size, CURRENT_TIMESTAMP )";
     }
     // Run query
     $result=$connection->query($sql) or die(mysqli_error($connection));
