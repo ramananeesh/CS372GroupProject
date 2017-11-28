@@ -165,7 +165,7 @@ function signO() {
       signOut();
   }
   else {
-      window.open("./login.php", "_self");
+      window.open("./sessionEnd.php", "_self");
   }
 }
 

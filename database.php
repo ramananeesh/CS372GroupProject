@@ -48,8 +48,6 @@ function addUser($connection, $details, $idOverride = NULL){
                    $connection->real_escape_string($email));
         }
         
-        
-        
         // execute query
         $result = $connection->query($sql) or die(mysqli_error($connection));  
 
@@ -68,17 +66,37 @@ function addFile($connection,$file,$userid){
     $data=mysqli_real_escape_string($connection,file_get_contents($file_path));
     $n="NULL";
     
+    // Generate UUID
+    $sql = "select uuid() as id from dual";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row = $result->fetch_assoc();
+    $uuid = $row['id'];
+    
     //if username is not null - for registered users
     if(!($userid===$n)){
-        $sql="INSERT into files (id,fname,size,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,\"$userid\",5,'".$data."')";
+        $sql="INSERT into files (id,fname,size,user_id,download_count,f_data) values (\"$uuid\",\"$file_name\",$file_size,\"$userid\",5,'".$data."')";
     }
     else{
         //for ur-users
-         $sql="INSERT into files (id,fname,size,download_count,f_data) values (uuid(),\"$file_name\",$file_size,5,'".$data."')";
+         $sql="INSERT into files (id,fname,size,download_count,f_data) values (\"$uuid\",\"$file_name\",$file_size,5,'".$data."')";
     }
     
     //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
 
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    
+    // Insert a transaction record
+    // upload = 1, ipv6, file_id, user_id, hidden = 0
+                 
+    if(!($userid===$n)){
+         $sql = "INSERT into transactions (upload, ipv6, file_id, user_id, hidden)" . 
+                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\",\"$userid\",0 )";
+    }
+    else{
+         $sql = "INSERT into transactions (upload, ipv6, file_id, hidden)" . 
+                "values (1, \"$_SERVER[REMOTE_ADDR]\",\"$uuid\", 0 )";
+    }
+    
     $result=$connection->query($sql) or die(mysqli_error($connection));
     
 }

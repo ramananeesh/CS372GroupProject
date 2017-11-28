@@ -1,13 +1,16 @@
 <?php
   require_once 'html-builder.php';
-  require ('database.php');
-   session_start();
-    $connection=dbConnect();
+  require_once 'database.php';
+  session_start();
     
-   
+  // Open Database connection
+  $connection=dbConnect();
+  
+  // Start the session
   session_start();
   
-  if($_SESSION['userName'] === ""){
+  // Send empty usernames back to Login
+  if(trim($_SESSION['userName']) === ""){
     header('Location: login.php');
   }
   
@@ -37,26 +40,6 @@
    if($_POST["submit"]){
       $file = $_FILES['input-b3'];
       addFile($connection,$file,$userId);
-      
-      /*$file_name = $file['name'];
-      $file_type = $file ['type'];
-      $file_size = $file ['size'];
-      $file_path = $file ['tmp_name'];
-      
-      $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
-      $row=mysqli_fetch_assoc($r);
-      $userid=$row['id'];
-      $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
-      $row=mysqli_fetch_assoc($r);
-      $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
-      $cur=$row['CURDATE()'];
-      $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
-      //echo $data;
-      $user=   $username;
-      //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
-      $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
-      //echo $sql;
-      $result=$connection->query($sql) or die(mysqli_error($connection));*/
     }
 
     if(isset($_POST['action']) && $_POST['action'] == "deleteFiles"){
