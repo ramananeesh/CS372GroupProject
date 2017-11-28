@@ -52,8 +52,25 @@
       }
     }
     
+    $sql="select count(id) as noUsers from users";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noUsers=$row['noUsers'];
+    //echo "<script>alert(\"No of users : $noUsers\")</script>";
+    $sql="select count(id) as noFiles from files";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noFiles=$row['noFiles'];
     
+    $sql="select count(id) as noNewFiles from files where upload_date=CURRENT_DATE";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noNewFiles=$row['noNewFiles'];
     
+    $sql="select count(id) as noNewUsers from users where dateActive=CURRENT_DATE";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noNewUsers=$row['noNewUsers'];
 ?>
 
 <!DOCTYPE html>
@@ -208,9 +225,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-user-1"></i></div><strong>New Users</strong>
+                          <div class="icon"><i class="icon-user-1"></i></div><strong>Total Users</strong>
                         </div>
-                        <div class="number dashtext-1">27</div>
+                        <div class="number dashtext-1"><?php echo $noUsers; ?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
@@ -223,7 +240,7 @@
                         <div class="title">
                           <div class="icon"><i class="icon-contract"></i></div><strong>New Files</strong>
                         </div>
-                        <div class="number dashtext-2">375</div>
+                        <div class="number dashtext-2"><?php echo $noNewFiles;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
@@ -234,9 +251,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>New Visitors</strong>
+                          <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>New Users</strong>
                         </div>
-                        <div class="number dashtext-3">140</div>
+                        <div class="number dashtext-3"><?php echo $noNewUsers;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
@@ -247,9 +264,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>All Projects</strong>
+                          <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>All Files</strong>
                         </div>
-                        <div class="number dashtext-4">41</div>
+                        <div class="number dashtext-4"><?php echo $noFiles;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
