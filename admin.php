@@ -99,42 +99,42 @@
         hideEverything();
         var homeSection = document.getElementById('home-section');
         homeSection.hidden = false;
-        homeSection.classList.add("active");
+        document.getElementById('homeNav').classList.add("active");
       }
       
       function showMessageSection(){
         hideEverything();
         var messageSection = document.getElementById('message-section');
         messageSection.hidden = false;
-        messageSection.classList.add("active");
+        document.getElementById('msgNav').classList.add("active");
       }
       
       function showUserSection(){
         hideEverything();
         var userSection = document.getElementById('user-section');
         userSection.hidden = false;
-        userSection.classList.add("active");
+        document.getElementById('userNav').classList.add("active");
       }
       
       function showFileSection(){
         hideEverything();
         var fileSection = document.getElementById('file-section');
         fileSection.hidden = false;
-        fileSection.classList.add("active");
+        document.getElementById('fileNav').classList.add("active");
       }
       
       function showIpSection(){
         hideEverything();
         var ipSection = document.getElementById('ip-section');
         ipSection.hidden = false;
-        ipSection.classList.add("active");
+        document.getElementById('ipNav').classList.add("active");
       }
       
       function showSettingSection(){
         hideEverything();
         var settingSection = document.getElementById('setting-section');
         settingSection.hidden = false;
-        settingSection.classList.add("active");
+        document.getElementById('settingNav').classList.add("active");
       }
       
       function hideEverything(){
@@ -151,13 +151,13 @@
         fileSection.hidden = true;
         ipSection.hidden = true;
         settingSection.hidden = true;
-        
-        homeSection.classList.remove("active");
-        messageSection.classList.remove("active");
-        userSection.classList.remove("active");
-        fileSection.classList.remove("active");
-        ipSection.classList.remove("active");
-        settingSection.classList.remove("active");
+          
+        document.getElementById('homeNav').classList.remove("active");
+        document.getElementById('userNav').classList.remove("active");
+        document.getElementById('msgNav').classList.remove("active");
+        document.getElementById('fileNav').classList.remove("active");
+        document.getElementById('ipNav').classList.remove("active");
+        document.getElementById('settingNav').classList.remove("active");
       }
       
     </script>
@@ -180,13 +180,13 @@
           </div>
         </div><span class="heading">Main</span>
         <ul class="list-unstyled">
-          <li class="active"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
-          <li> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
-          <li> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
-          <li> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
-          <li> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
-          <li> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
-          <li> <a href="login.html"> <i class="icon-logout"></i>Login Page</a></li>
+          <li class="active" id="homeNav"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
+          <li id="userNav"> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
+          <li id="msgNav"> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
+          <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
+          <li id="ipNav"> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
+          <li id="settingNav"> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
+          <li> <a href="login.php"> <i class="icon-logout"></i>Login Page</a></li>
         </ul>
       </nav>
       <div class="page-content">
