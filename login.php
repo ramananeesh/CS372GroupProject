@@ -224,7 +224,7 @@
 									if(isset($_POST["name"]))
 										echo 'value="' . $_POST["name"] . '"'; 
 								?>
-								placeholder="Name">
+								placeholder="First and Last Name">
 							</div><br>
 							
 							<div class="input-group" 	

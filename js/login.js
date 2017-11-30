@@ -177,8 +177,13 @@ function signupValidate(f) {
         return true;
     }
     
-    if (document.getElementById("email").value.match(/.+@.+\..+$/)) {
+    if (document.getElementById("email").value.match(/.+@.+\..+$/) == null) {
         alert("Invalid email format.");
+        return false;
+    }
+    
+    if(document.getElementById("name").value.match(/^[A-z]+\ +[A-z]+$/) == null){
+        alert("Invalid name format: Must be only first and last name");
         return false;
     }
     
