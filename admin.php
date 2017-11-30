@@ -27,6 +27,29 @@
           echo "You did not choose a message.";
       }
     }
+    else if(isset($_POST['action']) && $_POST['action'] == "reactivateUser"){
+     
+      $usersToReactivate = $_POST['user-id'];
+      
+      if (isset($_POST['user-id'])) {
+          
+          foreach ($usersToReactivate as $user){
+              
+              $sql = sprintf("UPDATE users SET banned=0 WHERE id='%s'",
+              $connection->real_escape_string($user));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    }
    else if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
      
       $messagesToDelete = $_POST['message-id'];
@@ -405,13 +428,20 @@
             <form action="" method="post">
             <section class="row text-center placeholders">
               <div class="col-6 col-sm-3 placeholder" id="divBan">
-           
                 <a href="#Ban">
                   <input type="hidden" name="action" value="banUser">
                   <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Ban Button"/>
                 </a>
                 <h4>Ban</h4>
                 <span class="text-muted">Ban Selected Users(s)</span>
+              </div>
+              <div class="col-6 col-sm-3 placeholder" id="divReactivate">
+                <a href="#Ban">
+                  <input type="hidden" name="action" value="reactivateUser">
+                  <input type="image" src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Ban Button"/>
+                </a>
+                <h4>Reactivate</h4>
+                <span class="text-muted">Reactivate Selected Users(s)</span>
               </div>
             </section>
             
