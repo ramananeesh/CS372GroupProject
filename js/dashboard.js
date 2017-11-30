@@ -1,25 +1,43 @@
 
+var fileList = [];
+var iterator = 0;
+
 function downloadRequest(){
   // Check which files are selected
   var collection = document.getElementsByName("checkbox[]");
-  var spacer = 1000;
+  var spacer = 0;
   var link;
   var uuid;
+  
+  // Reset Global
+  fileList = [];
+  iterator = 0;
 
   for(var item in collection){
     if(collection[item].checked){
       uuid = collection[item].value;
       link = "./ajax_queries/fileDownload.php?file=".concat(String(uuid));
-      alert(link);
-      setTimeout(download(link),spacer);
-      link = "";
+      fileList.push(link);
+      setTimeout(download, spacer);
       spacer += 1000;
     }
   }
 }
 
-function download(link){
-   window.location = link;
+function download(){
+  if(iterator < fileList.length){
+    window.location = fileList[iterator];
+    iterator += 1;
+  }
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 
 function validate(e) {
