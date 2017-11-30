@@ -14,6 +14,9 @@
         <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="./css/slick-team-slider.css"  rel="stylesheet" type="text/css" />
         <link href="./css/style.css" rel="stylesheet" type="text/css">
+        
+        <script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="js/download.js"></script>
     </head>
     
     <body>
@@ -21,6 +24,7 @@
         <div class="jumbotron">
             <h1 class="small" style="text-align:center; color:black"><span class="bold">Doc->Dash </span>Downloads</h1>
         </div>
+        <form id="form" onsubmit="download(); return false;">
         <div id="downloadDiv">
             <div class="card" style="margin-left:15%; margin-right:15%; border-radius:20px "><br>
                 <div class="container">
@@ -30,9 +34,10 @@
                     <span class="input-group-addon" id="basic-addon3">UUID : </span>
                     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"/>
                     </div><br>
-                    <input class="btn btn-primary" type="submit" value="Download">
+                    <input class="btn btn-primary" type="submit" id="submit" value="Download">
                 </div><br>
             </div>
         </div>
+        </form>
     </body>
 </html>
