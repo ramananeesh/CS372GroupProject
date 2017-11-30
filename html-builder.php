@@ -34,7 +34,10 @@ function insertNav(){
                         <a class="nav-link" href="./index.php"><i class="fa fa-home" aria-hidden="true"></i> Home </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./ur-user.php" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> Quick Send</a>
+                        <a class="nav-link" href="./ur-user.php" target="_blank"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Quick Send</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./download.php" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="links2">
