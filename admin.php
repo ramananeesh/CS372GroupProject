@@ -2,8 +2,9 @@
   
   require_once 'html-builder.php';
   require_once('db_connect.php');
-  
+  session_start();
    $connection = connect_to_db();
+   $adminUser=$_SESSION['userName'];
    if(isset($_POST['action']) && $_POST['action'] == "banUser"){
      
       $usersToBan = $_POST['user-id'];
@@ -340,7 +341,7 @@
         <div class="sidebar-header d-flex align-items-center">
           <div class="avatar"><img src="./images/profilePic_MatthewHunt.jpg" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
-            <h1 class="h5">Matthew Hunt</h1>
+            <h1 class="h5"><?php echo $adminUser ?></h1>
             <p>Developer</p>
           </div>
         </div><span class="heading">Main</span>
