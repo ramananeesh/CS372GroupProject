@@ -404,11 +404,11 @@
             </ul>
             <form action="" method="post">
             <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+              <div class="col-6 col-sm-3 placeholder" id="divBan">
            
-                <a href="#Delete">
+                <a href="#Ban">
                   <input type="hidden" name="action" value="banUser">
-                  <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                  <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Ban Button"/>
                 </a>
                 <h4>Ban</h4>
                 <span class="text-muted">Ban Selected Users(s)</span>
@@ -454,7 +454,7 @@
               </table>
               
             </div>
-            </from>
+            </form>
           </div>
           <!--End users section-->
           
