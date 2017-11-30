@@ -435,14 +435,6 @@
                 <h4>Ban</h4>
                 <span class="text-muted">Ban Selected Users(s)</span>
               </div>
-              <div class="col-6 col-sm-3 placeholder" id="divReactivate">
-                <a href="#Ban">
-                  <input type="hidden" name="action" value="reactivateUser">
-                  <input type="image" src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Ban Button"/>
-                </a>
-                <h4>Reactivate</h4>
-                <span class="text-muted">Reactivate Selected Users(s)</span>
-              </div>
             </section>
             
             <h2>Active User List</h2>
@@ -463,7 +455,62 @@
                       
                       // read
                     
-                      $sql = sprintf("Select * FROM users ORDER BY username");
+                      $sql = sprintf("Select * FROM users WHERE banned = 0 ORDER BY username");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($user= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$user["id"]."'/></td>";
+                          echo "<td>".$user["username"]."</td>";
+                          echo "<td>".$user["name"]."</td>";
+                          echo "<td>".$user["email"]."</td>";
+                          echo "<td>".$user["dateActive"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
+                </tbody>
+              </table>
+              
+            </div>
+            
+            
+
+            </form>
+            
+            <form action="" method="post">
+            <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divReactivate">
+                <a href="#Reactivate">
+                  <input type="hidden" name="action" value="reactivateUser">
+                  <input type="image" src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Reactivate Button"/>
+                </a>
+                <h4>Reactivate</h4>
+                <span class="text-muted">Reactivate Selected Users(s)</span>
+              </div>
+            </section>
+            <h2>Banned User List</h2>
+            <div class="table-responsive" id="bannedUserList">
+              
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Join Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM users WHERE banned = 1 ORDER BY username");
     
                       // execute query
                       $result = $connection->query($sql) or die(mysqli_error());   
@@ -485,6 +532,8 @@
               
             </div>
             </form>
+            
+            
           </div>
           <!--End users section-->
           
