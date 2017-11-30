@@ -3,10 +3,31 @@
   require_once 'html-builder.php';
   require_once('db_connect.php');
   
-
    $connection = connect_to_db();
-   
-   if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
+   if(isset($_POST['action']) && $_POST['action'] == "banUser"){
+     
+      $usersToBan = $_POST['user-id'];
+      
+      if (isset($_POST['user-id'])) {
+          
+          foreach ($usersToBan as $user){
+              
+              $sql = sprintf("UPDATE users SET banned=1 WHERE id='%s'",
+              $connection->real_escape_string($user));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    }
+   else if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
      
       $messagesToDelete = $_POST['message-id'];
       
@@ -366,6 +387,13 @@
         <!--users list-->
          <div id="user-section" hidden>
            
+
+             <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Users</h2>
+            </div>
+          </div>
+           
            <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#">Active</a>
@@ -374,26 +402,22 @@
                 <a class="nav-link" href="#">Banned</a>
               </li>
             </ul>
-  
+            <form action="" method="post">
             <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Download">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+           
+                <a href="#Delete">
+                  <input type="hidden" name="action" value="banUser">
+                  <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
                 </a>
                 <h4>Ban</h4>
-                <span class="text-muted">Ban Selected User(s)</span>
-              </div>
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Delete">
-                  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Reactivate</h4>
-                <span class="text-muted">Reactivate Selected Users(s)</span>
+                <span class="text-muted">Ban Selected Users(s)</span>
               </div>
             </section>
             
             <h2>Active User List</h2>
             <div class="table-responsive" id="fileList">
+              
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -415,20 +439,22 @@
                       $result = $connection->query($sql) or die(mysqli_error());   
     
                       // check whether we found a row
-                      while ($contact= $result->fetch_assoc())
+                      while ($user= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' name='selected'/></td>";
-                          echo "<td>".$contact["username"]."</td>";
-                          echo "<td>".$contact["name"]."</td>";
-                          echo "<td>".$contact["email"]."</td>";
-                          echo "<td>".$contact["dateActive"]."</td>";
+                          echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$user["id"]."'/></td>";
+                          echo "<td>".$user["username"]."</td>";
+                          echo "<td>".$user["name"]."</td>";
+                          echo "<td>".$user["email"]."</td>";
+                          echo "<td>".$user["dateActive"]."</td>";
                           echo "</tr>";
                       }
                     ?>
                 </tbody>
               </table>
+              
             </div>
+            </from>
           </div>
           <!--End users section-->
           
