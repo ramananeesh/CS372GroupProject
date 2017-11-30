@@ -76,12 +76,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
+
+    <!-- PHP Header call [Title, Charset, and Icon Link] -->
+    <?php insertHeader("Admin"); ?>
+        
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="./admin/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
@@ -186,7 +184,6 @@
             
         <!-- END NAVBAR -->
     
-    <br/>
     <div class="d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="sidebar-header d-flex align-items-center">
@@ -298,10 +295,6 @@
         </div>
         <!-- End Home Section -->
         
-        <br>
-        <br>
-        <br>
-        <br>
          <!-- Begin Messages-->
         <div id="message-section" hidden>
          <div class="page-header">
