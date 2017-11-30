@@ -19,7 +19,6 @@
         public $size;
         public $expireDate;
         public $uploadDate;
-        public $userId;
         public $dCount;
     }
 
@@ -30,7 +29,7 @@
     $conn=dbConnect();
     
     // Fetch the user's files
-    $sql="select fname,size,expire_date,id from files where user_id=\"" . $conn->real_escape_string($_REQUEST['user']) . "\"";
+    $sql="select fname,size,expire_date, upload_date, id, download_count from files where user_id=\"" . $conn->real_escape_string($_REQUEST['user']) . "\"";
     $result=$conn->query($sql) or die(mysqli_error());
     
     while ($f = $result->fetch_assoc())
@@ -42,7 +41,6 @@
         $file->size = $f['size'];
         $file->expireDate = $f['expire_date'];
         $file->uploadDate = $f['upload_date'];
-        $file->userId = $f['user_id'];
         $file->dCount = $f['download_count'];
         
         array_push($fileList, $file);
@@ -51,5 +49,6 @@
 
     // Return json
     print json_encode($fileList);
-    
+    mysqli_close($conn);
+    exit;
 ?>
