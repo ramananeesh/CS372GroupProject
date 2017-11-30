@@ -162,7 +162,7 @@
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divDownload">
             <a href="#Download">
-                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Download Button">
+                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" onclick="downloadRequest();" alt="Download Button">
               </a>
             <h4>Download</h4>
             <span class="text-muted">Download Selected File(s)</span>
@@ -237,29 +237,6 @@
               
             ?>
             </form>
-            <!--
-            <tbody>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Profile Picture</td>
-                <td>128</td>
-                <td>06-Dec-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Video</td>
-                <td>258</td>
-                <td>10-Dec-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Checklist</td>
-                <td>185</td>
-                <td>07-Dec-2017</td>
-              </tr>
-            </tbody>
-          </table>
-          -->
         </div>
 
         <!--File History Table -->
