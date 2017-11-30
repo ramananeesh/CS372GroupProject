@@ -454,7 +454,7 @@
               </table>
               
             </div>
-            </from>
+            </form>
           </div>
           <!--End users section-->
           

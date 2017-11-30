@@ -12,7 +12,7 @@
     require('database.php');
     $connection=dbConnect();
     
-    $sql="select count(id) from users where dateActive>=CURRENT_DATE-7; ";
+    //$sql="select count(id) from users where dateActive>=CURRENT_DATE-7; ";
     
     $arrU=array();
     for($i=0;$i<7;$i++){
@@ -27,6 +27,7 @@
     $arrF=array();
     for($i=0;$i<7;$i++){
         $sql="select count(id) from files where upload_date=CURRENT_DATE-($i+1); ";
+        $sql="select count(id) from transactions where fuploadDate=CURRENT_DATE-($i+1); ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
