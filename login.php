@@ -54,7 +54,13 @@
 			//reditect user to dashboard, using absolute path
 			$host=$_SERVER["HTTP_HOST"];
 			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-			header("Location: ./dashboard.php");
+			if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
+				header("Location: ./admin.php");
+			}
+			else{
+				header("Location: ./dashboard.php");
+			}
+			
 			exit;
 		}
 		else{
@@ -224,7 +230,7 @@
 									if(isset($_POST["name"]))
 										echo 'value="' . $_POST["name"] . '"'; 
 								?>
-								placeholder="Name">
+								placeholder="First and Last Name">
 							</div><br>
 							
 							<div class="input-group" 	

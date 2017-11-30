@@ -276,7 +276,7 @@
         //var arrFiles=[8,2,4,7,6,12,14];
         var arrFiles=JSON.parse('<?php echo json_encode($arrF); ?>');
         var arr=[];
-        arr[0]=['Day','Users','Files'];
+        arr[0]=['Day','New Users','New Files'];
         for(var i=0;i<7;i++){
             arr[i+1]=[arrDay[i],arrUsers[i],arrFiles[i]];
         }

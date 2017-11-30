@@ -1,3 +1,27 @@
+
+function downloadRequest(){
+  // Check which files are selected
+  var collection = document.getElementsByName("checkbox[]");
+  var spacer = 1000;
+  var link;
+  var uuid;
+
+  for(var item in collection){
+    if(collection[item].checked){
+      uuid = collection[item].value;
+      link = "./ajax_queries/fileDownload.php?file=".concat(String(uuid));
+      alert(link);
+      setTimeout(download(link),spacer);
+      link = "";
+      spacer += 1000;
+    }
+  }
+}
+
+function download(link){
+   window.location = link;
+}
+
 function validate(e) {
 
   if ((typeof e !== "undefined") && (e !== null)) {
