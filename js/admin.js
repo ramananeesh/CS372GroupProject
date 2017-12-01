@@ -47,7 +47,9 @@ function makeAjaxRequest(type, url, data, func){
         complete: function() {                                  // Once finished
           //$('#load').remove();                               // Clear message
         },
-        success: func,
+        success: function(data){
+            func(data);
+        },
         fail: function() {                                      // Show error msg 
             alert("Error with Ajax call!");
           //$('#panel').html('<div class="loading">Please try again soon.</div>');

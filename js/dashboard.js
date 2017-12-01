@@ -2,6 +2,7 @@
 var fileList = [];
 var iterator = 0;
 
+
 function downloadRequest(){
   // Check which files are selected
   var collection = document.getElementsByName("checkbox[]");
@@ -22,6 +23,22 @@ function downloadRequest(){
       spacer += 1000;
     }
   }
+}
+
+function fetchFiles(){
+  
+  var type = "POST", url = "./ajax_queries/fileList.php", 
+  info = {
+     user: sessionStorage.getItem("userID")
+  },
+  func = function(data){
+      for(var val in data){
+        alert(data[val]);
+      }
+  };
+  
+  makeAjaxRequest(type, url, info, func);
+  
 }
 
 function download(){
