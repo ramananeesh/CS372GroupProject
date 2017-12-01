@@ -243,3 +243,4 @@ function onSignIn(googleUser) {
     sessionStorage.setItem("typeofLogin", type);
     window.open("verify.php", "_self");
 }
+
