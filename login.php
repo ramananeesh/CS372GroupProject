@@ -223,9 +223,6 @@
     			}
 				 });
 				</script>";
-				//echo "<script type=\"text/javascript\">sweetAlert(\"Your account has been deactivated!\",\"You may contest the ban through the contact page\",\"success\")</script>";
-				//echo "<script>alert(\"Your account has been deactivated. You may contest the ban through the contact page\");</script>";
-				//echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
 				exit;
 			}
 			
