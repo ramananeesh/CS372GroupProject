@@ -336,7 +336,7 @@
                 left:40,
                 right:40
             },
-            colors: ['#864DD9','#ff5050'],
+            colors: ['#e95f71','#CF53F9'],
             height:357,
             width: 614,
             lineWidth:1.5,
@@ -542,10 +542,10 @@
                         <div class="title">
                           <div class="icon"><i class="fa fa-comments"></i></div><strong>New Messages</strong>
                         </div>
-                        <div class="number dashtext-1"><?php echo $noNewMessages; ?></div>
+                        <div class="number dashtext-2"><?php echo $noNewMessages; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style=<?php $width=($noNewMessages/$noMessages)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noNewMessages/$noMessages)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
                       </div>
                     </div>
                     <div class="statistic-block block">
@@ -553,10 +553,10 @@
                         <div class="title">
                           <div class="icon"><i class="fa fa-inbox"></i></div><strong>Total Messages</strong>
                         </div>
-                        <div class="number dashtext-1"><?php echo $noMessages; ?></div>
+                        <div class="number dashtext-4"><?php echo $noMessages; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style=<?php $width=($noMessages/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noMessages/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
                       </div>
                     </div>
                   </div>
