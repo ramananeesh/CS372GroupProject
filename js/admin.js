@@ -9,32 +9,19 @@ function banUser()
     // construct URL
     var url = "./ajax_queries/banUser.php?";
     
-    users.forEach(function(user) {
-        url += "user[]=" + user + "&";
-    });
+    var data;
     
-    // // ban users
-    // xhr.onreadystatechange =
-    // function()
-    // {
-    //     // only handle loaded requests
-    //     if (xhr.readyState == 4)
-    //     {
-    //         if (xhr.status == 200)
-    //         {
-    //             // insert user
-    //             alert('this worked!');
-    //         }
-    //         else
-    //             alert("Error with Ajax call!");
-    //     }
-    // }
-    // xhr.open("GET", url, true);
-    // xhr.send(null);
+    // users.forEach(function(user) {
+    //     data = 'user[]:' + user;
+    // });
+    
     
     $.ajax({
-        type: "GET",                                           // GET or POST
+        type: "POST",                                           // GET or POST
         url: url,                                               // Path to file
+        data: { 
+                  'user[]': users
+                 },
         timeout: 2000,                                          // Waiting time
         beforeSend: function() {                                // Before Ajax 
           //$content.append('<div id="load">Loading</div>');      // Load message
@@ -53,26 +40,6 @@ function banUser()
     });
 }
 
-function openAjax(){
-    // instantiate XMLHttpRequest object
-    try
-    {
-        xhr = new XMLHttpRequest();
-    }
-    catch (e)
-    {
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    // handle old browsers
-    if (xhr == null)
-    {
-        alert("Ajax not supported by your browser!");
-        return;
-    }
-    
-    return xhr;
-}
 
 // Pass the checkbox name to the function
 function getCheckedBoxes(chkboxName) {

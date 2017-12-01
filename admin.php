@@ -402,7 +402,7 @@
           <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
           <li id="ipNav"> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
           <li id="settingNav"> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
-          <li> <a href="login.php"> <i class="icon-logout"></i>Login Page</a></li>
+          <li> <a href="sessionEnd.php"> <i class="icon-logout"></i>Login Page</a></li>
         </ul>
       </nav>
       <div class="page-content">
