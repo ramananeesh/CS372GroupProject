@@ -1,6 +1,6 @@
 <?php 
     require_once 'html-builder.php';
-    require_once 'contact_form.php';
+    
  
 ?>
 
@@ -32,7 +32,9 @@
         
         <!-- BEGIN NAVBAR -->
             
-        <?php insertNav(); ?>
+        <?php 
+        require_once 'contact_form.php';
+        insertNav(); ?>
             
         <!-- END NAVBAR -->
         

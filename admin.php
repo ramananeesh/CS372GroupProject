@@ -156,6 +156,17 @@
             $arrF[]=$x;
         }
     }
+    
+    $arrM=array();
+    for($i=0;$i<7;$i++){
+    
+      $sql="select count(id) from contact where date(time_stamp)=CURRENT_DATE-($i); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrM[]=$x;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -273,6 +284,7 @@
         var arrUsers=JSON.parse('<?php echo json_encode($arrU); ?>');
         //var arrFiles=[8,2,4,7,6,12,14];
         var arrFiles=JSON.parse('<?php echo json_encode($arrF); ?>');
+        var arrMessages=JSON.parse('<?php echo json_encode($arrM); ?>');
         var arr=[];
         arr[0]=['Day','New Users','New Files'];
         for(var i=0;i<7;i++){
@@ -293,7 +305,7 @@
                 left:40,
                 right:40
             },
-            colors: ['#9900ff','#ff5050'],
+            colors: ['#864DD9','#ff5050'],
             height:357,
             width: 614,
             lineWidth:1.5,
@@ -323,6 +335,36 @@
         var chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
 
         chart.draw(data, options);
+        
+        var arr2=[];
+        arr2[0]=['Day','Messages'];
+        for(var i=0;i<7;i++){
+            arr2[i+1]=[arrDay[i],arrMessages[i]];
+        }
+        
+        var data2=google.visualization.arrayToDataTable(arr2);
+        var option2={
+          title: 'Messages Received',
+          titleTextStyle:{
+            color: '#8a8d93',
+            alignment:'center',
+            fontSize:12,
+          },
+          colors: ['#864DD9','#ff5050'],
+          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+          //legend: { position: 'none' },
+          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
+          hAxis:{
+            gridlines:{color:'transparent'},
+            baselineColor: 'black',
+          },
+          vAxis:{
+            gridlines:{color:'transparent'},
+          }
+        };
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        
+        chart2.draw(data2, option2);
       }
     </script>
   </head>
@@ -427,7 +469,8 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="bar-chart block no-margin-bottom">
-                      <canvas id="barChartExample1"></canvas>
+                      <!--<canvas id="barChartExample1"></canvas>-->
+                      <div id="chart_div"></div>
                     </div>
                     <div class="bar-chart block">
                       <canvas id="barChartExample2"></canvas>
