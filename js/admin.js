@@ -1,27 +1,45 @@
-function banUser()
+function banUser(ban = true)
 {
-
-//    var xhr = openAjax();
-
+    
     // get selected users
     var users = getCheckedBoxes("user-id[]");
     
     // construct URL
-    var url = "./ajax_queries/banUser.php?";
+    var url = "./ajax_queries/banUser.php";
     
-    var data;
+    // collect data
+    var data = { 'user[]': users, ban: ban};
     
-    // users.forEach(function(user) {
-    //     data = 'user[]:' + user;
-    // });
+    var result = makeAjaxRequest("POST", url, data,  function(data) { alert(data)});
+    
+}
+
+function fileList(ban = true)
+{
+    
+    // get selected users
+    var users = getCheckedBoxes("user-id[]");
+    var user = users[0];
+    
+    // construct URL
+    var url = "./ajax_queries/fileList.php?user=" + String(user);
+    
+    // collect data
+    var data = { 'user': user};
+    
+    data = "";
+    
+    var result = makeAjaxRequest("GET", url, data,  function() { ; });
+    
+}
+
+function makeAjaxRequest(type, url, data, func){
     
     
     $.ajax({
-        type: "POST",                                           // GET or POST
+        type: type,                                           // GET or POST
         url: url,                                               // Path to file
-        data: { 
-                  'user[]': users
-                 },
+        data: data,
         timeout: 2000,                                          // Waiting time
         beforeSend: function() {                                // Before Ajax 
           //$content.append('<div id="load">Loading</div>');      // Load message
@@ -29,10 +47,7 @@ function banUser()
         complete: function() {                                  // Once finished
           //$('#load').remove();                               // Clear message
         },
-        success: function(data) {                               // Show content
-            alert("Ajax sent!");
-          //$content.html( $(data).find('#container') ).hide().fadeIn(400);
-        },
+        success: func,
         fail: function() {                                      // Show error msg 
             alert("Error with Ajax call!");
           //$('#panel').html('<div class="loading">Please try again soon.</div>');
