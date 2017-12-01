@@ -25,7 +25,7 @@
                     values (0, \"" . $_SERVER['REMOTE_ADDR'] . "\", \"" . $_REQUEST['file'] ."\", \"" . $_SESSION['userUuid'] . "\", \"$file\", \"$size\",\"$uDate\")";
     
     // Insert transaction       
-    $result=$conn->query($sql) or die(mysqli_error());
+    $result=$conn->query($sql) or die(mysqli_error($conn));
     
     header("Content-length: $size");
     header("Content-type: application/octet-stream");
