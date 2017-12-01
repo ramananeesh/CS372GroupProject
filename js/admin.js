@@ -12,6 +12,20 @@ function listUsers()
     });
 }
 
+function listMessages()
+{
+    // construct URL
+    var url = "./admin/forms/messages_form.php";
+    
+    // collect data
+    
+    var data ="";
+    
+    var result = makeAjaxRequest("GET", url, data,  function(d) {
+        $("#message-section").html(d);
+    });
+}
+
 function banUser(ban = true)
 {
     
@@ -24,7 +38,7 @@ function banUser(ban = true)
     // collect data
     var data = { 'user[]': users, ban: ban};
     
-    var result = makeAjaxRequest("POST", url, data,  function(data) { alert(data)});
+    var result = makeAjaxRequest("POST", url, data,  function(d) { });
     
     listUsers();
 }
@@ -41,8 +55,9 @@ function deleteMessage()
     // collect data
     var data = { 'message[]': messages};
     
-    var result = makeAjaxRequest("POST", url, data,  function(data) { alert(data)});
+    var result = makeAjaxRequest("POST", url, data,  function(d) { });
     
+    listMessages();
 }
 
 function fileList(ban = true)
