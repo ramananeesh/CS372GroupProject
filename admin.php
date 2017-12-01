@@ -5,6 +5,13 @@
   session_start();
    $connection = connect_to_db();
    $adminUser=$_SESSION['userName'];
+   $adminid=$_SESSION['userUuid'];
+   $sql="select imgSrc from developers where userid=\"$adminid\" ";
+   $result = $connection->query($sql) or die(mysqli_error($connection));
+   if($result){
+     $row=mysqli_fetch_assoc($result);
+     $imgSrc=$row['imgSrc'];
+   }
    if(isset($_POST['action']) && $_POST['action'] == "banUser"){
      
       $usersToBan = $_POST['user-id'];
@@ -118,16 +125,6 @@
     $noNewUsers=$row['noNewUsers'];
 ?>
 <?php
-    $arrD=array(
-    0  => 1,
-    1 => 2,
-    2 => 3,
-    3 => 4,
-    4 => 5,
-    5 =>6,
-    6 =>7);
-  
-    
     require('database.php');
     $connection=dbConnect();
     
@@ -339,7 +336,7 @@
     <div class="d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="./images/profilePic_MatthewHunt.jpg" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="avatar"><img src=<?php echo "$imgSrc" ?> alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5"><?php echo $adminUser ?></h1>
             <p>Developer</p>
