@@ -389,7 +389,7 @@
     <div class="d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src=<?php echo "$imgSrc" ?> alt="..." class="img-fluid rounded-circle"></div>
+          <div class="avatar"><img src=<?php echo '"' . "$imgSrc" . '"'; ?> alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5"><?php echo $adminUser ?></h1>
             <p>Developer</p>
