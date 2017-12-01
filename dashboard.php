@@ -29,6 +29,10 @@
   $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
   
+  // Pass the uuid of the user to the front end
+  if($check == false)
+    echo '<script>  sessionStorage.setItem("userID", "' . $userId . '"); </script>';
+  
    if($_POST["submit"]){
       $file = $_FILES['input-b3'];
       addFile($connection,$file,$userId);
@@ -52,6 +56,7 @@
 <html lang="en">
 
 <head>
+  
   
   <!-- This is for the file upload stuff -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
@@ -97,9 +102,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
 
   <!-- If you're using Stripe for payments -->
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
-  <script type="text/javascript" src="./js/dashboard.js"></script>
+  
 
 </head>
 
@@ -359,7 +362,6 @@
       </section>
       <!--payment stuff-->
       <section class="col-sm-9 ml-sm-auto col-md-10 pt-3" id="goPro" style="display:none !important">
-        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
         <div class="container" style="margin-left:5%">
           <div class="row">
             <!-- You can make it whatever width you want. I'm making it full width
@@ -466,10 +468,13 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <!--script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+  <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript" src="./js/admin.js"></script>
+  <script type="text/javascript" src="./js/dashboard.js"></script>
 </body>
 
 </html>
