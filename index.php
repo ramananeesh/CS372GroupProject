@@ -1,6 +1,6 @@
 <?php 
     require_once 'html-builder.php';
-    require_once 'contact_form.php';
+    
 ?>
 <!DOCTYPE html>
 
@@ -18,14 +18,18 @@
         <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="./css/slick-team-slider.css"  rel="stylesheet" type="text/css" />
         <link href="./css/style.css" rel="stylesheet" type="text/css">
-    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     </head>
 
     <body>
         
         <!-- BEGIN NAVBAR -->
         
-        <?php insertNav(); ?>
+        <?php 
+        require 'contact_form.php';
+        insertNav(); 
+        ?>
         
         <!-- END NAVBAR -->
         
@@ -66,7 +70,9 @@
 
         <!-- BEGIN CONTACT -->
         
-        <?php insertContactForm(); ?>
+        <?php
+        
+        insertContactForm(); ?>
         
         <!-- END CONTACT -->
         
