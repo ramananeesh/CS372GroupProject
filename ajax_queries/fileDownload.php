@@ -17,7 +17,8 @@
     
     list($file, $size, $content) = mysqli_fetch_array($result);
     
-    // Insert transaction 
+    // Insert transaction
+    
     
     header("Content-length: $size");
     header("Content-type: application/octet-stream");
