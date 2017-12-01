@@ -32,13 +32,62 @@ function fetchFiles(){
      user: sessionStorage.getItem("userID")
   },
   func = function(data){
+      
+      // Create new body
+      var body = document.createElement("tbody");
+      var tr, td;
+      
+      // Delete old body
+      document.getElementById("UserFileTable").removeChild(document.getElementById("userFiles"))
+      
+      body.setAttribute("id","userFiles");
+      
       for(var val in data){
-        alert(data[val]);
+        tr = document.createElement("tr");
+        body.appendChild(tr);
+        
+        td = document.createElement("td");
+        td.appendChild(create_checkbox(data[val]['id']));
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.innerHTML = data[val]['name'];
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.innerHTML = data[val]['size'];
+        tr.appendChild(td);
+        td = document.createElement("td");
+        td.innerHTML = data[val]['expireDate'];
+        tr.appendChild(td);
       }
+      
+      document.getElementById("UserFileTable").appendChild(body);
   };
   
   makeAjaxRequest(type, url, info, func);
   
+}
+
+function deleteFiles(){
+  
+  var files = [];
+  var data;
+  
+  files = getCheckedBoxes("checkbox[]");
+  
+  data = { 'delete[]': files};
+  
+  makeAjaxRequest("POST", "./ajax_queries/fileDelete.php", data, fetchFiles);
+  
+}
+
+function create_checkbox(value){
+  
+  var check = document.createElement("input");
+  check.setAttribute("type","checkbox");
+  check.setAttribute("name","checkbox[]");
+  check.setAttribute("value",String(value));
+  
+  return check;
 }
 
 function download(){

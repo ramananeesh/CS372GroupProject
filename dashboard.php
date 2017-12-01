@@ -185,7 +185,7 @@
                 <!--button id="delete" type="submit"-->
                 <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
                 <input type="hidden" name="action" value="deleteFiles">
-                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <img src="./images/delete icon.jpg" width="100" height="100" onclick="deleteFiles()" class="img-fluid rounded-circle" alt="Delete Button" />
                 <!--/button-->
               </a>
               <h4>Delete</h4>
@@ -199,7 +199,7 @@
         <div class="table-responsive" id="fileList">
           <h2 id="fileListTitle">Active File List</h2>
           <!--<form method="POST">-->
-          <table class="table table-striped">
+          <table class="table table-striped" id="UserFileTable">
             <thead>
               <tr>
                 <th><input type="checkbox" onclick="checkAll('fileSelected','fileAll')" id="fileAll" />&nbsp&nbspSelect All</th>
@@ -221,7 +221,7 @@
               }
               $sql="select fname,size,expire_date,id from files where user_id=\"$uId\"";
               $result=$conn->query($sql) or die(mysqli_error());
-              echo "<tbody>";
+              echo "<tbody id=\"userFiles\">";
               while ($f = $result->fetch_assoc())
               {
                 $fname=$f['fname'];
