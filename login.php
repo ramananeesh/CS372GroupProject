@@ -19,12 +19,19 @@
 	}
 	
 	//if username and password were submitted, check them
-	if(isset($_POST["username"])&&isset($_POST["password"]) && $signup == 1 ){
+	if((isset($_POST["username"]) && isset($_POST["password"])) || ($_SESSION['userName'] != NULL && $_SESSION['password'] != NULL) && $signup == 1 ){
 		
 		//prepare sql
-		$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
+		if(!(isset($_POST["username"]))){
+			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
+						$connection->real_escape_string($_SESSION["username"]),
+						$connection->real_escape_string($_SESSION["password"]));
+		}
+		else{
+			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
 						$connection->real_escape_string($_POST["username"]),
 						$connection->real_escape_string($_POST["password"]));
+		}
 		
 		//execute query
 		$result=$connection->query($sql) or die(mysqli_error());
@@ -50,9 +57,10 @@
 			$_SESSION['password']=$row['password'];
 			$_SESSION['emailID']=$row['email'];
 			$_SESSION['typeOfLogin']=$row['normalLogin'];
+			$_SESSION['pro'] = $row['pro'];
 			
 			//reditect user to dashboard, using absolute path
-			$host=$_SERVER["HTTP_HOST"];
+			$host = $_SERVER["HTTP_HOST"];
 			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
 			if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
 				header("Location: ./admin.php");
