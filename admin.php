@@ -338,7 +338,7 @@
             },
             colors: ['#e95f71','#CF53F9'],
             height:357,
-            width: 614,
+            width: 450,
             lineWidth:1.5,
             legend: {position: 'top',alignment:'center', textStyle: {color: '#b8b894', fontSize: 16}},
             hAxis:{
@@ -498,7 +498,7 @@
             <section class="no-padding-bottom">
               <div class="container-fluid">
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-md-3">
                     <div class="bar-chart block no-margin-bottom">
                       <!--<canvas id="barChartExample1"></canvas>-->
                       <div id="chart_div"></div>
@@ -508,13 +508,13 @@
                       
                     </div>
                   </div>
-                  <div class="col-lg-5">
+                  <div class="col-md-6" id="curve_chart">
                     
                       <!--<canvas id="lineCahrt"></canvas>-->
-                      <div id="curve_chart"></div>
+                      <!--<div id="curve_chart"></div>-->
                     
                   </div>
-                  <div class="col-md-3 col-sm-6">
+                  <div class="col-md-3 col-sm-3">
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
