@@ -14,6 +14,22 @@ function banUser(ban = true)
     
 }
 
+function deleteMessage()
+{
+    
+    // get selected users
+    var messages = getCheckedBoxes("message-id[]");
+    
+    // construct URL
+    var url = "./ajax_queries/deleteMessage.php";
+    
+    // collect data
+    var data = { 'message[]': messages};
+    
+    var result = makeAjaxRequest("POST", url, data,  function(data) { alert(data)});
+    
+}
+
 function fileList(ban = true)
 {
     

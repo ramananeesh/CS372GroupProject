@@ -575,7 +575,7 @@
               <h2 class="h5 no-margin-bottom">Messages</h2>
             </div>
           </div>
-          <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+          <form onsubmit='deleteMessage(); return false;' id='messages-form'>
           <section class="row text-center placeholders">
               <div class="col-6 col-sm-3 placeholder" id="divDelete">
            
