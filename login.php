@@ -249,7 +249,8 @@
 			exit;
 		}
 		else{
-			$passFail = true;
+			//$passFail = true;
+			echo "<script type=\"text/javascript\">sweetAlert(\"Error!\",\"Wrong Username/Password\",\"error\")</script>";
 		}
 		
 	}
