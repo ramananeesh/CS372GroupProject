@@ -449,7 +449,7 @@
                         <div class="number dashtext-1"><?php echo $noUsers; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noUsers/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
                       </div>
                     </div>
                   </div>
@@ -462,7 +462,7 @@
                         <div class="number dashtext-2"><?php echo $noNewFiles;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                        <div role="progressbar" style=<?php $width=($noNewFiles/$noFiles)*100; echo "\"width: $width%\""; ?> aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
                       </div>
                     </div>
                   </div>
@@ -475,7 +475,7 @@
                         <div class="number dashtext-3"><?php echo $noNewUsers;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                        <div role="progressbar" style=<?php $width=($noNewUsers/$noUsers)*100; echo "\"width: $width%\""; ?> aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
                       </div>
                     </div>
                   </div>
@@ -488,7 +488,7 @@
                         <div class="number dashtext-4"><?php echo $noFiles;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                        <div role="progressbar" style=<?php $width=($noFiles/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
                       </div>
                     </div>
                   </div>
@@ -534,7 +534,7 @@
                         <div class="number dashtext-1"><?php echo $noDownloads; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noDownloads/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
                       </div>
                     </div>
                     <div class="statistic-block block">
@@ -545,7 +545,7 @@
                         <div class="number dashtext-1"><?php echo $noNewMessages; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noNewMessages/$noMessages)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
                       </div>
                     </div>
                     <div class="statistic-block block">
@@ -556,7 +556,7 @@
                         <div class="number dashtext-1"><?php echo $noMessages; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noMessages/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
                       </div>
                     </div>
                   </div>
