@@ -244,3 +244,22 @@ function onSignIn(googleUser) {
     window.open("verify.php", "_self");
 }
 
+function errorMsg(){
+    sweetAlert({title: 'Error',
+				text: "Your account has been deactivated.You may contest the ban through the contact page",
+				type: "error",
+				showCancelButton: true,
+				dangerMode: true,
+				confirmButtonText: "Redirect to contact page",
+				cancelButtonText: "Not required"
+				},
+				function(isConfirm){
+
+				if (isConfirm){
+    				window.open("./contact.php","_self");
+
+    			} else {
+    				window.open("./index.php","_self");
+    			}
+				 });
+}

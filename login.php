@@ -4,6 +4,7 @@
 	
 	// Sign up indicator
 	$signup = 1;
+	$alertBan = false;
 	$passFail = false;
 	
 	//enable sessions
@@ -14,7 +15,117 @@
 			isset($_POST["email"]) && $_POST["email"] != ''){
 		$signup = 0;
 	}
-
+	
+	// Open connection
+	$connection = dbConnect();
+	
+	//if username and password were submitted, check them
+	if((isset($_POST["username"]) && isset($_POST["password"])) || ($_SESSION['userName'] != NULL && $_SESSION['password'] != NULL) && $signup == 1 ){
+		
+		//prepare sql
+		if(!(isset($_POST["username"]))){
+			$sql=sprintf("SELECT * from users where username='%s' AND password='%s'",
+						$connection->real_escape_string($_SESSION["userName"]),
+						$connection->real_escape_string(substr($_SESSION["password"],0,strlen($_SESSION["password"]))));
+		}
+		else{
+			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
+						$connection->real_escape_string($_POST["username"]),
+						$connection->real_escape_string($_POST["password"]));
+		}
+		
+		//execute query
+		$result=$connection->query($sql) or die(mysqli_error());
+		
+		//check whether we found a row
+		if($result->num_rows==1){
+			
+			$row = mysqli_fetch_assoc($result);
+			
+			// Check if the user is banned
+			if($row['banned'] == 1){
+				$alertBan = true;
+			}
+			else{
+				// Load the user
+				// Check the source IP
+				checkIP($connection);
+				 
+				$_SESSION["authenticated"]=true;
+				$_SESSION['userUuid'] = $row['id'];
+				$_SESSION['userName'] = $row['username'];
+				$_SESSION['password']=$row['password'];
+				$_SESSION['emailID']=$row['email'];
+				$_SESSION['typeOfLogin']=$row['normalLogin'];
+				$_SESSION['pro'] = $row['pro'];
+				
+				//reditect user to dashboard, using absolute path
+				$host = $_SERVER["HTTP_HOST"];
+				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+				if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
+					header("Location: ./admin.php");
+				}
+				else{
+					header("Location: ./dashboard.php");
+				}
+			}
+		}
+		else{
+			$passFail = true;
+		}
+		
+	}
+	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
+		$username=$_POST["username"];
+		if(!($_POST["password"]==$_POST["passwordReenter"]) || trim($_POST["password"]) === ""){
+			echo "<script type='text/javascript'> alert(\"The passwords you provided are diffferent.\"); </script>";
+		}
+		else if(strlen($_POST['password']) < 6){
+			echo "<script type='text/javascript'> alert(\"The password must be at least 6 characters long.\"); </script>";
+		}
+		else if(trim($_POST["name"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide a name to sign up.\"); </script>";
+		}
+		else if(trim($_POST["email"]) === ""){
+			echo "<script type='text/javascript'> alert(\"You must provide an email to sign up.\"); </script>";
+		}
+		else{
+			$password=$_POST["password"];
+			$email=$_POST["email"];
+			$name=$_POST["name"];
+			
+			addUser($connection,array('password' => $password,'username' => $username, 'email' => $email, 'name' => $name));
+			
+			// Check if adding the user was successful by signing them in
+			
+			// Prep sql
+			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
+							$connection->real_escape_string($username),
+							$connection->real_escape_string($password));
+			
+			// Query
+			$result=$connection->query($sql) or die(mysqli_error());
+			
+			// Check if a row was returned
+			if($result->num_rows==1){
+				$_SESSION["authenticated"]=true;
+				$row=mysqli_fetch_assoc($result);
+				//$_SESSION['userName'] = $row['username'];
+				$_SESSION['userName']=$username;
+				// $_SESSION['password']=$row['password'];
+				// $_SESSION['emailID']=$row['email'];
+				// $_SESSION['typeOfLogin']=$row['normalLogin'];
+				$_SESSION['password']=$password;
+				$_SESSION['emailID']=$email;
+				$_SESSION['typeOfLogin']=$typeOfLogin;
+				//reditect user to dashboard, using absolute path
+				$host=$_SERVER["HTTP_HOST"];
+				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+				header("Location: ./dashboard.php");
+				exit;
+			}
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +143,9 @@
 	    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-		<script src="./js/login.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <script src="./js/login.js"></script>
 	</head>
 
 	<body>
@@ -45,6 +156,29 @@
             
         <!-- END NAVBAR -->
         
+        <!-- Inform User of Ban -->
+        <?php
+        	if($alertBan){
+        		echo "<script>sweetAlert({title: 'Error',
+				text: \"Your account has been deactivated.You may contest the ban through the contact page\",
+				type: \"error\",
+				showCancelButton: true,
+				dangerMode: true,
+				confirmButtonText: \"Redirect to contact page\",
+				cancelButtonText: \"Not required\"
+				},
+				function(isConfirm){
+
+				if (isConfirm){
+    				window.open(\"./contact.php\",\"_self\");
+
+    			} else {
+    				window.open(\"./index.php\",\"_self\");
+    			}
+				 });
+				</script>";
+        	}
+        ?>
         
         <!-- BEGIN MAIN -->
 		<div class="container">
@@ -175,137 +309,5 @@
 		</div>
 		<!-- END MAIN -->
 		
-		<!--- Facebook and Google Login Scripts-->
-		<script src="./js/login.js"></script>
 	</body>
-<?php
-
-	
-	
-	$connection = dbConnect();
-	
-	
-	
-	//if username and password were submitted, check them
-	if(isset($_POST["username"])&&isset($_POST["password"]) && $signup == 1 ){
-		
-		//prepare sql
-		$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
-						$connection->real_escape_string($_POST["username"]),
-						$connection->real_escape_string($_POST["password"]));
-		
-		//execute query
-		$result=$connection->query($sql) or die(mysqli_error());
-		
-		//check whether we found a row
-		if($result->num_rows==1){
-			
-			$row=mysqli_fetch_assoc($result);
-			
-			// Check if the user is banned
-			if($row['banned'] == 1){
-				//echo "<h1>Your account has been deactivated. You may contest the ban through the contact page</h1>";
-				echo "<script>sweetAlert({title: 'Error',
-				text: \"Your account has been deactivated.You may contest the ban through the contact page\",
-				type: \"error\",
-				showCancelButton: true,
-				dangerMode: true,
-				confirmButtonText: \"Redirect to contact page\",
-				cancelButtonText: \"Not required\"
-				},
-				function(isConfirm){
-
-				if (isConfirm){
-    				window.open(\"./contact.php\",\"_self\");
-
-    			} else {
-    				window.open(\"./index.php\",\"_self\");
-    			}
-				 });
-				</script>";
-				exit;
-			}
-			
-			// Check the source IP
-			checkIP($connection);
-			 
-			$_SESSION["authenticated"]=true;
-			$_SESSION['userUuid'] = $row['id'];
-			$_SESSION['userName'] = $row['username'];
-			$_SESSION['password']=$row['password'];
-			$_SESSION['emailID']=$row['email'];
-			$_SESSION['typeOfLogin']=$row['normalLogin'];
-			
-			//reditect user to dashboard, using absolute path
-			$host=$_SERVER["HTTP_HOST"];
-			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-			if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
-				header("Location: ./admin.php");
-			}
-			else{
-				header("Location: ./dashboard.php");
-			}
-			
-			exit;
-		}
-		else{
-			//$passFail = true;
-			echo "<script type=\"text/javascript\">sweetAlert(\"Error!\",\"Wrong Username/Password\",\"error\")</script>";
-		}
-		
-	}
-	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
-		$username=$_POST["username"];
-		if(!($_POST["password"]==$_POST["passwordReenter"]) || trim($_POST["password"]) === ""){
-			echo "<script type='text/javascript'> alert(\"The passwords you provided are diffferent.\"); </script>";
-		}
-		else if(strlen($_POST['password']) < 6){
-			echo "<script type='text/javascript'> alert(\"The password must be at least 6 characters long.\"); </script>";
-		}
-		else if(trim($_POST["name"]) === ""){
-			echo "<script type='text/javascript'> alert(\"You must provide a name to sign up.\"); </script>";
-		}
-		else if(trim($_POST["email"]) === ""){
-			echo "<script type='text/javascript'> alert(\"You must provide an email to sign up.\"); </script>";
-		}
-		else{
-			$password=$_POST["password"];
-			$email=$_POST["email"];
-			$name=$_POST["name"];
-			
-			addUser($connection,array('password' => $password,'username' => $username, 'email' => $email, 'name' => $name));
-			
-			// Check if adding the user was successful by signing them in
-			
-			// Prep sql
-			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
-							$connection->real_escape_string($username),
-							$connection->real_escape_string($password));
-			
-			// Query
-			$result=$connection->query($sql) or die(mysqli_error());
-			
-			// Check if a row was returned
-			if($result->num_rows==1){
-				$_SESSION["authenticated"]=true;
-				$row=mysqli_fetch_assoc($result);
-				//$_SESSION['userName'] = $row['username'];
-				$_SESSION['userName']=$username;
-				// $_SESSION['password']=$row['password'];
-				// $_SESSION['emailID']=$row['email'];
-				// $_SESSION['typeOfLogin']=$row['normalLogin'];
-				$_SESSION['password']=$password;
-				$_SESSION['emailID']=$email;
-				$_SESSION['typeOfLogin']=$typeOfLogin;
-				//reditect user to dashboard, using absolute path
-				$host=$_SERVER["HTTP_HOST"];
-				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-				header("Location: ./dashboard.php");
-				exit;
-			}
-		}
-	}
-	
-
-?>
 </html>

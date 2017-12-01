@@ -331,7 +331,15 @@
             Pro Status
           </div>
           <div class="card-body">
-            <p class="card-text" style="color:red;">Disabled</p>
+            <p class="card-text" 
+            <?php 
+              if($_SESSION['pro'] == 1){
+                echo 'style="color:green;">Active</p>'; 
+              }
+              else{
+                echo 'style="color:red;">Disabled</p>';
+              }
+            ?>
             <a href="#" class="btn btn-primary">Upgrade</a>
           </div>
         </div>

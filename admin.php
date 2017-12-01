@@ -126,6 +126,26 @@
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewUsers=$row['noNewUsers'];
+    
+    $sql="select count(id) as noMessages from contact where active=1";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noMessages=$row['noMessages'];
+    
+    $sql="select count(id) as noNewMessages from contact where active=1 and date(time_stamp)=CURRENT_DATE";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noNewMessages=$row['noNewMessages'];
+    
+    $sql="select count(id) as noDownloads from transactions where upload=1";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noDownloads=$row['noDownloads'];
+    
+    $sql="select count(id) as noBannedUsers from users where banned=1";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noBannedUsers=$row['noBannedUsers'];
 ?>
 <?php
     require('database.php');
@@ -316,7 +336,7 @@
                 left:40,
                 right:40
             },
-            colors: ['#864DD9','#ff5050'],
+            colors: ['#e95f71','#CF53F9'],
             height:357,
             width: 614,
             lineWidth:1.5,
@@ -429,7 +449,7 @@
                         <div class="number dashtext-1"><?php echo $noUsers; ?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                        <div role="progressbar" style=<?php $width=($noUsers/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
                       </div>
                     </div>
                   </div>
@@ -442,7 +462,7 @@
                         <div class="number dashtext-2"><?php echo $noNewFiles;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                        <div role="progressbar" style=<?php $width=($noNewFiles/$noFiles)*100; echo "\"width: $width%\""; ?> aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
                       </div>
                     </div>
                   </div>
@@ -455,7 +475,7 @@
                         <div class="number dashtext-3"><?php echo $noNewUsers;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                        <div role="progressbar" style=<?php $width=($noNewUsers/$noUsers)*100; echo "\"width: $width%\""; ?> aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
                       </div>
                     </div>
                   </div>
@@ -468,7 +488,7 @@
                         <div class="number dashtext-4"><?php echo $noFiles;?></div>
                       </div>
                       <div class="progress">
-                        <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                        <div role="progressbar" style=<?php $width=($noFiles/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
                       </div>
                     </div>
                   </div>
@@ -488,11 +508,57 @@
                       
                     </div>
                   </div>
-                  <div class="col-lg-8">
+                  <div class="col-lg-5">
                     
                       <!--<canvas id="lineCahrt"></canvas>-->
                       <div id="curve_chart"></div>
                     
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-user-times"></i></div><strong>Banned Users</strong>
+                        </div>
+                        <div class="number dashtext-3"><?php echo $noBannedUsers; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noBannedUsers/$noUsers)*100; echo "\"width: $width%\""; ?> aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-cloud-download"></i></div><strong>Total Downloads</strong>
+                        </div>
+                        <div class="number dashtext-1"><?php echo $noDownloads; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noDownloads/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-comments"></i></div><strong>New Messages</strong>
+                        </div>
+                        <div class="number dashtext-2"><?php echo $noNewMessages; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noNewMessages/$noMessages)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-inbox"></i></div><strong>Total Messages</strong>
+                        </div>
+                        <div class="number dashtext-4"><?php echo $noMessages; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noMessages/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -836,7 +902,7 @@
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
               <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-              <p class="no-margin-bottom">2017 &copy; Your company. Design by <a href="https://bootstrapious.com">Bootstrapious</a>.</p>
+              <p class="no-margin-bottom">2017 &copy; Doc->Dash. Design by <a href="./index.php#about">Dev->Team</a>.</p>
             </div>
           </div>
         </footer>
