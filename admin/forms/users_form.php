@@ -62,7 +62,11 @@ function insertUserTable(){
         </form>
     </div>";
     
-    echo "<script>$('#active-users-tab').click(function() {
+    echo "<script>
+    $('#active-users-form').show();
+    $('#banned-users-form').hide();
+    
+    $('#active-users-tab').click(function() {
         $('#active-users-form').show();
         $('#banned-users-form').hide();
         $('#active-users-tab').removeClass('active');
@@ -71,8 +75,8 @@ function insertUserTable(){
     $('#banned-users-tab').click(function() {
         $('#active-users-form').hide();
         $('#banned-users-form').show();
-            $('#active-users-tab').addClass('active');
         $('#banned-users-tab').removeClass('active');
+        $('#active-users-tab').addClass('active');
     });</script>";
 }
 
