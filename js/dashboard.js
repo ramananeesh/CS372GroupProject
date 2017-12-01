@@ -1,3 +1,45 @@
+
+var fileList = [];
+var iterator = 0;
+
+function downloadRequest(){
+  // Check which files are selected
+  var collection = document.getElementsByName("checkbox[]");
+  var spacer = 0;
+  var link;
+  var uuid;
+  
+  // Reset Global
+  fileList = [];
+  iterator = 0;
+
+  for(var item in collection){
+    if(collection[item].checked){
+      uuid = collection[item].value;
+      link = "./ajax_queries/fileDownload.php?file=".concat(String(uuid));
+      fileList.push(link);
+      setTimeout(download, spacer);
+      spacer += 1000;
+    }
+  }
+}
+
+function download(){
+  if(iterator < fileList.length){
+    window.location = fileList[iterator];
+    iterator += 1;
+  }
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
 function validate(e) {
 
   if ((typeof e !== "undefined") && (e !== null)) {
@@ -7,6 +49,14 @@ function validate(e) {
       return false;
   }
 }
+
+/* Function validates that user is signed in */
+function validateLogin(){
+  if(sessionStorage.getItem("userName") == null){
+    window.open("./login.php", "_self");
+  }
+}
+
 //window.onload = function() {
 //This sessionStorage.getItem(); is also a predefined function in javascript
 //will retrieve session and get the value;
@@ -15,8 +65,15 @@ function initialize() {
   // document.getElementById("usern").innerHTML = "Hello, " + "<?php echo $username ; ?>";
   //var emailID = sessionStorage.getItem("emailID");
   //document.getElementById("emailID").innerHTML = "<?php echo $emailID ;?>";
-  //var typeOfLogin = sessionStorage.getItem("typeofLogin");
-  var typeOfLogin = "<?php echo $typeOfLogin; ?>"
+  
+  var typeOfLogin = sessionStorage.getItem("typeofLogin");
+  
+  // Check if a user actually signed in
+  if(sessionStorage.getItem("userName") !== null){
+    document.getElementById("usern").innerHTML = "Hello, " + sessionStorage.getItem("userName");
+    document.getElementById("emailID").innerHTML = sessionStorage.getItem("emailID");
+  }
+  
   if (typeOfLogin == "FacebookLogin") {
       document.getElementById("passwordField").innerHTML = "Account logged" +
           " in from Facebook. Cannot change password " +
@@ -29,16 +86,12 @@ function initialize() {
           "locally";
       document.getElementById("changePassword").disabled = true;
   }
-  /*else {
-    document.getElementById("passwordField").innerHTML = "<?php echo $password; ?>";//sessionStorage.getItem("password");
-  }*/
 
   gapi.load('auth2', function() {
       gapi.auth2.init();
   });
 
 }
-
 
 function logoutFB() {
   window.fbAsyncInit = function() {
@@ -164,16 +217,18 @@ function signO() {
   else if (typeOfLogin == "gmailLogin") {
       signOut();
   }
-  else {
-      window.open("./login.php", "_self");
-  }
+  else{signOut();}
+  /*else {
+    alert('User signed out the normal way.');
+    window.open("./sessionEnd.php", "_self");
+  }*/
 }
 
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function() {
-      alert('User signed out.');
-      window.open("./login.php", "_self");
+      sessionStorage.clear();
+      window.open("./sessionEnd.php", "_self");
   });
 }
 

@@ -331,8 +331,6 @@ i[class*='icon-'] {
 nav.navbar {
   background: #2d3035;
   color: #8a8d93;
-  padding-top: 20px;
-  padding-bottom: 20px;
   border-bottom: 1px solid #34373d;
   z-index: 9998;
 }

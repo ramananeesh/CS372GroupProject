@@ -2,20 +2,180 @@
   
   require_once 'html-builder.php';
   require_once('db_connect.php');
-  
-  
+  session_start();
    $connection = connect_to_db();
+   $adminUser=$_SESSION['userName'];
+   $adminid=$_SESSION['userUuid'];
+   $sql="select imgSrc from developers where userid=\"$adminid\" ";
+   $result = $connection->query($sql) or die(mysqli_error($connection));
+   if($result){
+     $row=mysqli_fetch_assoc($result);
+     $imgSrc=$row['imgSrc'];
+   }
+   if(isset($_POST['action']) && $_POST['action'] == "banUser"){
+     
+      $usersToBan = $_POST['user-id'];
+      
+      if (isset($_POST['user-id'])) {
+          
+          foreach ($usersToBan as $user){
+              
+              $sql = sprintf("UPDATE users SET banned=1 WHERE id='%s'",
+              $connection->real_escape_string($user));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    }
+    else if(isset($_POST['action']) && $_POST['action'] == "reactivateUser"){
+     
+      $usersToReactivate = $_POST['user-id'];
+      
+      if (isset($_POST['user-id'])) {
+          
+          foreach ($usersToReactivate as $user){
+              
+              $sql = sprintf("UPDATE users SET banned=0 WHERE id='%s'",
+              $connection->real_escape_string($user));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    }
+   else if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
+     
+      $messagesToDelete = $_POST['message-id'];
+      
+      if (isset($_POST['message-id'])) {
+          
+          foreach ($messagesToDelete as $message){
+              
+              $sql = sprintf("DELETE FROM contact WHERE id = '%s'",
+              $connection->real_escape_string($message));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a message.";
+      }
+    } else if(isset($_POST['action']) && $_POST['action'] == "deleteFile"){
+     
+      $filesToDelete = $_POST['files-id'];
+      
+      if (isset($_POST['files-id'])) {
+          
+          foreach ($messagesToDelete as $message){
+              
+              $sql = sprintf("DELETE FROM file WHERE id = '%s'",
+              $connection->real_escape_string($file));
+            
+              // execute query
+              $result = $connection->query($sql) or die(mysqli_error($connection));
+              
+              if ($result === false)
+                  die("Could not query database");
+              
+          }
+          
+      } else {
+          echo "You did not choose a file.";
+      }
+    }
+    
+    $sql="select count(id) as noUsers from users";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noUsers=$row['noUsers'];
+    //echo "<script>alert(\"No of users : $noUsers\")</script>";
+    $sql="select count(id) as noFiles from files";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noFiles=$row['noFiles'];
+    
+    $sql="select count(id) as noNewFiles from files where upload_date=CURRENT_DATE";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noNewFiles=$row['noNewFiles'];
+    
+    $sql="select count(id) as noNewUsers from users where dateActive=CURRENT_DATE";
+    $result=$connection->query($sql) or die(mysqli_error($connection));
+    $row=mysqli_fetch_assoc($result);
+    $noNewUsers=$row['noNewUsers'];
+?>
+<?php
+    require('database.php');
+    $connection=dbConnect();
+    
+    //$sql="select count(id) from users where dateActive>=CURRENT_DATE-7; ";
+    //select DATE_FORMAT( CURRENT_DATE - 1, '%M %D, %Y' )
+    $arrD=array();
+    for($i=0;$i<7;$i++){
+        $arrD[]=$i+1;
+    }
+    
+    
+    $arrU=array();
+    for($i=0;$i<7;$i++){
+        $sql="select count(id) from users where dateActive=CURRENT_DATE-($i); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrU[]=$x;
+        }
+    }
+    //echo "<script>alert($arrU[2])</script>";
+    $arrF=array();
+    for($i=0;$i<7;$i++){
+        
+        $sql="select count(id) from transactions where fuploadDate=CURRENT_DATE-($i); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrF[]=$x;
+        }
+    }
+    
+    $arrM=array();
+    for($i=0;$i<7;$i++){
+    
+      $sql="select count(id) from contact where date(time_stamp)=CURRENT_DATE-($i); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrM[]=$x;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
+
+    <!-- PHP Header call [Title, Charset, and Icon Link] -->
+    <?php insertHeader("Admin"); ?>
+        
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="./admin/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
@@ -50,42 +210,42 @@
         hideEverything();
         var homeSection = document.getElementById('home-section');
         homeSection.hidden = false;
-        homeSection.classList.add("active");
+        document.getElementById('homeNav').classList.add("active");
       }
       
       function showMessageSection(){
         hideEverything();
         var messageSection = document.getElementById('message-section');
         messageSection.hidden = false;
-        messageSection.classList.add("active");
+        document.getElementById('msgNav').classList.add("active");
       }
       
       function showUserSection(){
         hideEverything();
         var userSection = document.getElementById('user-section');
         userSection.hidden = false;
-        userSection.classList.add("active");
+        document.getElementById('userNav').classList.add("active");
       }
       
       function showFileSection(){
         hideEverything();
         var fileSection = document.getElementById('file-section');
         fileSection.hidden = false;
-        fileSection.classList.add("active");
+        document.getElementById('fileNav').classList.add("active");
       }
       
       function showIpSection(){
         hideEverything();
         var ipSection = document.getElementById('ip-section');
         ipSection.hidden = false;
-        ipSection.classList.add("active");
+        document.getElementById('ipNav').classList.add("active");
       }
       
       function showSettingSection(){
         hideEverything();
         var settingSection = document.getElementById('setting-section');
         settingSection.hidden = false;
-        settingSection.classList.add("active");
+        document.getElementById('settingNav').classList.add("active");
       }
       
       function hideEverything(){
@@ -102,15 +262,110 @@
         fileSection.hidden = true;
         ipSection.hidden = true;
         settingSection.hidden = true;
-        
-        homeSection.classList.remove("active");
-        messageSection.classList.remove("active");
-        userSection.classList.remove("active");
-        fileSection.classList.remove("active");
-        ipSection.classList.remove("active");
-        settingSection.classList.remove("active");
+          
+        document.getElementById('homeNav').classList.remove("active");
+        document.getElementById('userNav').classList.remove("active");
+        document.getElementById('msgNav').classList.remove("active");
+        document.getElementById('fileNav').classList.remove("active");
+        document.getElementById('ipNav').classList.remove("active");
+        document.getElementById('settingNav').classList.remove("active");
       }
       
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        //var arrDay=[1,2,3,4,5,6,7];
+        var arrDay=JSON.parse('<?php echo json_encode($arrD); ?>');
+        //var arrUsers=[10,2,4,8,12,6,5];
+        var arrUsers=JSON.parse('<?php echo json_encode($arrU); ?>');
+        //var arrFiles=[8,2,4,7,6,12,14];
+        var arrFiles=JSON.parse('<?php echo json_encode($arrF); ?>');
+        var arrMessages=JSON.parse('<?php echo json_encode($arrM); ?>');
+        var arr=[];
+        arr[0]=['Day','New Users','New Files'];
+        for(var i=0;i<7;i++){
+            arr[i+1]=[arrDay[i],arrUsers[i],arrFiles[i]];
+        }
+        
+        var data=google.visualization.arrayToDataTable(arr);
+        var options = {
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+            chartArea:{
+                backgroundColor:{
+                    fill:'#2d3035',
+                    stroke: 'black',
+                    strokeWidth: 3
+                },
+                left:40,
+                right:40
+            },
+            colors: ['#864DD9','#ff5050'],
+            height:357,
+            width: 614,
+            lineWidth:1.5,
+            legend: {position: 'top',alignment:'center', textStyle: {color: '#b8b894', fontSize: 16}},
+            hAxis:{
+                //title: 'Day',
+                titleTextStyle: {
+                color: '#8a8d93',
+                bold:true
+                },
+                gridlines:{color:'transparent'},
+                baselineColor: 'black',
+                minValue:1
+            },
+            vAxis:{
+                //title: 'Number',
+                titleTextStyle: {
+                color: '#8a8d93',
+                bold:true
+                },
+                gridlines:{color:'transparent'},
+                baselineColor: 'black',
+            }
+            
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+        
+        var arr2=[];
+        arr2[0]=['Day','Messages'];
+        for(var i=0;i<7;i++){
+            arr2[i+1]=[arrDay[i],arrMessages[i]];
+        }
+        
+        var data2=google.visualization.arrayToDataTable(arr2);
+        var option2={
+          title: 'Messages Received',
+          titleTextStyle:{
+            color: '#8a8d93',
+            alignment:'center',
+            fontSize:12,
+          },
+          colors: ['#864DD9','#ff5050'],
+          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+          //legend: { position: 'none' },
+          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
+          hAxis:{
+            gridlines:{color:'transparent'},
+            baselineColor: 'black',
+          },
+          vAxis:{
+            gridlines:{color:'transparent'},
+          }
+        };
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        
+        chart2.draw(data2, option2);
+      }
     </script>
   </head>
   <body>
@@ -120,24 +375,23 @@
             
         <!-- END NAVBAR -->
     
-    <br/>
     <div class="d-flex align-items-stretch">
       <nav id="sidebar">
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="./images/profilePic_MatthewHunt.jpg" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="avatar"><img src=<?php echo "$imgSrc" ?> alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
-            <h1 class="h5">Matthew Hunt</h1>
+            <h1 class="h5"><?php echo $adminUser ?></h1>
             <p>Developer</p>
           </div>
         </div><span class="heading">Main</span>
         <ul class="list-unstyled">
-          <li class="active"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
-          <li> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
-          <li> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
-          <li> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
-          <li> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
-          <li> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
-          <li> <a href="login.html"> <i class="icon-logout"></i>Login Page</a></li>
+          <li class="active" id="homeNav"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
+          <li id="userNav"> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
+          <li id="msgNav"> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
+          <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
+          <li id="ipNav"> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
+          <li id="settingNav"> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
+          <li> <a href="login.php"> <i class="icon-logout"></i>Login Page</a></li>
         </ul>
       </nav>
       <div class="page-content">
@@ -159,9 +413,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-user-1"></i></div><strong>New Users</strong>
+                          <div class="icon"><i class="icon-user-1"></i></div><strong>Total Users</strong>
                         </div>
-                        <div class="number dashtext-1">27</div>
+                        <div class="number dashtext-1"><?php echo $noUsers; ?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
@@ -174,7 +428,7 @@
                         <div class="title">
                           <div class="icon"><i class="icon-contract"></i></div><strong>New Files</strong>
                         </div>
-                        <div class="number dashtext-2">375</div>
+                        <div class="number dashtext-2"><?php echo $noNewFiles;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
@@ -185,9 +439,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>New Visitors</strong>
+                          <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>New Users</strong>
                         </div>
-                        <div class="number dashtext-3">140</div>
+                        <div class="number dashtext-3"><?php echo $noNewUsers;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
@@ -198,9 +452,9 @@
                     <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                         <div class="title">
-                          <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>All Projects</strong>
+                          <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>All Files</strong>
                         </div>
-                        <div class="number dashtext-4">41</div>
+                        <div class="number dashtext-4"><?php echo $noFiles;?></div>
                       </div>
                       <div class="progress">
                         <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
@@ -215,16 +469,19 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="bar-chart block no-margin-bottom">
-                      <canvas id="barChartExample1"></canvas>
+                      <!--<canvas id="barChartExample1"></canvas>-->
+                      <div id="chart_div"></div>
                     </div>
                     <div class="bar-chart block">
                       <canvas id="barChartExample2"></canvas>
+                      
                     </div>
                   </div>
                   <div class="col-lg-8">
-                    <div class="line-cahrt block">
-                      <canvas id="lineCahrt"></canvas>
-                    </div>
+                    
+                      <!--<canvas id="lineCahrt"></canvas>-->
+                      <div id="curve_chart"></div>
+                    
                   </div>
                 </div>
               </div>
@@ -232,10 +489,6 @@
         </div>
         <!-- End Home Section -->
         
-        <br>
-        <br>
-        <br>
-        <br>
          <!-- Begin Messages-->
         <div id="message-section" hidden>
          <div class="page-header">
@@ -243,6 +496,23 @@
               <h2 class="h5 no-margin-bottom">Messages</h2>
             </div>
           </div>
+          <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+          <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+           
+              <a href="#Delete">
+                <!--button id="delete" type="submit"-->
+                <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
+                <input type="hidden" name="action" value="deleteMessage">
+                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <!--/button-->
+              </a>
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected Message(s)</span>
+            
+          </div>
+            </section>
+          
             <div class="table-responsive" id="fileList">
               
               
@@ -270,7 +540,7 @@
                       while ($contact= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' id='".$contact["id"]."' name='".$contact["id"]."'/></td>";
+                          echo "<td><input type='checkbox' id='message-id' name='message-id[]' value='".$contact["id"]."'/></td>";
                           echo "<td>".$contact["name"]."</td>";
                           echo "<td>".$contact["email"]."</td>";
                           echo "<td>".$contact["message"]."</td>";
@@ -281,12 +551,21 @@
                 </tbody>
               </table>
             </div>
+            </form>
         </div>
+        
         <!-- End Messages -->
        
        
         <!--users list-->
          <div id="user-section" hidden>
+           
+
+             <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Users</h2>
+            </div>
+          </div>
            
            <ul class="nav nav-tabs">
               <li class="nav-item">
@@ -296,26 +575,21 @@
                 <a class="nav-link" href="#">Banned</a>
               </li>
             </ul>
-  
+            <form action="" method="post">
             <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Download">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
+              <div class="col-6 col-sm-3 placeholder" id="divBan">
+                <a href="#Ban">
+                  <input type="hidden" name="action" value="banUser">
+                  <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Ban Button"/>
                 </a>
                 <h4>Ban</h4>
-                <span class="text-muted">Ban Selected User(s)</span>
-              </div>
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Delete">
-                  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Reactivate</h4>
-                <span class="text-muted">Reactivate Selected Users(s)</span>
+                <span class="text-muted">Ban Selected Users(s)</span>
               </div>
             </section>
             
             <h2>Active User List</h2>
             <div class="table-responsive" id="fileList">
+              
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -331,75 +605,149 @@
                       
                       // read
                     
-                      $sql = sprintf("Select * FROM users ORDER BY username");
+                      $sql = sprintf("Select * FROM users WHERE banned = 0 ORDER BY username");
     
                       // execute query
                       $result = $connection->query($sql) or die(mysqli_error());   
     
                       // check whether we found a row
-                      while ($contact= $result->fetch_assoc())
+                      while ($user= $result->fetch_assoc())
                       {
                           echo "<tr>";
-                          echo "<td><input type='checkbox' name='selected'/></td>";
-                          echo "<td>".$contact["username"]."</td>";
-                          echo "<td>".$contact["name"]."</td>";
-                          echo "<td>".$contact["email"]."</td>";
-                          echo "<td>".$contact["dateActive"]."</td>";
+                          echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$user["id"]."'/></td>";
+                          echo "<td>".$user["username"]."</td>";
+                          echo "<td>".$user["name"]."</td>";
+                          echo "<td>".$user["email"]."</td>";
+                          echo "<td>".$user["dateActive"]."</td>";
                           echo "</tr>";
                       }
                     ?>
                 </tbody>
               </table>
+              
             </div>
+            
+            
+
+            </form>
+            
+            <form action="" method="post">
+            <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divReactivate">
+                <a href="#Reactivate">
+                  <input type="hidden" name="action" value="reactivateUser">
+                  <input type="image" src="./images/uploadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Reactivate Button"/>
+                </a>
+                <h4>Reactivate</h4>
+                <span class="text-muted">Reactivate Selected Users(s)</span>
+              </div>
+            </section>
+            <h2>Banned User List</h2>
+            <div class="table-responsive" id="bannedUserList">
+              
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Join Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM users WHERE banned = 1 ORDER BY username");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($user= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$user["id"]."'/></td>";
+                          echo "<td>".$user["username"]."</td>";
+                          echo "<td>".$user["name"]."</td>";
+                          echo "<td>".$user["email"]."</td>";
+                          echo "<td>".$user["dateActive"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
+                </tbody>
+              </table>
+              
+            </div>
+            </form>
+            
+            
           </div>
           <!--End users section-->
           
           
           <!--File section -->
           <div id="file-section" hidden>
-             <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Download">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Delete</h4>
-                <span class="text-muted">Ban Selected File(s)</span>
-              </div>
+             <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Files</h2>
+            </div>
+          </div>
+          
+          <form action="<?= $_SERVER["PHP_SELF"] ?>" method="post">
+          <section class="row text-center placeholders">
+              <div class="col-6 col-sm-3 placeholder" id="divDelete">
+           
+              <a href="#Delete">
+                <!--button id="delete" type="submit"-->
+                <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
+                <input type="hidden" name="action" value="deleteFile">
+                <input type="image" src="./images/delete icon.jpg" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" />
+                <!--/button-->
+              </a>
+              <h4>Delete</h4>
+              <span class="text-muted">Delete Selected Files(s)</span>
+            
+          </div>
             </section>
-            
-            
-            <h2>Files</h2>
+          
             <div class="table-responsive" id="fileList">
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>Select</th>
                     <th>File Name</th>
-                    <th>User</th>
+                    <th>Size</th>
                     <th>Created Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>img.png</td>
-                    <td>huntmj01</td>
-                    <td>10/06/2017</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>file.txt</td>
-                    <td>AhhhhYeah</td>
-                    <td>10/05/2017</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>animate.gif</td>
-                    <td>TopDawg</td>
-                    <td>10/04/2017</td>
+                   <?php
+                      
+                      // read
+                    
+                      $sql = sprintf("Select * FROM files ORDER BY upload_date DESC");
+    
+                      // execute query
+                      $result = $connection->query($sql) or die(mysqli_error());   
+    
+                      // check whether we found a row
+                      while ($file= $result->fetch_assoc())
+                      {
+                          echo "<tr>";
+                          echo "<td><input type='checkbox' id='file-id' name='file-id[]' value='".$file["id"]."'/></td>";
+                          echo "<td>".$file["fname"]."</td>";
+                          echo "<td>".$file["size"]."</td>";
+                          echo "<td>".$file["upload_date"]."</td>";
+                          echo "</tr>";
+                      }
+                    ?>
                 </tbody>
               </table>
             </div>
+            </form>
           </div>
           <!--End file section -->
           

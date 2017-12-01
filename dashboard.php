@@ -1,31 +1,26 @@
 <?php
   require_once 'html-builder.php';
-  require ('database.php');
-   session_start();
-    $connection=dbConnect();
+  require_once 'database.php';
+  $check = false;
+  session_start();
     
-   
+  // Open Database connection
+  $connection=dbConnect();
+  
+  // Start the session
   session_start();
   
-  if($_SESSION['userName'] === ""){
-    header('Location: login.php');
-  }
-  
-  // Check if user is logged in with Gmail or Facebook
-  if($_SESSION['typeofLogin'] == 'gmailLogin' || $_SESSION['typeofLogin'] == 'FacebookLogin'){
+  // Send empty usernames back to Login
+  if(trim($_SESSION['userName']) === ""){
     
-    // Check if the user has a database entry
-    $sql = sprintf("SELECT * from users where id='%s'",$_SESSION['userID']);
-    $result=$connection->query($sql) or die(mysqli_error());
-    
-    if($result->num_rows === 0){
-      // User has not been registered, create database entry
-      addUser($connection,array('password' => "dummy",'email' => $_SESSION['emailID'],'username' => $_SESSION['userName'], 'name' => $_SESSION['userName']), $_SESSION['userID']);
+    // Check if the user is using an alternate Sign-In method
+    if($_SESSION['altLogin'] == false){
+      header('Location: login.php');
     }
-    
-    // Overwrite UUID with Google/Facebook ID
-    $_SESSION['userUuid'] = $_SESSION['userID'];
-    
+    else{
+      // Force the user to validate since they are using alternate
+      $check = true;
+    }
   }
   
   $username=$_SESSION['userName'];
@@ -37,30 +32,18 @@
    if($_POST["submit"]){
       $file = $_FILES['input-b3'];
       addFile($connection,$file,$userId);
-      
-      /*$file_name = $file['name'];
-      $file_type = $file ['type'];
-      $file_size = $file ['size'];
-      $file_path = $file ['tmp_name'];
-      
-      $r=$connection->query("select id from users where username = \"$username\"") or die(mysqli_error($connection));
-      $row=mysqli_fetch_assoc($r);
-      $userid=$row['id'];
-      $r=$connection ->query("select DATE_ADD(CURDATE(),INTERVAL 1 WEEK), CURDATE()") or die(mysqli_error($connection));
-      $row=mysqli_fetch_assoc($r);
-      $expDate=$row['DATE_ADD(CURDATE(),INTERVAL 1 WEEK)'];
-      $cur=$row['CURDATE()'];
-      $data=mysqli_real_escape_string($connection,file_get_contents($_FILES['input-b3']['tmp_name']));
-      //echo $data;
-      $user=   $username;
-      //(id,fname,size,expire_date,upload_date,user_id,download_count,f_data) 
-      $sql="INSERT into files (id,fname,size,expire_date,upload_date,user_id,download_count,f_data) values (uuid(),\"$file_name\",$file_size,$expDate, $cur,\"$userid\",5,'".$data."')";
-      //echo $sql;
-      $result=$connection->query($sql) or die(mysqli_error($connection));*/
     }
 
     if(isset($_POST['action']) && $_POST['action'] == "deleteFiles"){
       echo '<script> alert("The User would like you to delete the files!");</script>';
+      $deleted = $_POST['checkbox'];
+        foreach ($deleted as $fileID) 
+        {
+	          $query="delete from files where id='$fileID'";
+	          $result= $connection->query($query) or die(mysqli_error($connection));
+        }
+       
+        echo '<script> alert("Done!");</script>';
     }
     
     
@@ -120,7 +103,7 @@
 
 </head>
 
-<body onload="attachCallback(); initialize();">
+<body onload="attachCallback();initialize();<?php if($check){ echo 'validateLogin();';} ?>">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.php" id="dashboardLogo"><img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -179,7 +162,7 @@
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divDownload">
             <a href="#Download">
-                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Download Button">
+                  <img src="./images/downloadicon.png" width="100" height="100" class="img-fluid rounded-circle" onclick="downloadRequest();" alt="Download Button">
               </a>
             <h4>Download</h4>
             <span class="text-muted">Download Selected File(s)</span>
@@ -204,7 +187,7 @@
               </a>
               <h4>Delete</h4>
               <span class="text-muted">Delete Selected File(s)</span>
-            </form>
+            <!--</form>-->
           </div>
         </section>
 
@@ -212,6 +195,7 @@
 
         <div class="table-responsive" id="fileList">
           <h2 id="fileListTitle">Active File List</h2>
+          <!--<form method="POST">-->
           <table class="table table-striped">
             <thead>
               <tr>
@@ -232,7 +216,7 @@
                 $uId=$row['id'];
                 //echo "id".$uId;
               }
-              $sql="select fname,size,expire_date from files where user_id=\"$uId\"";
+              $sql="select fname,size,expire_date,id from files where user_id=\"$uId\"";
               $result=$conn->query($sql) or die(mysqli_error());
               echo "<tbody>";
               while ($f = $result->fetch_assoc())
@@ -240,41 +224,19 @@
                 $fname=$f['fname'];
                 $fsize=$f['size'];
                 $fexp=$f['expire_date'];
-                
+                $fid=$f['id'];
                 echo "<tr>
-                        <td> <input type=\"checkbox\" name=\"checkbox[]\" /></td>
+                        <td> <input type=\"checkbox\" name=\"checkbox[]\" value=$fid /></td>
                         <td>$fname</td>
                         <td>$fsize</td>
                         <td>$fexp</td>
                       </tr>";
               }
               echo "</table>";
-              
+              //echo "</form>"
               
             ?>
-            <!--
-            <tbody>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Profile Picture</td>
-                <td>128</td>
-                <td>06-Dec-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Video</td>
-                <td>258</td>
-                <td>10-Dec-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="fileSelected" /></td>
-                <td>Checklist</td>
-                <td>185</td>
-                <td>07-Dec-2017</td>
-              </tr>
-            </tbody>
-          </table>
-          -->
+            </form>
         </div>
 
         <!--File History Table -->
@@ -322,7 +284,7 @@
           </div>
           <div class="card-body" style="padding:1.5em;">
             <p class="card-text">Email: <?php echo $emailID;?><label id="emailID"></label></p>
-            <!--<p class="card-text">Password: <label id="passwordField" type></label></p>-->
+            <p class="card-text"><label id="passwordField" type></label></p>
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
             <button class="btn btn-primary" id="changePassword">Change Password</button>
           </div>
