@@ -1,7 +1,7 @@
 function banUser()
 {
 
-    var xhr = openAjax();
+//    var xhr = openAjax();
 
     // get selected users
     var users = getCheckedBoxes("user-id[]");
@@ -13,24 +13,44 @@ function banUser()
         url += "user[]=" + user + "&";
     });
     
-    // ban users
-    xhr.onreadystatechange =
-    function()
-    {
-        // only handle loaded requests
-        if (xhr.readyState == 4)
-        {
-            if (xhr.status == 200)
-            {
-                // insert user
-                alert('this worked!');
-            }
-            else
-                alert("Error with Ajax call!");
+    // // ban users
+    // xhr.onreadystatechange =
+    // function()
+    // {
+    //     // only handle loaded requests
+    //     if (xhr.readyState == 4)
+    //     {
+    //         if (xhr.status == 200)
+    //         {
+    //             // insert user
+    //             alert('this worked!');
+    //         }
+    //         else
+    //             alert("Error with Ajax call!");
+    //     }
+    // }
+    // xhr.open("GET", url, true);
+    // xhr.send(null);
+    
+    $.ajax({
+        type: "GET",                                           // GET or POST
+        url: url,                                               // Path to file
+        timeout: 2000,                                          // Waiting time
+        beforeSend: function() {                                // Before Ajax 
+          //$content.append('<div id="load">Loading</div>');      // Load message
+        },
+        complete: function() {                                  // Once finished
+          //$('#load').remove();                               // Clear message
+        },
+        success: function(data) {                               // Show content
+            alert("Ajax sent!");
+          //$content.html( $(data).find('#container') ).hide().fadeIn(400);
+        },
+        fail: function() {                                      // Show error msg 
+            alert("Error with Ajax call!");
+          //$('#panel').html('<div class="loading">Please try again soon.</div>');
         }
-    }
-    xhr.open("GET", url, true);
-    xhr.send(null);
+    });
 }
 
 function openAjax(){

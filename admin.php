@@ -213,7 +213,7 @@
       }
     </style>
     
-    <script src="./js/admin.js"></script>
+
     
     <script>
       
@@ -831,10 +831,7 @@
               
             </div>
           </div>
-       
-       
-       
-       
+
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
@@ -853,5 +850,7 @@
     <script src="./admin/vendor/chart.js/Chart.min.js"></script>
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
+    <script src="./js/jquery-1.11.0.min.js"></script>
+    <script src="./js/admin.js"></script>
   </body>
 </html>
