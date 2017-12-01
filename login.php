@@ -4,13 +4,11 @@
 	
 	// Sign up indicator
 	$signup = 1;
+	$alertBan = false;
 	$passFail = false;
 	
 	//enable sessions
 	session_start();
-	
-	$connection = dbConnect();
-	
 	// Check if user is signing Up or signing in
 	if(isset($_POST["passwordReenter"]) && $_POST["passwordReenter"] != '' ||
 		  isset($_POST["name"]) && $_POST["name"] != '' ||
@@ -18,14 +16,17 @@
 		$signup = 0;
 	}
 	
+	// Open connection
+	$connection = dbConnect();
+	
 	//if username and password were submitted, check them
 	if((isset($_POST["username"]) && isset($_POST["password"])) || ($_SESSION['userName'] != NULL && $_SESSION['password'] != NULL) && $signup == 1 ){
 		
 		//prepare sql
 		if(!(isset($_POST["username"]))){
-			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
-						$connection->real_escape_string($_SESSION["username"]),
-						$connection->real_escape_string($_SESSION["password"]));
+			$sql=sprintf("SELECT * from users where username='%s' AND password='%s'",
+						$connection->real_escape_string($_SESSION["userName"]),
+						$connection->real_escape_string(substr($_SESSION["password"],0,strlen($_SESSION["password"]))));
 		}
 		else{
 			$sql=sprintf("SELECT * from users where username='%s' AND password=PASSWORD('%s')",
@@ -39,37 +40,35 @@
 		//check whether we found a row
 		if($result->num_rows==1){
 			
-			$row=mysqli_fetch_assoc($result);
+			$row = mysqli_fetch_assoc($result);
 			
 			// Check if the user is banned
 			if($row['banned'] == 1){
-				echo "<h1>Your account has been deactivated. You may contest the ban through the contact page</h1>";
-				echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
-				exit;
-			}
-			
-			// Check the source IP
-			checkIP($connection);
-			 
-			$_SESSION["authenticated"]=true;
-			$_SESSION['userUuid'] = $row['id'];
-			$_SESSION['userName'] = $row['username'];
-			$_SESSION['password']=$row['password'];
-			$_SESSION['emailID']=$row['email'];
-			$_SESSION['typeOfLogin']=$row['normalLogin'];
-			$_SESSION['pro'] = $row['pro'];
-			
-			//reditect user to dashboard, using absolute path
-			$host = $_SERVER["HTTP_HOST"];
-			$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-			if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
-				header("Location: ./admin.php");
+				$alertBan = true;
 			}
 			else{
-				header("Location: ./dashboard.php");
+				// Load the user
+				// Check the source IP
+				checkIP($connection);
+				 
+				$_SESSION["authenticated"]=true;
+				$_SESSION['userUuid'] = $row['id'];
+				$_SESSION['userName'] = $row['username'];
+				$_SESSION['password']=$row['password'];
+				$_SESSION['emailID']=$row['email'];
+				$_SESSION['typeOfLogin']=$row['normalLogin'];
+				$_SESSION['pro'] = $row['pro'];
+				
+				//reditect user to dashboard, using absolute path
+				$host = $_SERVER["HTTP_HOST"];
+				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+				if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
+					header("Location: ./admin.php");
+				}
+				else{
+					header("Location: ./dashboard.php");
+				}
 			}
-			
-			exit;
 		}
 		else{
 			$passFail = true;
@@ -127,7 +126,6 @@
 			}
 		}
 	}
-	
 ?>
 
 <!DOCTYPE html>
@@ -145,8 +143,9 @@
 	    <link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
-		<script src="./js/login.js"></script>
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <script src="./js/login.js"></script>
 	</head>
 
 	<body>
@@ -157,6 +156,29 @@
             
         <!-- END NAVBAR -->
         
+        <!-- Inform User of Ban -->
+        <?php
+        	if($alertBan){
+        		echo "<script>sweetAlert({title: 'Error',
+				text: \"Your account has been deactivated.You may contest the ban through the contact page\",
+				type: \"error\",
+				showCancelButton: true,
+				dangerMode: true,
+				confirmButtonText: \"Redirect to contact page\",
+				cancelButtonText: \"Not required\"
+				},
+				function(isConfirm){
+
+				if (isConfirm){
+    				window.open(\"./contact.php\",\"_self\");
+
+    			} else {
+    				window.open(\"./index.php\",\"_self\");
+    			}
+				 });
+				</script>";
+        	}
+        ?>
         
         <!-- BEGIN MAIN -->
 		<div class="container">
@@ -287,8 +309,5 @@
 		</div>
 		<!-- END MAIN -->
 		
-		<!--- Facebook and Google Login Scripts-->
-		<script src="./js/login.js"></script>
 	</body>
-
 </html>
