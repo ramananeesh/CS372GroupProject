@@ -1,6 +1,5 @@
 <?php 
-    require_once 'html-builder.php';
-    
+    require_once('html-builder.php');
 ?>
 <!DOCTYPE html>
 

@@ -12,6 +12,8 @@
      $row=mysqli_fetch_assoc($result);
      $imgSrc=$row['imgSrc'];
    }
+   
+   /*
    if(isset($_POST['action']) && $_POST['action'] == "banUser"){
      
       $usersToBan = $_POST['user-id'];
@@ -103,6 +105,7 @@
           echo "You did not choose a file.";
       }
     }
+    */
     
     $sql="select count(id) as noUsers from users";
     $result=$connection->query($sql) or die(mysqli_error($connection));
@@ -209,6 +212,8 @@
         color: white;
       }
     </style>
+    
+    <script src="./js/admin.js"></script>
     
     <script>
       
@@ -581,7 +586,7 @@
                 <a class="nav-link" href="#">Banned</a>
               </li>
             </ul>
-            <form action="" method="post">
+            <form onsubmit="banUser(); return false;">
             <section class="row text-center placeholders">
               <div class="col-6 col-sm-3 placeholder" id="divBan">
                 <a href="#Ban">
