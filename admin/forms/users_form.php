@@ -1,9 +1,7 @@
 <?php
-      require_once('db_connect.php');
+      require_once('../../db_connect.php');
       
-function insertUserTable(){
-    
-    echo "<div id='user-section' hidden>
+    echo "
     <div class='page-header'>
         <div class='container-fluid'>
             <h2 class='h5 no-margin-bottom'>Users</h2>
@@ -78,7 +76,7 @@ function insertUserTable(){
         $('#banned-users-tab').removeClass('active');
         $('#active-users-tab').addClass('active');
     });</script>";
-}
+
 
 function printUserTable($query){
     echo "<table class='table table-striped'>

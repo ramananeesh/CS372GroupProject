@@ -2,7 +2,6 @@
   
   require_once 'html-builder.php';
   require_once('db_connect.php');
-  require_once('./admin/forms/users_form.php');
   session_start();
    $connection = connect_to_db();
    $adminUser=$_SESSION['userName'];
@@ -568,6 +567,9 @@
         </div>
         <!-- End Home Section -->
         
+        <div id='user-section' hidden>
+        </div>
+        
          <!-- Begin Messages-->
         <div id="message-section" hidden>
          <div class="page-header">
@@ -637,7 +639,7 @@
        
        
         <!--users list-->
-         <?php insertUserTable(); ?>
+
           <!--End users section-->
           
           
@@ -793,5 +795,10 @@
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
     <script src="./js/admin.js"></script>
+    <script>
+      $('#userNav').click(function(){
+        listUsers();
+      });
+    </script>
   </body>
 </html>

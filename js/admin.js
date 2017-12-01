@@ -1,3 +1,17 @@
+function listUsers()
+{
+    // construct URL
+    var url = "./admin/forms/users_form.php";
+    
+    // collect data
+    
+    var data ="";
+    
+    var result = makeAjaxRequest("GET", url, data,  function(d) {
+        $("#user-section").html(d);
+    });
+}
+
 function banUser(ban = true)
 {
     
@@ -12,6 +26,7 @@ function banUser(ban = true)
     
     var result = makeAjaxRequest("POST", url, data,  function(data) { alert(data)});
     
+    listUsers();
 }
 
 function deleteMessage()
