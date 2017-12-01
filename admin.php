@@ -417,12 +417,12 @@
         </div><span class="heading">Main</span>
         <ul class="list-unstyled">
           <li class="active" id="homeNav"><a onclick="showHomeSection();"><i class="icon-home"></i>Home</a></li>
-          <li id="userNav"> <a onclick="showUserSection()"> <i class="fa fa-bar-chart"></i>Users</a></li>
-          <li id="msgNav"> <a onclick="showMessageSection()"> <i class="fa fa-bar-chart"></i>Messages</a></li>
-          <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
-          <li id="ipNav"> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
-          <li id="settingNav"> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
-          <li> <a href="sessionEnd.php"> <i class="icon-logout"></i>Login Page</a></li>
+          <li id="userNav"> <a onclick="showUserSection()"> <i class="fa fa-users"></i>Users</a></li>
+          <li id="msgNav"> <a onclick="showMessageSection()"> <i class="fa fa-commenting"></i>Messages</a></li>
+          <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-files-o"></i>Files </a></li>
+          <li id="ipNav"> <a onclick="showIpSection()"> <i class="fa fa-location-arrow"></i>IPs </a></li>
+          <li id="settingNav"> <a onclick="showSettingSection()"> <i class="fa fa-cogs"></i>Settings </a></li>
+          <li> <a href="sessionEnd.php"> <i class="fa fa-sign-out"></i>Login Page</a></li>
         </ul>
       </nav>
       <div class="page-content">
