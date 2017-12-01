@@ -244,7 +244,6 @@ function onSignIn(googleUser) {
     window.open("verify.php", "_self");
 }
 
-
 function errorMsg(){
     sweetAlert({title: 'Error',
 				text: "Your account has been deactivated.You may contest the ban through the contact page",
