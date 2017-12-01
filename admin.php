@@ -12,6 +12,8 @@
      $row=mysqli_fetch_assoc($result);
      $imgSrc=$row['imgSrc'];
    }
+   
+   /*
    if(isset($_POST['action']) && $_POST['action'] == "banUser"){
      
       $usersToBan = $_POST['user-id'];
@@ -103,6 +105,7 @@
           echo "You did not choose a file.";
       }
     }
+    */
     
     $sql="select count(id) as noUsers from users";
     $result=$connection->query($sql) or die(mysqli_error($connection));
@@ -209,6 +212,8 @@
         color: white;
       }
     </style>
+    
+
     
     <script>
       
@@ -397,7 +402,7 @@
           <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-bar-chart"></i>Files </a></li>
           <li id="ipNav"> <a onclick="showIpSection()"> <i class="icon-padnote"></i>IPs </a></li>
           <li id="settingNav"> <a onclick="showSettingSection()"> <i class="icon-padnote"></i>Settings </a></li>
-          <li> <a href="login.php"> <i class="icon-logout"></i>Login Page</a></li>
+          <li> <a href="sessionEnd.php"> <i class="icon-logout"></i>Login Page</a></li>
         </ul>
       </nav>
       <div class="page-content">
@@ -581,7 +586,7 @@
                 <a class="nav-link" href="#">Banned</a>
               </li>
             </ul>
-            <form action="" method="post">
+            <form onsubmit="banUser(); return false;">
             <section class="row text-center placeholders">
               <div class="col-6 col-sm-3 placeholder" id="divBan">
                 <a href="#Ban">
@@ -826,10 +831,7 @@
               
             </div>
           </div>
-       
-       
-       
-       
+
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
@@ -848,5 +850,7 @@
     <script src="./admin/vendor/chart.js/Chart.min.js"></script>
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
+    <script src="./js/jquery-1.11.0.min.js"></script>
+    <script src="./js/admin.js"></script>
   </body>
 </html>
