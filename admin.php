@@ -114,12 +114,12 @@
     $row=mysqli_fetch_assoc($result);
     $noFiles=$row['noFiles'];
     
-    $sql="select count(id) as noNewFiles from files where upload_date=CURRENT_DATE";
+    $sql="select count(id) as noNewFiles from files where upload_date=date(now())";
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewFiles=$row['noNewFiles'];
     
-    $sql="select count(id) as noNewUsers from users where dateActive=CURRENT_DATE";
+    $sql="select count(id) as noNewUsers from users where dateActive=date(now())";
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewUsers=$row['noNewUsers'];
@@ -134,11 +134,11 @@
     for($i=0;$i<7;$i++){
         $arrD[]=$i+1;
     }
-    
+   
     
     $arrU=array();
     for($i=0;$i<7;$i++){
-        $sql="select count(id) from users where dateActive=CURRENT_DATE-($i); ";
+        $sql="select count(id) from users where dateActive=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY); ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
@@ -147,9 +147,10 @@
     }
     //echo "<script>alert($arrU[2])</script>";
     $arrF=array();
+    
     for($i=0;$i<7;$i++){
-        
-        $sql="select count(id) from transactions where fuploadDate=CURRENT_DATE-($i); ";
+        $date=date("Y-m-d")-$i;
+        $sql="select count(id) from transactions where fuploadDate=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY) ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
@@ -160,7 +161,7 @@
     $arrM=array();
     for($i=0;$i<7;$i++){
     
-      $sql="select count(id) from contact where date(time_stamp)=CURRENT_DATE-($i); ";
+      $sql="select count(id) from contact where date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY) ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
