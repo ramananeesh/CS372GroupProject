@@ -114,12 +114,12 @@
     $row=mysqli_fetch_assoc($result);
     $noFiles=$row['noFiles'];
     
-    $sql="select count(id) as noNewFiles from files where upload_date=date(now())";
+    $sql="select count(id) as noNewFiles from files where upload_date=CURRENT_DATE";
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewFiles=$row['noNewFiles'];
     
-    $sql="select count(id) as noNewUsers from users where dateActive=date(now())";
+    $sql="select count(id) as noNewUsers from users where dateActive=CURRENT_DATE";
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewUsers=$row['noNewUsers'];
@@ -137,35 +137,40 @@
    
     
     $arrU=array();
+    $c=6;
     for($i=0;$i<7;$i++){
-        $sql="select count(id) from users where dateActive=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY); ";
+        $sql="select count(id) from users where dateActive=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY); ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
             $arrU[]=$x;
+            $c--;
         }
     }
     //echo "<script>alert($arrU[2])</script>";
     $arrF=array();
-    
+    $c=6;
     for($i=0;$i<7;$i++){
         $date=date("Y-m-d")-$i;
-        $sql="select count(id) from transactions where fuploadDate=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY) ";
+        $sql="select count(id) from transactions where fuploadDate=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
             $arrF[]=$x;
         }
+        $c--;
     }
     
     $arrM=array();
+    $c=6;
     for($i=0;$i<7;$i++){
     
-      $sql="select count(id) from contact where date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $i DAY) ";
+      $sql="select count(id) from contact where date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
         if($result=mysqli_query($connection,$sql)){
             $row=mysqli_fetch_assoc($result);
             $x=intVal($row['count(id)']);
             $arrM[]=$x;
+            $c--;
         }
     }
 ?>
