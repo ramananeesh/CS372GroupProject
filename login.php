@@ -58,6 +58,7 @@
 				$_SESSION['emailID']=$row['email'];
 				$_SESSION['typeOfLogin']=$row['normalLogin'];
 				$_SESSION['pro'] = $row['pro'];
+				$_SESSION['name'] = $row['name'];
 				
 				//reditect user to dashboard, using absolute path
 				$host = $_SERVER["HTTP_HOST"];

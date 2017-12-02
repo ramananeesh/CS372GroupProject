@@ -1,7 +1,7 @@
 
 var fileList = [];
 var iterator = 0;
-
+var tabOpen = 'f';
 
 function downloadRequest(){
   // Check which files are selected
@@ -25,71 +25,6 @@ function downloadRequest(){
   }
 }
 
-function fetchFiles(){
-  
-  var type = "POST", url = "./ajax_queries/fileList.php", 
-  info = {
-     user: sessionStorage.getItem("userID")
-  },
-  func = function(data){
-      
-      // Create new body
-      var body = document.createElement("tbody");
-      var tr, td;
-      
-      // Delete old body
-      document.getElementById("UserFileTable").removeChild(document.getElementById("userFiles"))
-      
-      body.setAttribute("id","userFiles");
-      
-      for(var val in data){
-        tr = document.createElement("tr");
-        body.appendChild(tr);
-        
-        td = document.createElement("td");
-        td.appendChild(create_checkbox(data[val]['id']));
-        tr.appendChild(td);
-        td = document.createElement("td");
-        td.innerHTML = data[val]['name'];
-        tr.appendChild(td);
-        td = document.createElement("td");
-        td.innerHTML = data[val]['size'];
-        tr.appendChild(td);
-        td = document.createElement("td");
-        td.innerHTML = data[val]['expireDate'];
-        tr.appendChild(td);
-      }
-      
-      document.getElementById("UserFileTable").appendChild(body);
-  };
-  
-  makeAjaxRequest(type, url, info, func);
-  
-}
-
-function deleteFiles(){
-  
-  var files = [];
-  var data;
-  
-  files = getCheckedBoxes("checkbox[]");
-  
-  data = { 'delete[]': files};
-  
-  makeAjaxRequest("POST", "./ajax_queries/fileDelete.php", data, fetchFiles);
-  
-}
-
-function create_checkbox(value){
-  
-  var check = document.createElement("input");
-  check.setAttribute("type","checkbox");
-  check.setAttribute("name","checkbox[]");
-  check.setAttribute("value",String(value));
-  
-  return check;
-}
-
 function download(){
   if(iterator < fileList.length){
     window.location = fileList[iterator];
@@ -97,14 +32,151 @@ function download(){
   }
 }
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
+function deleteSomething(){
+  
+  if(tabOpen === 'h'){
+    deleteHistory();
+  }
+  else{
+    deleteFiles();
   }
 }
+
+function fetchFiles(){
+  
+  var type = "POST", url = "./ajax_queries/fileList.php", 
+  info = {
+     user: sessionStorage.getItem("userID")
+  },
+  func = function(data){ refreshDataList(data);};
+  
+  makeAjaxRequest(type, url, info, func);
+  
+}
+
+function refreshDataList(data){
+  // Create new body
+  var body = document.createElement("tbody");
+  var tr, td;
+  
+  // Delete old body
+  document.getElementById("UserFileTable").removeChild(document.getElementById("userFiles"))
+  
+  body.setAttribute("id","userFiles");
+  
+  for(var val in data){
+    tr = document.createElement("tr");
+    body.appendChild(tr);
+    
+    td = document.createElement("td");
+    td.appendChild(create_checkbox(data[val]['id'], "checkbox[]"));
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['name'];
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['size'];
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['expireDate'];
+    tr.appendChild(td);
+  }
+  
+  document.getElementById("UserFileTable").appendChild(body);
+}
+
+function deleteFiles(){
+
+  var type = "POST";
+  var url = "./ajax_queries/fileDelete.php";
+  var info = { delete: getCheckedBoxes('checkbox[]')};
+  var func = function(data) {  };
+  
+  if(info['delete'] === null){
+    return;
+  }
+  
+  makeAjaxRequest(type, url, info, func);
+  setTimeout(fetchFiles, 1000);
+}
+
+function fetchHistory(){
+  var type = "POST", url = "./ajax_queries/fileHistory.php", 
+  info = {
+     user: sessionStorage.getItem("userID")
+  },
+  func = function(data){ refreshHistoryList(data);};
+  
+  makeAjaxRequest(type, url, info, func);
+}
+
+function deleteHistory(){
+  var type = "POST", url = "./ajax_queries/fileHistHide.php", 
+  info = {
+     hide: getCheckedBoxes("entrySelected[]")
+  },
+  func = function(data){ };
+  
+  makeAjaxRequest(type, url, info, func);
+  setTimeout(fetchHistory, 1000);
+}
+
+function refreshHistoryList(data){
+  // Create new body
+  var body = document.createElement("tbody");
+  var tr, td;
+  
+  // Delete old body
+  document.getElementById("historyTable").removeChild(document.getElementById("historyFiles"))
+  
+  body.setAttribute("id","historyFiles");
+  
+  for(var val in data){
+    tr = document.createElement("tr");
+    body.appendChild(tr);
+    
+    td = document.createElement("td");
+    td.appendChild(create_checkbox(data[val]['id'], "entrySelected[]"));
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['fname'];
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['fsize'];
+    tr.appendChild(td);
+    td = document.createElement("td");
+    td.innerHTML = data[val]['fuploadDate'];
+    tr.appendChild(td);
+  }
+  
+  document.getElementById("historyTable").appendChild(body);
+}
+
+function shareFile(){
+  
+  var box = getCheckedBoxes("checkbox[]");
+  
+  if(box === null)
+    return;
+  
+  // Show user their selection
+  for(var i in box){
+    sweetAlert("Share this File!", " UUID for sharing : " + box[i], "success");
+  }
+  
+}
+
+function create_checkbox(value, name){
+  
+  var check = document.createElement("input");
+  check.setAttribute("type","checkbox");
+  check.setAttribute("name", name);
+  check.setAttribute("value",String(value));
+  
+  return check;
+}
+
+
 
 function validate(e) {
 
@@ -123,16 +195,15 @@ function validateLogin(){
   }
 }
 
-//window.onload = function() {
-//This sessionStorage.getItem(); is also a predefined function in javascript
-//will retrieve session and get the value;
+
+
 function initialize() {
-  //var a = sessionStorage.getItem("userName");
-  // document.getElementById("usern").innerHTML = "Hello, " + "<?php echo $username ; ?>";
-  //var emailID = sessionStorage.getItem("emailID");
-  //document.getElementById("emailID").innerHTML = "<?php echo $emailID ;?>";
-  
+
   var typeOfLogin = sessionStorage.getItem("typeofLogin");
+  
+  // Load users files
+  fetchFiles();
+  fetchHistory();
   
   // Check if a user actually signed in
   if(sessionStorage.getItem("userName") !== null){
@@ -329,10 +400,6 @@ function docCancel() {
   filesClick();
 }
 
-/* Think this should stay here, since its global and very page specific, but everything else
-  should be good to go... */
-
-
 function bind(elements) {
   var collect = {};
   var activate = false;
@@ -408,10 +475,12 @@ function historyClick() {
   tabs.open(1);
   switchVis(["fileListTitle", "historyTitle"]);
   switchVis(["divDownload", "divUpload", "divShare"]);
+  tabOpen = 'h';
 }
 
 function activeClick() {
   tabs.open(0);
   switchVis(["fileListTitle", "historyTitle"]);
   switchVis(["divDownload", "divUpload", "divShare"]);
+  tabOpen = 'f';
 }

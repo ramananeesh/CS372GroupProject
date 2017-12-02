@@ -2,8 +2,8 @@
     /**
      *
      * 
-     * You must pass 'hide[]=uuid' in the request field for
-     *  each historical file
+     * You must pass 'hide[]=id' in the request field for
+     *  each historical entry
      * 
      */
      
@@ -19,10 +19,10 @@
         
         if($firstItem){
             $firstItem = false;
-            $sql="Update transactions set hidden = 1 where file_id=\"" . $conn->real_escape_string($value) . "\"";
+            $sql="Update transactions set hidden = 1 where id=\"" . $conn->real_escape_string($value) . "\"";
         }
         else{
-            $sql = $sql . " OR file_id=\"" . $conn->real_escape_string($value) . "\"";
+            $sql = $sql . " OR id=\"" . $conn->real_escape_string($value) . "\"";
         }
     }
    

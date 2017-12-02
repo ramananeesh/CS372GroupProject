@@ -15,7 +15,7 @@
     header("Content-type: application/json");
     
     // Create connection
-    $conn=dbConnect();
+    $conn = dbConnect();
     
     // Build query
     foreach ($_REQUEST['delete'] as $value){

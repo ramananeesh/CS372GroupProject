@@ -36,7 +36,7 @@
     
     // Check if asked for explict history
     if($_REQUEST['seeAll'] == NULL || $_REQUEST['seeAll'] == false){
-        $sql = $sql . " AND hidden = 0";
+        $sql = $sql . " AND hidden = 0 AND upload = 1 ORDER BY time_stamp DESC";
     }
     
     $result=$conn->query($sql) or die(mysqli_error());

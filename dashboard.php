@@ -28,6 +28,7 @@
   $password=$_SESSION['password'];
   $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
+  $name = $_SESSION['name'];
   
   // Pass the uuid of the user to the front end
   if($check == false)
@@ -35,7 +36,10 @@
   
    if($_POST["submit"]){
       $file = $_FILES['input-b3'];
-      addFile($connection,$file,$userId);
+      
+      if($file['tmp_name'] != NULL && trim($file['tmp_name']) != "" && trim($file['name']) != ""){
+        addFile($connection,$file,$userId);
+      }
     }
 
     if(isset($_POST['action']) && $_POST['action'] == "deleteFiles"){
@@ -83,6 +87,8 @@
   <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/themes/fa/theme.js"></script>
   <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
   <!--Other normal HTML Stuff -->
   
@@ -118,7 +124,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo $username ?></label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo $name ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
@@ -172,7 +178,7 @@
           </div>
           <div class="col-6 col-sm-3 placeholder" id="divShare">
             <a href="#Share">
-              <img src="./images/shareicon.png" width="100" height="100" class="img-fluid rounded-circle" alt="Share Button">
+              <img src="./images/shareicon.png" width="100" height="100" class="img-fluid rounded-circle" onclick="shareFile();" alt="Share Button">
             </a>
             <h4>Share</h4>
             <span class="text-muted">Share or Modify File Access</span>
@@ -185,7 +191,7 @@
                 <!--button id="delete" type="submit"-->
                 <!-- img src="./images/delete icon.jpg" name="delete" width="100" height="100" class="img-fluid rounded-circle" alt="Delete Button" -->
                 <input type="hidden" name="action" value="deleteFiles">
-                <img src="./images/delete icon.jpg" width="100" height="100" onclick="deleteFiles()" class="img-fluid rounded-circle" alt="Delete Button" />
+                <img src="./images/delete icon.jpg" width="100" height="100" onclick="deleteSomething();" class="img-fluid rounded-circle" alt="Delete Button" />
                 <!--/button-->
               </a>
               <h4>Delete</h4>
@@ -202,77 +208,32 @@
           <table class="table table-striped" id="UserFileTable">
             <thead>
               <tr>
-                <th><input type="checkbox" onclick="checkAll('fileSelected','fileAll')" id="fileAll" />&nbsp&nbspSelect All</th>
+                <th><input type="checkbox" onclick="checkAll('checkbox[]','fileAll')" id="fileAll" />&nbsp&nbspSelect All</th>
                 <th>Name</th>
                 <th>Size (Kb)</th>
                 <th>Expiration Date</th>
               </tr>
             </thead>
-            <?php
-              require_once "database.php";
+            <tbody id="userFiles">
               
-              $conn=dbConnect();
-              $sql="select id from users where username=\"$username\"";
-              $result=$conn->query($sql) or die(mysqli_error($conn));
-              if($result->num_rows==1){
-                $row=$result->fetch_assoc();
-                $uId=$row['id'];
-                //echo "id".$uId;
-              }
-              $sql="select fname,size,expire_date,id from files where user_id=\"$uId\"";
-              $result=$conn->query($sql) or die(mysqli_error());
-              echo "<tbody id=\"userFiles\">";
-              while ($f = $result->fetch_assoc())
-              {
-                $fname=$f['fname'];
-                $fsize=$f['size'];
-                $fexp=$f['expire_date'];
-                $fid=$f['id'];
-                echo "<tr>
-                        <td> <input type=\"checkbox\" name=\"checkbox[]\" value=$fid /></td>
-                        <td>$fname</td>
-                        <td>$fsize</td>
-                        <td>$fexp</td>
-                      </tr>";
-              }
-              echo "</table>";
-              //echo "</form>"
-              
-            ?>
+            </tbody>
+            </table>
             </form>
         </div>
 
         <!--File History Table -->
         <h2 id="historyTitle" style="display:none;">File History List</h2>
         <div class="table-responsive" id="history" style="display:none;">
-          <table class="table table-striped">
+          <table class="table table-striped" id="historyTable">
             <thead>
               <tr>
-                <th><input type="checkbox" onclick="checkAll('entrySelected','histAll')" id="histAll" />&nbsp&nbspSelect All</th>
+                <th><input type="checkbox" onclick="checkAll('entrySelected[]','histAll')" id="histAll" />&nbsp&nbspSelect All</th>
                 <th>Name</th>
                 <th>Size (Kb)</th>
-                <th>Expiration Date</th>
+                <th>Upload Date</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox" name="entrySelected" /></td>
-                <td>Puppy Picture</td>
-                <td>128</td>
-                <td>06-Oct-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="entrySelected" /></td>
-                <td>Skyline</td>
-                <td>558</td>
-                <td>10-Oct-2017</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="entrySelected" /></td>
-                <td>Fall Picture</td>
-                <td>728</td>
-                <td>06-Sept-2017</td>
-              </tr>
+            <tbody id="historyFiles">
             </tbody>
           </table>
         </div>
@@ -337,13 +298,14 @@
             <p class="card-text" 
             <?php 
               if($_SESSION['pro'] == 1){
-                echo 'style="color:green;">Active</p>'; 
+                echo 'style="color:green;">Active</p>';
+                echo '<a href="#" class="btn btn-primary">Cancel Subscription</a>';
               }
               else{
                 echo 'style="color:red;">Disabled</p>';
+                echo '<a href="#" class="btn btn-primary">Upgrade</a>';
               }
             ?>
-            <a href="#" class="btn btn-primary">Upgrade</a>
           </div>
         </div>
       </section>
