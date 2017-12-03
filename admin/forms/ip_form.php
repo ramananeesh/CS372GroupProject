@@ -17,7 +17,7 @@
           </li>
         </ul>
     
-    <form onsubmit='banIP(); return false;' id='banned-ips-form'>
+    <form onsubmit='banIP(false); return false;' id='banned-ips-form'>
         
         
         <section class='row text-center placeholders'>
@@ -38,7 +38,7 @@
       echo "
     </form>
     
-    <form onsubmit='banIp(false); return false;' id='ban-ip-form'>
+    <form onsubmit='banIP(); return false;' id='ban-ip-form'>
         
         <section class='row text-center placeholders'>
           <div class='col-6 col-sm-3 placeholder' id='divBan'>
@@ -47,18 +47,16 @@
               <input type='image' src='./images/delete icon.jpg' width='100' height='100' class='img-fluid rounded-circle' alt='Reactivate Button'/>
             </a>
             <h4>Ban</h4>
-            <span class='text-muted'>IP to Ban:</span>
+            <span class='text-muted'>Ban an IP</span>
           </div>
         </section>
         
-        <h2>Ban IP</h2>
-        
-        <div class='table-responsive' id='bannedUserList'>";
-          
+        <h2>IP to Ban:</h2>";
         echo "<input id='input-ip' name='input-ip' type='text'>";
-          
+        echo "<h2>Timeout:</h2>";
+        echo "<input id='input-timeout' name='input-timeout' type='text'>";
         echo "
-        </div>
+
     </form>
 </div>";
     

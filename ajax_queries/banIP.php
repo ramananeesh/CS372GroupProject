@@ -24,17 +24,30 @@
     // Create connection
     $conn = dbConnect();
     
-    // Build query
-    foreach ($_REQUEST['ip'] as $value){
+    if ($ban){
         
-        if($firstItem){
-            $firstItem = false;
-            $sql="Delete FROM ip_ban where id=\"" . $conn->real_escape_string($value) . "\"";
+        // Build query
+        foreach ($_REQUEST['ip'] as $value){
+        
+            $sql="INSERT INTO ip_ban VALUES (null,'".$conn->real_escape_string($value)."', '".$conn->real_escape_string($_REQUEST['date'])."');";
+            
         }
-        else{
-            $sql = $sql . " OR id=\"" . $conn->real_escape_string($value) . "\"";
+        
+    }else{
+        // Build query
+        foreach ($_REQUEST['ip'] as $value){
+            
+            if($firstItem){
+                $firstItem = false;
+                $sql="Delete FROM ip_ban where id=\"" . $conn->real_escape_string($value) . "\"";
+            }
+            else{
+                $sql = $sql . " OR id=\"" . $conn->real_escape_string($value) . "\"";
+            }
         }
     }
+    
+    
     
     $result=$conn->query($sql) or die(mysqli_error($conn));
     

@@ -127,12 +127,18 @@ function banIP(ban = true)
     
     // get selected users
     var ips = getCheckedBoxes("ip-id[]");
+    var date = "";
+    
+    if (ban){
+        ips = document.getElementById('input-ip').value;
+        date = document.getElementById('input-timeout').value;
+    }
     
     // construct URL
     var url = "./ajax_queries/banIP.php";
     
     // collect data
-    var data = { 'ip[]': ips, ban: ban};
+    var data = { 'ip[]': ips, ban: ban, date: date};
     
     var result = makeAjaxRequest("POST", url, data,  function(d) { listIPs(); });
     
