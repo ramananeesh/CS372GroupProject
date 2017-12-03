@@ -26,6 +26,19 @@ function listMessages()
     });
 }
 
+function listFiles()
+{
+    // construct URL
+    var url = "./admin/forms/files_form.php";
+    
+    // collect data
+    var data ="";
+    
+    var result = makeAjaxRequest("GET", url, data,  function(d) {
+        $("#file-section").html(d);
+    });
+}
+
 function banUser(ban = true)
 {
     
