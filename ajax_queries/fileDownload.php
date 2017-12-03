@@ -21,9 +21,15 @@
     list($file, $size, $uDate, $content) = mysqli_fetch_array($result);
     
     // Insert transaction
-    $sql="Insert into transactions(upload, ipv6, file_id, user_id, fname, fsize, fuploadDate)" . "
+    if(!($userid == NULL) && isset($user_id)){
+     $sql="Insert into transactions(upload, ipv6, file_id, user_id, fname, fsize, fuploadDate)" . "
                     values (0, \"" . $_SERVER['REMOTE_ADDR'] . "\", \"" . $_REQUEST['file'] ."\", \"" . $_SESSION['userUuid'] . "\", \"$file\", \"$size\",\"$uDate\")";
-    
+    }
+    else{
+        $sql="Insert into transactions(upload, ipv6, file_id, fname, fsize, fuploadDate)" . "
+                    values (0, \"" . $_SERVER['REMOTE_ADDR'] . "\", \"" . $_REQUEST['file'] ."\", \"$file\", \"$size\",\"$uDate\")";
+    }
+   
     // Insert transaction       
     $result=$conn->query($sql) or die(mysqli_error($conn));
     
