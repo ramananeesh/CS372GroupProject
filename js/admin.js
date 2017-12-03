@@ -73,6 +73,24 @@ function deleteMessage()
     listMessages();
 }
 
+function deleteFile()
+{
+    
+    // get selected users
+    var files = getCheckedBoxes("file-id[]");
+    
+    // construct URL
+    var url = "./ajax_queries/fileDelete.php";
+    
+    // collect data
+    var data = { 'delete[]': files};
+    
+    var result = makeAjaxRequest("POST", url, data,  function(d) { });
+    
+    listFiles();
+}
+
+
 function fileList(ban = true)
 {
     

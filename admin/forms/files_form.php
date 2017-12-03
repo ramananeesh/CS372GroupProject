@@ -8,7 +8,7 @@
             </div>
           </div>
           
-          <form action='' method='post'>
+          <form onsubmit='deleteFile(); return false;' id='files-form'>
           <section class='row text-center placeholders'>
               <div class='col-6 col-sm-3 placeholder' id='divDelete'>
            
