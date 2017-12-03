@@ -188,15 +188,6 @@ function validate(e) {
   }
 }
 
-/* Function validates that user is signed in */
-function validateLogin(){
-  if(sessionStorage.getItem("userName") == null){
-    window.open("./login.php", "_self");
-  }
-}
-
-
-
 function initialize() {
 
   var typeOfLogin = sessionStorage.getItem("typeofLogin");
@@ -234,7 +225,7 @@ function logoutFB() {
   window.fbAsyncInit = function() {
       FB.init({
           appId: '152162102051722', // App ID
-          channelUrl: 'https://docdash-aneeshraman.c9users.io/FREndFiles/login.php', // Channel File
+          channelUrl: 'https://docdash-aneeshraman.c9users.io/FREndFiles/sessionEnd.php', // Channel File
           status: true, // check login status
           cookie: true, // enable cookies to allow the server to access the session
           xfbml: true // parse XFBML
@@ -345,6 +336,7 @@ function signO() {
   var typeOfLogin = sessionStorage.getItem("typeofLogin");
   //alert(typeOfLogin);
   if (typeOfLogin == "FacebookLogin") {
+      logoutFB();
       FB.logout(function(response) {
           FB.Auth.setAuthResponse(null, 'unknown');
       });
@@ -355,10 +347,6 @@ function signO() {
       signOut();
   }
   else{signOut();}
-  /*else {
-    alert('User signed out the normal way.');
-    window.open("./sessionEnd.php", "_self");
-  }*/
 }
 
 function signOut() {
