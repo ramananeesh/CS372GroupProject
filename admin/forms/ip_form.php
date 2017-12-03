@@ -24,7 +24,7 @@
           <div class='col-6 col-sm-3 placeholder' id='divBan'>
             <a href='#Ban'>
               <input type='hidden' name='action' value='banIP'>
-              <input type='image' src='./images/delete icon.jpg' width='100' height='100' class='img-fluid rounded-circle' alt='Ban Button'/>
+              <input type='image' src='./images/uploadicon.png' width='100' height='100' class='img-fluid rounded-circle' alt='Ban Button'/>
             </a>
             <h4>Ban</h4>
             <span class='text-muted'>Reactive Selected IP(s)</span>
@@ -35,51 +35,49 @@
         
         printUserTable("Select * FROM ip_ban;");
         
-       /* echo "
+      echo "
     </form>
     
-    <form onsubmit='banUser(false); return false;' id='banned-users-form'>
+    <form onsubmit='banIp(false); return false;' id='ban-ip-form'>
         
         <section class='row text-center placeholders'>
-          <div class='col-6 col-sm-3 placeholder' id='divReactivate'>
-            <a href='#Reactivate'>
-              <input type='hidden' name='action' value='reactivateUser'>
-              <input type='image' src='./images/uploadicon.png' width='100' height='100' class='img-fluid rounded-circle' alt='Reactivate Button'/>
+          <div class='col-6 col-sm-3 placeholder' id='divBan'>
+            <a href='#Ban'>
+              <input type='hidden' name='action' value='banIp'>
+              <input type='image' src='./images/delete icon.jpg' width='100' height='100' class='img-fluid rounded-circle' alt='Reactivate Button'/>
             </a>
-            <h4>Reactivate</h4>
-            <span class='text-muted'>Reactivate Selected Users(s)</span>
+            <h4>Ban</h4>
+            <span class='text-muted'>IP to Ban:</span>
           </div>
         </section>
         
-        <h2>Banned User List</h2>
+        <h2>Ban IP</h2>
         
         <div class='table-responsive' id='bannedUserList'>";
-          printUserTable('Select * FROM users WHERE banned = 1 ORDER BY username');
-          */
-            echo "
-            </div>
-        </form>
-    </div>";
+          
+        echo "<input id='input-ip' name='input-ip' type='text'>";
+          
+        echo "
+        </div>
+    </form>
+</div>";
     
-    /*
     echo "<script>
-    $('#active-users-form').show();
-    $('#banned-users-form').hide();
+    $('#banned-ips-form').show();
+    $('#ban-ip-form').hide();
     
-    $('#active-users-tab').click(function() {
-        $('#active-users-form').show();
-        $('#banned-users-form').hide();
-        $('#active-users-tab').removeClass('active');
-        $('#banned-users-tab').addClass('active');
+    $('#banned-ip-tab').click(function() {
+        $('#banned-ips-form').show();
+        $('#ban-ip-form').hide();
+        $('#banned-ip-tab').removeClass('active');
+        $('#insert-ip-tab').addClass('active');
     });
-    $('#banned-users-tab').click(function() {
-        $('#active-users-form').hide();
-        $('#banned-users-form').show();
-        $('#banned-users-tab').removeClass('active');
-        $('#active-users-tab').addClass('active');
+    $('#insert-ip-tab').click(function() {
+        $('#banned-ips-form').hide();
+        $('#ban-ip-form').show();
+        $('#banned-ip-tab').removeClass('active');
+        $('#insert-ip-tab').addClass('active');
     });</script>";
-
-*/
 
 function printUserTable($query){
     echo "<table class='table table-striped'>
