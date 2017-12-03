@@ -579,66 +579,11 @@
         <div id="file-section" hidden>
         </div>
           
-          <!-- IP section -->
-          <div id="ip-section" hidden>
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Active</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Banned</a>
-              </li>
-            </ul>
-  
-            <section class="row text-center placeholders">
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Download">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Ban</h4>
-                <span class="text-muted">Ban Selected User(s)</span>
-              </div>
-              <div class="col-6 col-sm-3 placeholder">
-                <a href="#Delete">
-                  <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-                </a>
-                <h4>Reactivate</h4>
-                <span class="text-muted">Reactivate Selected Users(s)</span>
-              </div>
-            </section>
-            
-            <!--Active File Table -->
-            <h2>Allowed IPs</h2>
-            <div class="table-responsive" id="fileList">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Select</th>
-                    <thIPs</th>
-                    <th>Location</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>10.128.1.168</td>
-                    <td>Location</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>10.128.1.169</td>
-                    <td>Location</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox" name="selected"/></td>
-                    <td>10.128.1.170</td>
-                    <td>Location</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- End IP section -->
+        <!-- IP -->
+        <div id="ip-section" hidden>
+        </div>
+          
+        
           
           <div id="setting-section" hidden>
             <h2>Settings</h2>
@@ -677,6 +622,9 @@
       });
       $('#fileNav').click(function(){
         listFiles();
+      });
+      $('#ipNav').click(function(){
+        listIPs();
       });
     </script>
   </body>

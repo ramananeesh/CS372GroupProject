@@ -39,6 +39,19 @@ function listFiles()
     });
 }
 
+function listIPs()
+{
+    // construct URL
+    var url = "./admin/forms/ip_form.php";
+    
+    // collect data
+    var data ="";
+    
+    var result = makeAjaxRequest("GET", url, data,  function(d) {
+        $("#ip-section").html(d);
+    });
+}
+
 function banUser(ban = true)
 {
     
