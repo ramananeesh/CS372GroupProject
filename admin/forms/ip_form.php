@@ -105,7 +105,7 @@ function printUserTable($query){
   while ($user= $result->fetch_assoc())
   {
       echo "<tr>";
-      echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$user["id"]."'/></td>";
+      echo "<td><input type='checkbox' id='ip-id' name='ip-id[]' value='".$user["id"]."'/></td>";
       echo "<td>".$user["ipv6"]."</td>";
       echo "<td>".$user["time_out"]."</td>";
       echo "</tr>";

@@ -64,9 +64,8 @@ function banUser(ban = true)
     // collect data
     var data = { 'user[]': users, ban: ban};
     
-    var result = makeAjaxRequest("POST", url, data,  function(d) { });
+    var result = makeAjaxRequest("POST", url, data,  function(d) { listUsers(); });
     
-    listUsers();
 }
 
 function deleteMessage()
@@ -81,9 +80,9 @@ function deleteMessage()
     // collect data
     var data = { 'message[]': messages};
     
-    var result = makeAjaxRequest("POST", url, data,  function(d) { });
+    var result = makeAjaxRequest("POST", url, data,  function(d) { listMessages(); });
     
-    listMessages();
+    
 }
 
 function deleteFile()
@@ -98,9 +97,9 @@ function deleteFile()
     // collect data
     var data = { 'delete[]': files};
     
-    var result = makeAjaxRequest("POST", url, data,  function(d) { });
+    var result = makeAjaxRequest("POST", url, data,  function(d) { listFiles(); });
     
-    listFiles();
+    
 }
 
 
@@ -120,6 +119,23 @@ function fileList(ban = true)
     data = "";
     
     var result = makeAjaxRequest("GET", url, data,  function() { ; });
+    
+}
+
+function banIP(ban = true)
+{
+    
+    // get selected users
+    var ips = getCheckedBoxes("ip-id[]");
+    
+    // construct URL
+    var url = "./ajax_queries/banIP.php";
+    
+    // collect data
+    var data = { 'ip[]': ips, ban: ban};
+    
+    var result = makeAjaxRequest("POST", url, data,  function(d) { listIPs(); });
+    
     
 }
 
