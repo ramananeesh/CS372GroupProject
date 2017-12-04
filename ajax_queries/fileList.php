@@ -36,12 +36,12 @@
     {
         $file = new FileMeta();
         
-        $file->id = $f['id'];
-        $file->name = $f['fname'];
-        $file->size = $f['size'];
-        $file->expireDate = $f['expire_date'];
-        $file->uploadDate = $f['upload_date'];
-        $file->dCount = $f['download_count'];
+        $file->id = htmlspecialchars($f['id']);
+        $file->name = htmlspecialchars($f['fname']);
+        $file->size = htmlspecialchars($f['size']);
+        $file->expireDate = htmlspecialchars($f['expire_date']);
+        $file->uploadDate = htmlspecialchars($f['upload_date']);
+        $file->dCount = htmlspecialchars($f['download_count']);
         
         array_push($fileList, $file);
         

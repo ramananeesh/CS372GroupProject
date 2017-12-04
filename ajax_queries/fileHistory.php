@@ -45,13 +45,13 @@
     {
         $file = new TransActMeta();
         
-        $file->id = $f['id'];
-        $file->was_upload = $f['upload'];
-        $file->ipv6 = $f['ipv6'];
-        $file->file_id = $f['file_id'];
-        $file->fname = $f['fname'];
-        $file->fsize = $f['fsize'];
-        $file->fuploadDate = $f['fuploadDate'];
+        $file->id = htmlspecialchars($f['id']);
+        $file->was_upload = htmlspecialchars($f['upload']);
+        $file->ipv6 = htmlspecialchars($f['ipv6']);
+        $file->file_id = htmlspecialchars($f['file_id']);
+        $file->fname = htmlspecialchars($f['fname']);
+        $file->fsize = htmlspecialchars($f['fsize']);
+        $file->fuploadDate = htmlspecialchars($f['fuploadDate']);
         
         array_push($fileList, $file);
         
