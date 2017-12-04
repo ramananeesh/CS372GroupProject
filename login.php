@@ -56,7 +56,6 @@
 				$_SESSION['userName'] = $row['username'];
 				$_SESSION['password']=$row['password'];
 				$_SESSION['emailID']=$row['email'];
-				$_SESSION['typeOfLogin']=$row['normalLogin'];
 				$_SESSION['pro'] = $row['pro'];
 				$_SESSION['name'] = $row['name'];
 				
@@ -77,7 +76,9 @@
 		
 	}
 	elseif (isset($_POST["username"])&&isset($_POST["password"])&&isset($_POST["passwordReenter"])&&isset($_POST["email"])&&isset($_POST["name"])) {
+		
 		$username=$_POST["username"];
+		
 		if(!($_POST["password"]==$_POST["passwordReenter"]) || trim($_POST["password"]) === ""){
 			echo "<script type='text/javascript'> alert(\"The passwords you provided are diffferent.\"); </script>";
 		}
@@ -105,25 +106,37 @@
 							$connection->real_escape_string($password));
 			
 			// Query
-			$result=$connection->query($sql) or die(mysqli_error());
+			$result=$connection->query($sql) or die(mysqli_error($connection));
 			
 			// Check if a row was returned
 			if($result->num_rows==1){
-				$_SESSION["authenticated"]=true;
-				$row=mysqli_fetch_assoc($result);
-				//$_SESSION['userName'] = $row['username'];
-				$_SESSION['userName']=$username;
-				// $_SESSION['password']=$row['password'];
-				// $_SESSION['emailID']=$row['email'];
-				// $_SESSION['typeOfLogin']=$row['normalLogin'];
-				$_SESSION['password']=$password;
-				$_SESSION['emailID']=$email;
-				$_SESSION['typeOfLogin']=$typeOfLogin;
-				//reditect user to dashboard, using absolute path
-				$host=$_SERVER["HTTP_HOST"];
-				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
-				header("Location: ./dashboard.php");
-				exit;
+				
+				$row = mysqli_fetch_assoc($result);
+			
+				// Check if the user is banned
+				if($row['banned'] == 1){
+					$alertBan = true;
+				}
+				else{
+					// Load the user
+					// Check the source IP
+					checkIP($connection);
+					 
+					 // Load session variables
+					$_SESSION["authenticated"]=true;
+					$_SESSION['userUuid'] = $row['id'];
+					$_SESSION['userName'] = $row['username'];
+					$_SESSION['password']=$row['password'];
+					$_SESSION['emailID']=$row['email'];
+					$_SESSION['pro'] = $row['pro'];
+					$_SESSION['name'] = $row['name'];
+					
+					//reditect user to dashboard, using absolute path
+					$host = $_SERVER["HTTP_HOST"];
+					$path = rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+					header("Location: ./dashboard.php");
+					exit;
+				}
 			}
 		}
 	}

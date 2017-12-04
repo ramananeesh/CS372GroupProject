@@ -18,7 +18,6 @@
   $username=$_SESSION['userName'];
   $userId=$_SESSION['userUuid'];
   $password=$_SESSION['password'];
-  $typeOfLogin=$_SESSION['typeOfLogin'];
   $emailID=$_SESSION['emailID'];
   $name = $_SESSION['name'];
   
@@ -116,7 +115,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo htmlspecialchars($name) ?></label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo htmlspecialchars($name); ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
