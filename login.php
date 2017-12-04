@@ -267,7 +267,7 @@
 									if($signup == 1)
 										echo 'style="display:none;"'; 
 								?> id="nameDiv">
-								<span class="input-group-addon"><i class="fa fa-envelope"></i>
+								<span class="input-group-addon"><i class="fa fa-user"></i>
 								</span>
 								<input type="text" class="form-control" name="name" id="name" 
 								<?php
@@ -309,14 +309,14 @@
 				</div>
 				<div class="row omb_row-sm-offset-3">
 					<div class="col-xs-12 col-sm-3">
-						<label class="checkbox">
+						<!--label class="checkbox">
 					<input type="checkbox" value="remember-me">Remember Me
-				</label>
+				</label--->
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<p class="omb_forgotPwd">
+						<!--p class="omb_forgotPwd">
 							<a href="#" id="forgotPass">Forgot password?</a>
-						</p>
+						</p-->
 					</div>
 				</div>
 			</div>

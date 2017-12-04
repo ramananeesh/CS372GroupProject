@@ -157,11 +157,58 @@ function validate(f) {
 }
 
 function showSignUp(){
+    
+    var par = document.getElementById("status");
+    var toggle;
 
-    document.getElementById("emailDiv").style.display = '';
-    document.getElementById("passwordDiv").style.display = '';
-    document.getElementById("nameDiv").style.display = '';
-    document.getElementById("login_b").innerHTML = "Sign Up";
+    if(document.getElementById("login_b").innerHTML != "Sign Up"){
+        document.getElementById("emailDiv").style.display = '';
+        document.getElementById("passwordDiv").style.display = '';
+        document.getElementById("nameDiv").style.display = '';
+        document.getElementById("login_b").innerHTML = "Sign Up";
+        
+        // Remove Children
+        par.removeChild(par.firstChild);
+        par.removeChild(par.firstChild);
+        
+        // Create toggle element
+        toggle = document.createElement("a");
+        toggle.setAttribute("href", "#Login");
+        toggle.setAttribute("onclick", "showLogin()");
+        toggle.appendChild(document.createTextNode("Login"));
+        
+        // Append Children
+        par.appendChild(toggle);
+        par.appendChild(document.createTextNode(" / Sign Up"));
+        
+    }
+}
+
+function showLogin(){
+    
+    var par = document.getElementById("status");
+    var toggle;
+
+    if(document.getElementById("login_b").innerHTML != "Login"){
+        document.getElementById("emailDiv").style.display = 'none';
+        document.getElementById("passwordDiv").style.display = 'none';
+        document.getElementById("nameDiv").style.display = 'none';
+        document.getElementById("login_b").innerHTML = "Login";
+        
+        // Remove Children
+        par.removeChild(par.firstChild);
+        par.removeChild(par.firstChild);
+        
+        // Create toggle element
+        toggle = document.createElement("a");
+        toggle.setAttribute("href", "#signup");
+        toggle.setAttribute("onclick", "showSignUp()");
+        toggle.appendChild(document.createTextNode("Sign Up"));
+        
+        // Append Children
+        par.appendChild(document.createTextNode("Login / "));
+        par.appendChild(toggle);
+    }
 }
 
 function signupValidate(f) {
