@@ -24,7 +24,7 @@
   
   // Pass the uuid of the user to the front end
   if($check == false)
-    echo '<script>  sessionStorage.setItem("userID", "' . $userId . '"); </script>';
+    echo '<script>  sessionStorage.setItem("userID", "' . htmlspecialchars($userId) . '"); </script>';
   
    if($_POST["submit"]){
       $file = $_FILES['input-b3'];
@@ -116,7 +116,7 @@
 
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo $name ?></label></a>
+        <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo htmlspecialchars($name) ?></label></a>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
       </form>
     </div>
@@ -239,7 +239,7 @@
             User Information
           </div>
           <div class="card-body" style="padding:1.5em;">
-            <p class="card-text">Email: <?php echo $emailID;?><label id="emailID"></label></p>
+            <p class="card-text">Email: <?php echo htmlspecialchars($emailID);?><label id="emailID"></label></p>
             <p class="card-text"><label id="passwordField" type></label></p>
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
             <button class="btn btn-primary" id="changePassword">Change Password</button>

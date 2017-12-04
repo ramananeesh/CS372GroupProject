@@ -20,7 +20,7 @@
 	$connection = dbConnect();
 	
 	//if username and password were submitted, check them
-	if((isset($_POST["username"]) && isset($_POST["password"])) || ($_SESSION['userName'] != NULL && $_SESSION['password'] != NULL) && $signup == 1 ){
+	if(((isset($_POST["username"]) && isset($_POST["password"])) || ($_SESSION['userName'] != NULL && $_SESSION['password'] != NULL)) && $signup == 1 ){
 		
 		//prepare sql
 		if(!(isset($_POST["username"]))){

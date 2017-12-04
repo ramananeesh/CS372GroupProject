@@ -4,9 +4,20 @@
     
     session_start();
     $connection=dbConnect();
+    $alert = false;
     
     // Check if request is comming from a bad IP
     checkIP($connection);
+    
+    
+    if($_POST["submit"]){
+        $file = $_FILES['input-b3'];
+        
+        if($file['tmp_name'] != NULL && trim($file['tmp_name']) != "" && trim($file['name']) != ""){
+            $u=addFile($connection,$file,"NULL");
+            $alert = true;
+        }
+    }
     
     
 ?>
@@ -60,6 +71,13 @@
                     <h1>Upload a File</h1>
                     <hr class="pg-titl-bdr-btm" style="background-color:blue"></hr>
                 </div>
+                
+                <!-- SWEET ALERT CALLER -->
+                <?php
+                    if($alert)
+                        echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $u \", \"success\")</script>";
+                ?>
+                
                 <form action="" method="POST" enctype="multipart/form-data">
     
                     <div class="card" style="margin-left:15%; margin-right:15%; border-radius:20px ">
@@ -79,17 +97,6 @@
         </div>
     
         <!-- END MAIN CONTENT-->
-        <?php
-    
-    if($_POST["submit"]){
-            $file = $_FILES['input-b3'];
-            $u=addFile($connection,$file,"NULL");
-            //echo "<script>alert(\"Your uuid is : $u\")</script>";
-           echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $u \", \"success\")</script>";
-        }
-    
-    ?>
-    
     </body>
 
 </html>
