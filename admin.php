@@ -583,16 +583,45 @@
         <div id="ip-section" hidden>
         </div>
           
-        
-          
-          <div id="setting-section" hidden>
-            <h2>Settings</h2>
-            
-            <!--Setting Management-->
-            <div id="setting-data">
-              
-            </div>
+        <div id="setting-section" hidden>
+          <div class='page-header'>
+              <div class='container-fluid'>
+                  <h2 class='h5 no-margin-bottom'>Settings</h2>
+              </div>
           </div>
+          
+          <table class='table table-striped'>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Last Modified</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                  $sql = "SELECT * FROM global_settings";
+    
+                  $connection = connect_to_db();
+                  
+                  // execute query
+                  $result = $connection->query($sql) or die(mysqli_error());   
+                
+                  // check whether we found a row
+                  while ($setting= $result->fetch_assoc())
+                  {
+                      echo "<tr>";
+                      echo "<td>".$setting["g_name"]."</td>";
+                      echo "<td><input type='text' id='setting-id' name='setting-id[]' value='".$setting["g_value"]."'/></td>";
+                      echo "<td>".$setting["modified"]."</td>";
+                      echo "<td><input type='submit' name='submit' class='btn btn-primary' value='update'>";
+                      echo "</tr>";
+                  }
+                ?>
+            </tbody>
+          </table>
+        </div>
 
         <footer class="footer">
           <div class="footer__block block no-margin-bottom">
@@ -602,6 +631,7 @@
             </div>
           </div>
         </footer>
+        
       </div>
     </div>
     <!-- Javascript files-->
