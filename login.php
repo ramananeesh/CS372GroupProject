@@ -224,7 +224,7 @@
 								<input type="text" class="form-control" name="username" id="username" 
 								<?php
 									if(isset($_POST["username"]))
-										echo 'value="' . $_POST["username"] . '"'; 
+										echo 'value="' . htmlspecialchars($_POST["username"]) . '"'; 
 								?> placeholder="username">
 							</div>
 
@@ -259,7 +259,7 @@
 								<input type="text" class="form-control" name="name" id="name" 
 								<?php
 									if(isset($_POST["name"]))
-										echo 'value="' . $_POST["name"] . '"'; 
+										echo 'value="' . htmlspecialchars($_POST["name"]) . '"'; 
 								?>
 								placeholder="First and Last Name">
 							</div><br>
@@ -274,7 +274,7 @@
 								<input type="text" class="form-control" name="email" id="email" 
 								<?php
 									if(isset($_POST["email"]))
-										echo 'value="' . $_POST["email"] . '"'; 
+										echo 'value="' . htmlspecialchars($_POST["email"]) . '"'; 
 								?>
 								placeholder="email@example.com">
 							</div>

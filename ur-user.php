@@ -74,8 +74,10 @@
                 
                 <!-- SWEET ALERT CALLER -->
                 <?php
+                    $text = htmlspecialchars($u);
+                
                     if($alert)
-                        echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $u \", \"success\")</script>";
+                        echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $text \", \"success\")</script>";
                 ?>
                 
                 <form action="" method="POST" enctype="multipart/form-data">
