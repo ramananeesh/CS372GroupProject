@@ -199,13 +199,13 @@
 			<div class="omb_login">
 				<h2 class="omb_authTitle" id="status">Login / <a href="#signup" onclick="showSignUp()">Sign up</a></h2>
 
-				<div class="row omb_row-sm-offset-3 omb_socialButtons">
+				<!--<div class="row omb_row-sm-offset-3 omb_socialButtons" style="text-align:center">
 					<!--remove this for previous look. this is added from FB website -->
-					<div class="col-xs-4 col-sm-3">
+					<!--<div class="col-xs-4 col-sm-3">
 						<div class="fb-login-button" data-max-rows="1" onlogin="checkLoginState();" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
-						<!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>-->
-					</div>
-					<div class="col-xs-4 col-sm-4">
+					</div>-->
+				<div class=" omb_row-sm-offset-3 omb_socialButtons" style="text-align:center">
+					<div class="col-xs-4 col-sm-6" style="display:inline-block">
 						<div class="g-signin2" data-onsuccess="onSignIn" data-width="200px" data-height="40px" data-longtitle="true"></div>
 					</div>
 				</div>

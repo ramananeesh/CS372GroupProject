@@ -1,4 +1,4 @@
-function fbLog() {
+/*function fbLog() {
     //onlogin="checkLoginState();"
     checkLoginState();
 }
@@ -23,7 +23,7 @@ function statusChangeCallback(response) {
             function(response) {
                 sessionStorage.setItem("userName", response.name);
                 sessionStorage.setItem("emailID", response.email);
-                alert("Hi" + " " + response.email);
+                //alert("Hi" + " " + response.email);
             }, { scope: 'email' }
         );
 
@@ -100,7 +100,7 @@ function testAPI() {
         document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
         sessionStorage.setItem("userName", response.name);
     });
-}
+}*/
 
 function login(f) {
     if (validate(this)) {
