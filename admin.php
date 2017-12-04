@@ -421,8 +421,8 @@
           <li id="msgNav"> <a onclick="showMessageSection()"> <i class="fa fa-commenting"></i>Messages</a></li>
           <li id="fileNav"> <a onclick="showFileSection()"> <i class="fa fa-files-o"></i>Files </a></li>
           <li id="ipNav"> <a onclick="showIpSection()"> <i class="fa fa-location-arrow"></i>IPs </a></li>
-          <li id="dashboardNav"> <a href="./dashboard.php"> <i class="fa fa-tachometer"></i>Dashboard </a></li>
           <li id="settingNav"> <a onclick="showSettingSection()"> <i class="fa fa-cogs"></i>Settings </a></li>
+          <li id="dashboardNav"> <a href="./dashboard.php"> <i class="fa fa-tachometer"></i>Dashboard </a></li>
           <li> <a href="sessionEnd.php"> <i class="fa fa-sign-out"></i>Login Page</a></li>
         </ul>
       </nav>
