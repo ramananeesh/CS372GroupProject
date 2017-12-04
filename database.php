@@ -63,8 +63,8 @@ function addFile($connection,$file,$userid = NULL){
     $file_size = $file ['size'];
     $file_path = $file ['tmp_name'];
     
-    $data=mysqli_real_escape_string($connection,file_get_contents($file_path));
-    $n="NULL";
+    $data = mysqli_real_escape_string($connection,file_get_contents($file_path));
+    $n = "NULL";
     
     // Generate UUID
     $sql = "select uuid() as id from dual";
