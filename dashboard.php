@@ -103,7 +103,7 @@
 
 </head>
 
-<body onload="attachCallback();initialize();">
+<body onload="attachCallback();">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="index.php" id="dashboardLogo"><img src="./images/logo.ico" width="25px" height="25px"> Doc -> Dash</a>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,7 +116,7 @@
       </ul>
       <form class="form-inline mt-2 mt-md-0">
         <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo htmlspecialchars($name); ?></label></a>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signO();">Sign Out</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signOut();">Sign Out</button>
       </form>
     </div>
   </nav>

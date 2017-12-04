@@ -6,7 +6,7 @@ function download(){
     uuid = document.getElementById("basic-url").value;
     
     if(uuid === null || uuid === ""){
-        alert("Your UUID field is empty.");
+        sweetAlert("Error","Your UUID field is empty.","error");
     }
     else{
         link = "./ajax_queries/fileDownload.php?origin=../download.php&file=".concat(String(uuid));

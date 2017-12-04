@@ -25,8 +25,12 @@
         <link href="./css/slick-team-slider.css"  rel="stylesheet" type="text/css" />
         <link href="./css/style.css" rel="stylesheet" type="text/css">
         
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/download.js"></script>
+        
     </head>
     
     <body>

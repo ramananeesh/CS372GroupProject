@@ -188,7 +188,7 @@ function validate(e) {
   }
 }
 
-function initialize() {
+/*function initialize() {
 
   var typeOfLogin = sessionStorage.getItem("typeofLogin");
   
@@ -219,9 +219,9 @@ function initialize() {
       gapi.auth2.init();
   });
 
-}
+}*/
 
-function logoutFB() {
+/*function logoutFB() {
   window.fbAsyncInit = function() {
       FB.init({
           appId: '152162102051722', // App ID
@@ -251,7 +251,7 @@ function logoutFB() {
 
   });
 }
-
+*/
 
 function checkAll(eName, source) {
   var checkboxes = document.getElementsByName(eName);
@@ -335,7 +335,7 @@ function hideElements(elements) {
 function signO() {
   var typeOfLogin = sessionStorage.getItem("typeofLogin");
   //alert(typeOfLogin);
-  if (typeOfLogin == "FacebookLogin") {
+  /*if (typeOfLogin == "FacebookLogin") {
       logoutFB();
       FB.logout(function(response) {
           FB.Auth.setAuthResponse(null, 'unknown');
@@ -343,18 +343,20 @@ function signO() {
       alert("Signed out of FB");
       //window.open("./login.php","_self");
   }
-  else if (typeOfLogin == "gmailLogin") {
+  else*/ if (typeOfLogin == "gmailLogin") {
       signOut();
   }
   else{signOut();}
 }
 
 function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
+  /*var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function() {
       sessionStorage.clear();
       window.open("./sessionEnd.php", "_self");
-  });
+  });*/
+  sessionStorage.clear();
+      window.open("./sessionEnd.php", "_self");
 }
 
 function attachCallback() {

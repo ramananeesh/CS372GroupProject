@@ -102,59 +102,59 @@ function testAPI() {
     });
 }*/
 
-function login(f) {
-    if (validate(this)) {
-        sessionStorage.setItem("typeofLogin", "normalLogin");
-        window.open("dashboard.php");
-    }
-    else
-        return false;
+// function login(f) {
+//     if (validate(this)) {
+//         sessionStorage.setItem("typeofLogin", "normalLogin");
+//         window.open("dashboard.php");
+//     }
+//     else
+//         return false;
 
-}
+// }
 
 
-function validate(f) {
-    var userList = ["ramaa02",
-        "huntmj01", "staudj01"
-    ];
-    var password = "adminLogin";
-    /*if ((f.username.value.match(/.+@.+\.edu$/))) {
-    	alert("Invalid username. Remember: The username is the email id" +
-    		" being used. It should be a .edu email");
-    	/*f.usernameError.value="Invalid username. Remember: The username is the email id"+
-    				" being used. It should be a .edu email";
-    	return false;
-    }*/
-    //else {
-    if (!(f.username.value == userList[0]) &&
-        !(f.username.value == userList[1]) &&
-        !(f.username.value == userList[2])) {
-        alert("Invalid username. Due to lack of Database, only" +
-            " admin credentials will work");
-        return false;
-    }
-    else {
-        if (f.password.value.length < 6) {
-            alert("Password length too small");
-            return false;
-        }
-        else if (!(f.password.value == password)) {
-            alert("Incorrect Password. Due to lack of Database, only" +
-                " only admin credentials will work");
-            return false;
-        }
-        else {
+// function validate(f) {
+//     var userList = ["ramaa02",
+//         "huntmj01", "staudj01"
+//     ];
+//     var password = "adminLogin";
+//     /*if ((f.username.value.match(/.+@.+\.edu$/))) {
+//     	alert("Invalid username. Remember: The username is the email id" +
+//     		" being used. It should be a .edu email");
+//     	/*f.usernameError.value="Invalid username. Remember: The username is the email id"+
+//     				" being used. It should be a .edu email";
+//     	return false;
+//     }*/
+//     //else {
+//     if (!(f.username.value == userList[0]) &&
+//         !(f.username.value == userList[1]) &&
+//         !(f.username.value == userList[2])) {
+//         alert("Invalid username. Due to lack of Database, only" +
+//             " admin credentials will work");
+//         return false;
+//     }
+//     else {
+//         if (f.password.value.length < 6) {
+//             sweetAlert("Password Problem!","Password length too small","warning");
+//             return false;
+//         }
+//         else if (!(f.password.value == password)) {
+//             sweetAlert("Passsword Error!","Incorrect Password. Due to lack of Database, only" +
+//                 " only admin credentials will work","error");
+//             return false;
+//         }
+//         else {
 
-            sessionStorage.setItem("userName", f.username.value);
-            //sessionStorage.setItem("emailID", f.emailID.value);
-            sessionStorage.setItem("password", f.password.value);
-            window.open("dashboard.php", "_self");
-            return true;
-        }
-    }
-    //}
+//             sessionStorage.setItem("userName", f.username.value);
+//             //sessionStorage.setItem("emailID", f.emailID.value);
+//             sessionStorage.setItem("password", f.password.value);
+//             window.open("dashboard.php", "_self");
+//             return true;
+//         }
+//     }
+//     //}
 
-}
+// }
 
 function showSignUp(){
     
@@ -223,17 +223,6 @@ function signupValidate(f) {
         // User is signing in and not signing up
         return true;
     }
-    
-    if (document.getElementById("email").value.match(/.+@.+\..+$/) == null) {
-        alert("Invalid email format.");
-        return false;
-    }
-    
-    if(document.getElementById("name").value.match(/^[A-z]+\ +[A-z]+$/) == null){
-        alert("Invalid name format: Must be only first and last name");
-        return false;
-    }
-    
     if( document.getElementById("username").value == "" ||
         document.getElementById("password").value == "" ||
         document.getElementById("passwordReenter").value == "" ||
@@ -241,18 +230,29 @@ function signupValidate(f) {
         document.getElementById("email").value == ""
         )
     {
-         alert("All fields are required!");
+         sweetAlert("Important!","All fields are required!","warning");
          return false;
     }
+    if (document.getElementById("email").value.match(/.+@.+\..+$/) == null) {
+        sweetAlert("Email Problem!","Invalid email format.","warning");
+        return false;
+    }
+    
+    if(document.getElementById("name").value.match(/^[A-z]+\ +[A-z]+$/) == null){
+        sweetAlert("Name input error!","Invalid name format: Must be only first and last name","warning");
+        return false;
+    }
+    
+    
 
     if (document.getElementById("password").value.length < 6) {
-        alert("Your password must be at least 6 characters long.");
+        sweetAlert("Password too small!","Your password must be at least 6 characters long.","warning");
         
         return false;
     }
     
     if(document.getElementById("password").value !== document.getElementById("passwordReenter").value){
-         alert("Your passwords don't match!");
+         sweetAlert("Password mismatch!","Your passwords don't match!","error");
         
         return false;
     }
