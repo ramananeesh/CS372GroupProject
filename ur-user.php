@@ -5,6 +5,7 @@
     session_start();
     $connection=dbConnect();
     $alert = false;
+    $complain = false;
     
     // Check if request is comming from a bad IP
     checkIP($connection);
@@ -16,6 +17,9 @@
         if($file['tmp_name'] != NULL && trim($file['tmp_name']) != "" && trim($file['name']) != ""){
             $u=addFile($connection,$file,"NULL");
             $alert = true;
+        }
+        else{
+            $complain = true;
         }
     }
     
@@ -78,6 +82,8 @@
                 
                     if($alert)
                         echo "<script type=\"text/javascript\">sweetAlert(\"File Uploaded!\", \" UUID for sharing : $text \", \"success\")</script>";
+                    else if($complain)
+                        echo "<script type=\"text/javascript\">sweetAlert(\"No File Chosen!\", \"Your upload field is empty. Please press browse and select a file.\", \"warning\")</script>";
                 ?>
                 
                 <form action="" method="POST" enctype="multipart/form-data">
