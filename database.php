@@ -75,7 +75,7 @@ function addFile($connection,$file,$userid){
     //if username is not null - for registered users
     // if(!($userid == NULL) && isset($user_id)){
     if(!($userid == "NULL")){
-        $sql="INSERT into files (id,fname, upload_date, size,user_id,download_count,f_data) values (\"$uuid\",\"$file_name\", NOW(),$file_size,\"$userid\",5,'".$data."')";
+        $sql="INSERT into files (id,fname, upload_date,expire_date, size,user_id,download_count,f_data) values (\"$uuid\",\"$file_name\", NOW(),DATE_ADD(CURDATE(),INTERVAL 1 WEEK),$file_size,\"$userid\",5,'".$data."')";
     }
     else{
         //for ur-users
