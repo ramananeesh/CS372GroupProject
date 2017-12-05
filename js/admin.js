@@ -1,3 +1,17 @@
+function listHome()
+{
+    // construct URL
+    var url = "./admin/forms/home_form.php";
+    
+    // collect data
+    
+    var data ="";
+    
+    var result = makeAjaxRequest("GET", url, data,  function(d) {
+        $("#home-section").html(d);
+    });
+}
+
 function listUsers()
 {
     // construct URL
@@ -267,8 +281,14 @@ function showHomeSection(){
     document.getElementById('ipNav').classList.remove("active");
     document.getElementById('settingNav').classList.remove("active");
   }
-  
+ 
+function onBodyLoad(){
+    listHome();
+}
 
+$('#homeNav').click(function(){
+    listHome();
+});
 $('#userNav').click(function(){
     listUsers();
 });
