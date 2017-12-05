@@ -625,10 +625,10 @@
                   while ($setting= $result->fetch_assoc())
                   {
                       echo "<tr>";
-                      echo "<td>".$setting["g_name"]."</td>";
-                      echo "<td><input type='text' id='setting-id-".$setting["id"]."' name='setting-id[]' value='".$setting["g_value"]."'/></td>";
-                      echo "<td>".$setting["modified"]."</td>";
-                      echo "<td><input type='submit' name='submit' class='btn btn-primary' value='update' onclick='updateSetting(".$setting["id"].")'>";
+                      echo "<td>".$connection->real_escape_string($setting["g_name"])."</td>";
+                      echo "<td><input type='text' id='setting-id-".$connection->real_escape_string($setting["id"])."' name='setting-id[]' value='".$connection->real_escape_string($setting["g_value"])."'/></td>";
+                      echo "<td>".$connection->real_escape_string($setting["modified"])."</td>";
+                      echo "<td><input type='submit' name='submit' class='btn btn-primary' value='update' onclick='updateSetting(".$connection->real_escape_string($setting["id"]).")'>";
                       echo "</tr>";
                   }
                 ?>

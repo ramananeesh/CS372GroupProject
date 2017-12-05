@@ -52,11 +52,11 @@
       while ($contact= $result->fetch_assoc())
       {
           echo "<tr>";
-          echo "<td><input type='checkbox' id='message-id' name='message-id[]' value='".$contact["id"]."'/></td>";
-          echo "<td>".$contact["name"]."</td>";
-          echo "<td>".$contact["email"]."</td>";
-          echo "<td>".$contact["message"]."</td>";
-          echo "<td>".$contact["time_stamp"]."</td>";
+          echo "<td><input type='checkbox' id='message-id' name='message-id[]' value='".$connection->real_escape_string($contact["id"])."'/></td>";
+          echo "<td>".$connection->real_escape_string($contact["name"])."</td>";
+          echo "<td>".$connection->real_escape_string($contact["email"])."</td>";
+          echo "<td>".$connection->real_escape_string($contact["message"])."</td>";
+          echo "<td>".$connection->real_escape_string($contact["time_stamp"])."</td>";
           echo "</tr>";
       }
       
