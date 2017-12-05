@@ -352,13 +352,14 @@ function signO() {
 }
 
 function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function() {
-      sessionStorage.clear();
+  // var auth2 = gapi.auth2.getAuthInstance();
+  // auth2.signOut().then(function() {
+  //     sessionStorage.clear();
+  //     window.open("./sessionEnd.php", "_self");
+  // });
+  //sessionStorage.clear();
       window.open("./sessionEnd.php", "_self");
-  });
-  sessionStorage.clear();
-      window.open("./sessionEnd.php", "_self");
+  //window.location.assign("./sessionEnd.php");
 }
 
 function attachCallback() {

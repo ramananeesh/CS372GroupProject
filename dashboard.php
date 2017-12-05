@@ -7,8 +7,7 @@
   // Open Database connection
   $connection=dbConnect();
   
-  // Start the session
-  session_start();
+ 
   
   // Send empty usernames back to Login
   if($_SESSION['userName'] === NULL || trim($_SESSION['userName']) === ""){
@@ -44,7 +43,10 @@
        
         echo '<script> alert("Done!");</script>';
     }
-    
+    if(isset($_POST["signout"])){
+      echo "<script>sessionStorage.clear()</script>";
+      header("location:  ./sessionEnd.php");
+    }
     
 ?>
 <!DOCTYPE html>
@@ -114,9 +116,9 @@
       <ul class="navbar-nav mr-auto">
 
       </ul>
-      <form class="form-inline mt-2 mt-md-0">
+      <form class="form-inline mt-2 mt-md-0" action="" method="POST">
         <a class="navbar-brand" href="#" id="usernameDisplay"><label id="usern" name="username">Hello, <?php echo htmlspecialchars($name); ?></label></a>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="signOut();">Sign Out</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="signout">Sign Out</button><!-- onclick="signOut();"-->
       </form>
     </div>
   </nav>
