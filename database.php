@@ -79,7 +79,7 @@ function addFile($connection,$file,$userid){
     }
     else{
         //for ur-users
-         $sql="INSERT into files (id,fname, upload_date, size,download_count,f_data) values (\"$uuid\",\"$file_name\", NOW() ,$file_size, 5,'".$data."')";
+         $sql="INSERT into files (id,fname, upload_date,expire_date,size,download_count,f_data) values (\"$uuid\",\"$file_name\", NOW() ,DATE_ADD(CURDATE(),INTERVAL 1 DAY),$file_size, 1,'".$data."')";
     }
     
     // Insert file
