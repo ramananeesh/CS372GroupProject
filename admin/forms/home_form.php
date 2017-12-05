@@ -198,7 +198,35 @@
         
         chart2.draw(data2, option2);
         
+        var arr3=[];
+        arr3[0]=['Day','Downloads'];
+        for(var i=0;i<7;i++){
+            arr3[i+1]=[arrDay[i],arrMessages[i]];
+        }
         
+        var data3=google.visualization.arrayToDataTable(arr3);
+        var option3={
+          title: 'Downloads',
+          titleTextStyle:{
+            color: '#8a8d93',
+            alignment:'center',
+            fontSize:12,
+          },
+          colors: ['#864DD9','#ff5050'],
+          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+          //legend: { position: 'none' },
+          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
+          hAxis:{
+            gridlines:{color:'transparent'},
+            baselineColor: 'black',
+          },
+          vAxis:{
+            gridlines:{color:'transparent'},
+          }
+        };
+        var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+        
+        chart3.draw(data3, option3);
       }
       </script>";
       
