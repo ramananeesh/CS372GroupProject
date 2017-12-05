@@ -52,10 +52,10 @@
       while ($file= $result->fetch_assoc())
       {
           echo "<tr>";
-          echo "<td><input type='checkbox' id='file-id' name='file-id[]' value='".$file["id"]."'/></td>";
-          echo "<td>".$file["fname"]."</td>";
-          echo "<td>".$file["size"]."</td>";
-          echo "<td>".$file["upload_date"]."</td>";
+          echo "<td><input type='checkbox' id='file-id' name='file-id[]' value='".$connection->real_escape_string($file["id"])."'/></td>";
+          echo "<td>".$connection->real_escape_string($file["fname"])."</td>";
+          echo "<td>".$connection->real_escape_string($file["size"])."</td>";
+          echo "<td>".$connection->real_escape_string($file["upload_date"])."</td>";
           echo "</tr>";
       }
       echo "</tbody>
