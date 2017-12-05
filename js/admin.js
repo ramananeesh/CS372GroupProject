@@ -200,6 +200,75 @@ function getCheckedBoxes(chkboxName) {
   return checkboxesChecked.length > 0 ? checkboxesChecked : null;
 }
 
+
+
+// navbar
+function showHomeSection(){
+    hideEverything();
+    var homeSection = document.getElementById('home-section');
+    homeSection.hidden = false;
+    document.getElementById('homeNav').classList.add("active");
+  }
+  
+  function showMessageSection(){
+    hideEverything();
+    var messageSection = document.getElementById('message-section');
+    messageSection.hidden = false;
+    document.getElementById('msgNav').classList.add("active");
+  }
+  
+  function showUserSection(){
+    hideEverything();
+    var userSection = document.getElementById('user-section');
+    userSection.hidden = false;
+    document.getElementById('userNav').classList.add("active");
+  }
+  
+  function showFileSection(){
+    hideEverything();
+    var fileSection = document.getElementById('file-section');
+    fileSection.hidden = false;
+    document.getElementById('fileNav').classList.add("active");
+  }
+  
+  function showIpSection(){
+    hideEverything();
+    var ipSection = document.getElementById('ip-section');
+    ipSection.hidden = false;
+    document.getElementById('ipNav').classList.add("active");
+  }
+  
+  function showSettingSection(){
+    hideEverything();
+    var settingSection = document.getElementById('setting-section');
+    settingSection.hidden = false;
+    document.getElementById('settingNav').classList.add("active");
+  }
+  
+  function hideEverything(){
+    var homeSection = document.getElementById('home-section');
+    var messageSection = document.getElementById('message-section');
+    var userSection = document.getElementById('user-section');
+    var fileSection = document.getElementById('file-section');
+    var ipSection = document.getElementById('ip-section');
+    var settingSection = document.getElementById('setting-section');
+    
+    homeSection.hidden = true;
+    messageSection.hidden = true;
+    userSection.hidden = true;
+    fileSection.hidden = true;
+    ipSection.hidden = true;
+    settingSection.hidden = true;
+      
+    document.getElementById('homeNav').classList.remove("active");
+    document.getElementById('userNav').classList.remove("active");
+    document.getElementById('msgNav').classList.remove("active");
+    document.getElementById('fileNav').classList.remove("active");
+    document.getElementById('ipNav').classList.remove("active");
+    document.getElementById('settingNav').classList.remove("active");
+  }
+  
+
 $('#userNav').click(function(){
     listUsers();
 });
