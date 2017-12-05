@@ -42,4 +42,50 @@
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noBannedUsers=$connection->real_escape_string($row['noBannedUsers']);
+    
+    //$sql="select count(id) from users where dateActive>=CURRENT_DATE-7; ";
+    //select DATE_FORMAT( CURRENT_DATE - 1, '%M %D, %Y' )
+    $arrD=array();
+    for($i=0;$i<7;$i++){
+        $arrD[]=$i+1;
+    }
+   
+    
+    $arrU=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+        $sql="select count(id) from users where dateActive=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrU[]=$x;
+            $c--;
+        }
+    }
+    //echo "<script>alert($arrU[2])</script>";
+    $arrF=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+        $date=date("Y-m-d")-$i;
+        $sql="select count(id) from transactions where fuploadDate=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrF[]=$x;
+        }
+        $c--;
+    }
+    
+    $arrM=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+    
+      $sql="select count(id) from contact where date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrM[]=$x;
+            $c--;
+        }
+    }
 ?>
