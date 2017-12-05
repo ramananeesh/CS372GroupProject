@@ -89,6 +89,18 @@
         }
     }
     
+    $arrDown=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+      $sql="select count(id) from transactions where upload=0 and date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY)";
+      if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrDown[]=$x;
+            $c--;
+        }
+    }
+    
     echo "
     
     <script type='text/javascript'>
@@ -103,6 +115,7 @@
         //var arrFiles=[8,2,4,7,6,12,14];
         var arrFiles=JSON.parse('".json_encode($arrF)."');
         var arrMessages=JSON.parse('".json_encode($arrM)."');
+        var arrDownloads=JSON.parse('".json_encode($arrDown)."');
         var arr=[];
         arr[0]=['Day','New Users','New Files'];
         for(var i=0;i<7;i++){
@@ -120,8 +133,9 @@
                     stroke: 'black',
                     strokeWidth: 3
                 },
-                left:40,
-                right:40
+                left:20,
+                right:5,
+                top:20
             },
             colors: ['#e95f71','#CF53F9'],
             height:357,
@@ -183,8 +197,43 @@
         var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         
         chart2.draw(data2, option2);
+        
+        var arr3=[];
+        arr3[0]=['Day','Downloads'];
+        for(var i=0;i<7;i++){
+            arr3[i+1]=[arrDay[i],arrMessages[i]];
+        }
+        
+        var data3=google.visualization.arrayToDataTable(arr3);
+        var option3={
+          title: 'Downloads',
+          titleTextStyle:{
+            color: '#8a8d93',
+            alignment:'center',
+            fontSize:12,
+          },
+          colors: ['#864DD9','#ff5050'],
+          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+          //legend: { position: 'none' },
+          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
+          hAxis:{
+            gridlines:{color:'transparent'},
+            baselineColor: 'black',
+          },
+          vAxis:{
+            gridlines:{color:'transparent'},
+          }
+        };
+        var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+        
+        chart3.draw(data3, option3);
       }
-    </script>";
+      </script>";
+      
+    //     echo"<script>
+        
+    //   }
+    // </script>";
     
     echo "<div class='page-header'>
             <div class='container-fluid'>
@@ -263,7 +312,7 @@
                       <div id='chart_div'></div>
                     </div>
                     <div class='bar-chart block'>
-                      <canvas id='barChartExample2'></canvas>
+                      <div id='chart_div2'></div>
                       
                     </div>
                   </div>
