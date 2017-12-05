@@ -115,7 +115,6 @@
         //var arrFiles=[8,2,4,7,6,12,14];
         var arrFiles=JSON.parse('".json_encode($arrF)."');
         var arrMessages=JSON.parse('".json_encode($arrM)."');
-        var arrDownloads=JSON.parse('".json_encode($arrDown)."');
         var arr=[];
         arr[0]=['Day','New Users','New Files'];
         for(var i=0;i<7;i++){
@@ -194,39 +193,10 @@
             gridlines:{color:'transparent'},
           }
         };
-        var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        //var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         
-        chart2.draw(data2, option2);
+        //chart2.draw(data2, option2);
         
-        var arr3=[];
-        arr3[0]=['Day','Downloads'];
-        for(var i=0;i<7;i++){
-            arr3[i+1]=[arrDay[i],arrMessages[i]];
-        }
-        
-        var data3=google.visualization.arrayToDataTable(arr3);
-        var option3={
-          title: 'Downloads',
-          titleTextStyle:{
-            color: '#8a8d93',
-            alignment:'center',
-            fontSize:12,
-          },
-          colors: ['#864DD9','#ff5050'],
-          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
-          //legend: { position: 'none' },
-          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
-          hAxis:{
-            gridlines:{color:'transparent'},
-            baselineColor: 'black',
-          },
-          vAxis:{
-            gridlines:{color:'transparent'},
-          }
-        };
-        var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
-        
-        chart3.draw(data3, option3);
       }
       </script>";
       
@@ -308,12 +278,7 @@
                 <div class='row'>
                   <div class='col-md-3'>
                     <div class='bar-chart block no-margin-bottom'>
-                      <!--<canvas id='barChartExample1'></canvas>-->
                       <div id='chart_div'></div>
-                    </div>
-                    <div class='bar-chart block'>
-                      <div id='chart_div2'></div>
-                      
                     </div>
                   </div>
                   <div class='col-md-6' id='curve_chart'>
