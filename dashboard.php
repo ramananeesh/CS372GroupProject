@@ -16,6 +16,7 @@
   }
   
   $username=$_SESSION['userName'];
+  echo "<script>alert($username)</script>";
   $userId=$_SESSION['userUuid'];
   $password=$_SESSION['password'];
   $emailID=$_SESSION['emailID'];

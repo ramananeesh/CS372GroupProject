@@ -56,7 +56,7 @@ function addUser($connection, $details, $idOverride = NULL){
     }
 }
 
-function addFile($connection,$file,$userid = NULL){
+function addFile($connection,$file,$userid){
 
     $file_name = $file['name'];
     $file_type = $file ['type'];
@@ -73,7 +73,8 @@ function addFile($connection,$file,$userid = NULL){
     $uuid = $row['id'];
     
     //if username is not null - for registered users
-    if(!($userid == NULL) && isset($user_id)){
+    // if(!($userid == NULL) && isset($user_id)){
+    if(!($userid == "NULL")){
         $sql="INSERT into files (id,fname, upload_date, size,user_id,download_count,f_data) values (\"$uuid\",\"$file_name\", NOW(),$file_size,\"$userid\",5,'".$data."')";
     }
     else{
