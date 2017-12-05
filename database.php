@@ -56,6 +56,9 @@ function addUser($connection, $details, $idOverride = NULL){
     }
 }
 
+function deleteFile($connection,$fileName){
+    
+}
 function addFile($connection,$file,$userid){
 
     $file_name = $file['name'];
