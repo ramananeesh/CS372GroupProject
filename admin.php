@@ -2,6 +2,7 @@
   
   require_once 'html-builder.php';
   require_once('db_connect.php');
+  require_once('./admin/forms/home_form.php');
   session_start();
   
    $connection = connect_to_db();
@@ -28,7 +29,58 @@
 			header("Location: ./dashboard.php");
 		}
     
+    
 ?>
+<?php
+    
+    
+    //$sql="select count(id) from users where dateActive>=CURRENT_DATE-7; ";
+    //select DATE_FORMAT( CURRENT_DATE - 1, '%M %D, %Y' )
+    $arrD=array();
+    for($i=0;$i<7;$i++){
+        $arrD[]=$i+1;
+    }
+   
+    
+    $arrU=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+        $sql="select count(id) from users where dateActive=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY); ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrU[]=$x;
+            $c--;
+        }
+    }
+    //echo "<script>alert($arrU[2])</script>";
+    $arrF=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+        $date=date("Y-m-d")-$i;
+        $sql="select count(id) from transactions where fuploadDate=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrF[]=$x;
+        }
+        $c--;
+    }
+    
+    $arrM=array();
+    $c=6;
+    for($i=0;$i<7;$i++){
+    
+      $sql="select count(id) from contact where date(time_stamp)=DATE_SUB(CURRENT_DATE,INTERVAL $c DAY) ";
+        if($result=mysqli_query($connection,$sql)){
+            $row=mysqli_fetch_assoc($result);
+            $x=intVal($row['count(id)']);
+            $arrM[]=$x;
+            $c--;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -63,10 +115,109 @@
         color: white;
       }
     </style>
+    
+
     <script src="./js/jquery-1.11.0.min.js"></script>
-  <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script>
+      
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        //var arrDay=[1,2,3,4,5,6,7];
+        var arrDay=JSON.parse('<?php echo json_encode($arrD); ?>');
+        //var arrUsers=[10,2,4,8,12,6,5];
+        var arrUsers=JSON.parse('<?php echo json_encode($arrU); ?>');
+        //var arrFiles=[8,2,4,7,6,12,14];
+        var arrFiles=JSON.parse('<?php echo json_encode($arrF); ?>');
+        var arrMessages=JSON.parse('<?php echo json_encode($arrM); ?>');
+        var arr=[];
+        arr[0]=['Day','New Users','New Files'];
+        for(var i=0;i<7;i++){
+            arr[i+1]=[arrDay[i],arrUsers[i],arrFiles[i]];
+        }
+        
+        var data=google.visualization.arrayToDataTable(arr);
+        var options = {
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+            chartArea:{
+                backgroundColor:{
+                    fill:'#2d3035',
+                    stroke: 'black',
+                    strokeWidth: 3
+                },
+                left:40,
+                right:40
+            },
+            colors: ['#e95f71','#CF53F9'],
+            height:357,
+            width: 450,
+            lineWidth:1.5,
+            legend: {position: 'top',alignment:'center', textStyle: {color: '#b8b894', fontSize: 16}},
+            hAxis:{
+                //title: 'Day',
+                titleTextStyle: {
+                color: '#8a8d93',
+                bold:true
+                },
+                gridlines:{color:'transparent'},
+                baselineColor: 'black',
+                minValue:1
+            },
+            vAxis:{
+                //title: 'Number',
+                titleTextStyle: {
+                color: '#8a8d93',
+                bold:true
+                },
+                gridlines:{color:'transparent'},
+                baselineColor: 'black',
+            }
+            
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+        
+        var arr2=[];
+        arr2[0]=['Day','Messages'];
+        for(var i=0;i<7;i++){
+            arr2[i+1]=[arrDay[i],arrMessages[i]];
+        }
+        
+        var data2=google.visualization.arrayToDataTable(arr2);
+        var option2={
+          title: 'Messages Received',
+          titleTextStyle:{
+            color: '#8a8d93',
+            alignment:'center',
+            fontSize:12,
+          },
+          colors: ['#864DD9','#ff5050'],
+          backgroundColor:{fill: '#212529',stroke:'transparent',strokeWidth:2},
+          //legend: { position: 'none' },
+          legend: {position: 'top',alignment:'end', textStyle: {color: '#b8b894', fontSize: 10}},
+          hAxis:{
+            gridlines:{color:'transparent'},
+            baselineColor: 'black',
+          },
+          vAxis:{
+            gridlines:{color:'transparent'},
+          }
+        };
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        
+        chart2.draw(data2, option2);
+      }
+    </script>
   </head>
-  <body onload="onBodyLoad();">
+  <body>
         <!-- BEGIN NAVBAR -->
             
         <?php insertNav(); ?>
@@ -95,8 +246,142 @@
       </nav>
       <div class="page-content">
         
+      
+        
         <!-- Begin Home Section-->
         <div id="home-section">
+          
+          <div class="page-header">
+            <div class="container-fluid">
+              <h2 class="h5 no-margin-bottom">Dashboard</h2>
+            </div>
+          </div>
+            <section class="no-padding-top no-padding-bottom">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="icon-user-1"></i></div><strong>Total Users</strong>
+                        </div>
+                        <div class="number dashtext-1"><?php echo $noUsers; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noUsers/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="icon-contract"></i></div><strong>New Files</strong>
+                        </div>
+                        <div class="number dashtext-2"><?php echo $noNewFiles;?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noNewFiles/$noFiles)*100; echo "\"width: $width%\""; ?> aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>New Users</strong>
+                        </div>
+                        <div class="number dashtext-3"><?php echo $noNewUsers;?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noNewUsers/$noUsers)*100; echo "\"width: $width%\""; ?> aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>All Files</strong>
+                        </div>
+                        <div class="number dashtext-4"><?php echo $noFiles;?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noFiles/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="no-padding-bottom">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="bar-chart block no-margin-bottom">
+                      <!--<canvas id="barChartExample1"></canvas>-->
+                      <div id="chart_div"></div>
+                    </div>
+                    <div class="bar-chart block">
+                      <canvas id="barChartExample2"></canvas>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6" id="curve_chart">
+                    
+                      <!--<canvas id="lineCahrt"></canvas>-->
+                      <!--<div id="curve_chart"></div>-->
+                    
+                  </div>
+                  <div class="col-md-3 col-sm-3">
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-user-times"></i></div><strong>Banned Users</strong>
+                        </div>
+                        <div class="number dashtext-3"><?php echo $noBannedUsers; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noBannedUsers/$noUsers)*100; echo "\"width: $width%\""; ?> aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-cloud-download"></i></div><strong>Total Downloads</strong>
+                        </div>
+                        <div class="number dashtext-1"><?php echo $noDownloads; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noDownloads/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-comments"></i></div><strong>New Messages</strong>
+                        </div>
+                        <div class="number dashtext-2"><?php echo $noNewMessages; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noNewMessages/$noMessages)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                      </div>
+                    </div>
+                    <div class="statistic-block block">
+                      <div class="progress-details d-flex align-items-end justify-content-between">
+                        <div class="title">
+                          <div class="icon"><i class="fa fa-inbox"></i></div><strong>Total Messages</strong>
+                        </div>
+                        <div class="number dashtext-4"><?php echo $noMessages; ?></div>
+                      </div>
+                      <div class="progress">
+                        <div role="progressbar" style=<?php $width=($noMessages/100)*100; echo "\"width: $width%\""; ?> aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
         </div>
         <!-- End Home Section -->
         

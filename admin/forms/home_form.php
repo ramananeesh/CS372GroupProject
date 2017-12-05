@@ -1,6 +1,6 @@
 <?php
 
-    require_once('../../db_connect.php');
+    require_once('./db_connect.php');
     $connection = connect_to_db();
 
     $sql="select count(id) as noUsers from users";
@@ -88,6 +88,7 @@
             $c--;
         }
     }
+<<<<<<< HEAD
     
     $arrDown=array();
     $c=6;
@@ -345,4 +346,6 @@
               </div>
             </section>";
     
+=======
+>>>>>>> parent of b262612... moves aneesh's sh*t to its own file on admin page
 ?>
