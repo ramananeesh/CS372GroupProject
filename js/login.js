@@ -265,13 +265,13 @@ function signupValidate(f) {
     return true;
 }
 
-function proceed() {
+/*function proceed() {
     FB.login(function(response) {
         if (response.authResponse == 'connected') {
             window.top.location = "verify.php";
         }
     });
-}
+}*/
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
