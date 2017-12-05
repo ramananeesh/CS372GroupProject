@@ -656,19 +656,5 @@
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
     <script src="./js/admin.js"></script>
-    <script>
-      $('#userNav').click(function(){
-        listUsers();
-      });
-      $('#msgNav').click(function(){
-        listMessages();
-      });
-      $('#fileNav').click(function(){
-        listFiles();
-      });
-      $('#ipNav').click(function(){
-        listIPs();
-      });
-    </script>
   </body>
 </html>

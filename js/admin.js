@@ -199,3 +199,16 @@ function getCheckedBoxes(chkboxName) {
   // Return the array if it is non-empty, or null
   return checkboxesChecked.length > 0 ? checkboxesChecked : null;
 }
+
+$('#userNav').click(function(){
+    listUsers();
+});
+$('#msgNav').click(function(){
+    listMessages();
+});
+$('#fileNav').click(function(){
+    listFiles();
+});
+$('#ipNav').click(function(){
+    listIPs();
+});
