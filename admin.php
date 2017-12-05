@@ -13,6 +13,19 @@
      $imgSrc=$row['imgSrc'];
    }
    
+   // Send empty usernames back to Login
+  if($_SESSION['userName'] === NULL || trim($_SESSION['userName']) === ""){
+    header('Location: login.php');
+  }
+  
+  // this is bad, please fix!!!
+  	if($_SESSION['userName']=="ramaa02"||$_SESSION['userName']=="staujd02"||$_SESSION['userName']=="huntmj01"){
+  	  
+		}
+		else{
+			header("Location: ./dashboard.php");
+		}
+   
    /*
    if(isset($_POST['action']) && $_POST['action'] == "banUser"){
      

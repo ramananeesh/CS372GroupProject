@@ -62,6 +62,8 @@
 				//reditect user to dashboard, using absolute path
 				$host = $_SERVER["HTTP_HOST"];
 				$path=rtrim(dirname($SERVER["PHP_SELF"]),"/\\");
+				
+				// this is bad, please fix!!!
 				if($row['username']=="ramaa02"||$row['username']=="staujd02"||$row['username']=="huntmj01"){
 					header("Location: ./admin.php");
 				}
