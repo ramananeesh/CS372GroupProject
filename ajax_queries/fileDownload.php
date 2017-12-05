@@ -24,7 +24,8 @@
         list($file, $size, $uDate, $content) = mysqli_fetch_array($result);
         
         // Insert transaction
-        if(!($userid == NULL) && isset($user_id)){
+        // if(!($userid == NULL) && isset($user_id)){
+        if(!($userid == "NULL")){
          $sql="Insert into transactions(upload, ipv6, file_id, user_id, fname, fsize, fuploadDate)" . "
                         values (0, \"" . $_SERVER['REMOTE_ADDR'] . "\", \"" .  $conn->real_escape_string($_REQUEST['file']) ."\", \"" . $_SESSION['userUuid'] . "\", \"$file\", \"$size\",\"$uDate\")";
         }
@@ -35,7 +36,9 @@
        
         // Insert transaction       
         $result=$conn->query($sql) or die(mysqli_error($conn));
-        
+        //delete files that have exhausted download limit
+        $sql="delete from files where download_count<=0";
+        $result=$conn->query($sql) or die(mysqli_error($conn));
         header("Content-length: $size");
         header("Content-type: application/octet-stream");
         header("Content-Disposition: attachment; filename=$file");
