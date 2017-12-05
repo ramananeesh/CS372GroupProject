@@ -142,11 +142,26 @@ function banIP(ban = true)
     
     var result = makeAjaxRequest("POST", url, data,  function(d) { listIPs(); });
     
+}
+
+function updateSetting(id)
+{
+    
+    // get selected users
+    var settingvalue = document.getElementById('setting-id-' + id).value;
+    
+    // construct URL
+    var url = "./ajax_queries/updateSetting.php";
+    
+    // collect data
+    var data = { 'id': id, 'value': settingvalue };
+    
+    var result = makeAjaxRequest("POST", url, data,  function(d) {  });
+    
     
 }
 
 function makeAjaxRequest(type, url, data, func){
-    
     
     $.ajax({
         type: type,                                           // GET or POST
