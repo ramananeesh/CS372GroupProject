@@ -25,100 +25,6 @@
 		else{
 			header("Location: ./dashboard.php");
 		}
-   
-   /*
-   if(isset($_POST['action']) && $_POST['action'] == "banUser"){
-     
-      $usersToBan = $_POST['user-id'];
-      
-      if (isset($_POST['user-id'])) {
-          
-          foreach ($usersToBan as $user){
-              
-              $sql = sprintf("UPDATE users SET banned=1 WHERE id='%s'",
-              $connection->real_escape_string($user));
-            
-              // execute query
-              $result = $connection->query($sql) or die(mysqli_error($connection));
-              
-              if ($result === false)
-                  die("Could not query database");
-              
-          }
-          
-      } else {
-          echo "You did not choose a message.";
-      }
-    }
-    else if(isset($_POST['action']) && $_POST['action'] == "reactivateUser"){
-     
-      $usersToReactivate = $_POST['user-id'];
-      
-      if (isset($_POST['user-id'])) {
-          
-          foreach ($usersToReactivate as $user){
-              
-              $sql = sprintf("UPDATE users SET banned=0 WHERE id='%s'",
-              $connection->real_escape_string($user));
-            
-              // execute query
-              $result = $connection->query($sql) or die(mysqli_error($connection));
-              
-              if ($result === false)
-                  die("Could not query database");
-              
-          }
-          
-      } else {
-          echo "You did not choose a message.";
-      }
-    }
-   else if(isset($_POST['action']) && $_POST['action'] == "deleteMessage"){
-     
-      $messagesToDelete = $_POST['message-id'];
-      
-      if (isset($_POST['message-id'])) {
-          
-          foreach ($messagesToDelete as $message){
-              
-              $sql = sprintf("DELETE FROM contact WHERE id = '%s'",
-              $connection->real_escape_string($message));
-            
-              // execute query
-              $result = $connection->query($sql) or die(mysqli_error($connection));
-              
-              if ($result === false)
-                  die("Could not query database");
-              
-          }
-          
-      } else {
-          echo "You did not choose a message.";
-      }
-    } else if(isset($_POST['action']) && $_POST['action'] == "deleteFile"){
-     
-      $filesToDelete = $_POST['files-id'];
-      
-      if (isset($_POST['files-id'])) {
-          
-          foreach ($messagesToDelete as $message){
-              
-              $sql = sprintf("DELETE FROM file WHERE id = '%s'",
-              $connection->real_escape_string($file));
-            
-              // execute query
-              $result = $connection->query($sql) or die(mysqli_error($connection));
-              
-              if ($result === false)
-                  die("Could not query database");
-              
-          }
-          
-      } else {
-          echo "You did not choose a file.";
-      }
-    }
-    */
     
     $sql="select count(id) as noUsers from users";
     $result=$connection->query($sql) or die(mysqli_error($connection));
@@ -247,73 +153,8 @@
     </style>
     
 
-        <script src="./js/jquery-1.11.0.min.js"></script>
+    <script src="./js/jquery-1.11.0.min.js"></script>
     <script>
-      
-      function showHomeSection(){
-        hideEverything();
-        var homeSection = document.getElementById('home-section');
-        homeSection.hidden = false;
-        document.getElementById('homeNav').classList.add("active");
-      }
-      
-      function showMessageSection(){
-        hideEverything();
-        var messageSection = document.getElementById('message-section');
-        messageSection.hidden = false;
-        document.getElementById('msgNav').classList.add("active");
-      }
-      
-      function showUserSection(){
-        hideEverything();
-        var userSection = document.getElementById('user-section');
-        userSection.hidden = false;
-        document.getElementById('userNav').classList.add("active");
-      }
-      
-      function showFileSection(){
-        hideEverything();
-        var fileSection = document.getElementById('file-section');
-        fileSection.hidden = false;
-        document.getElementById('fileNav').classList.add("active");
-      }
-      
-      function showIpSection(){
-        hideEverything();
-        var ipSection = document.getElementById('ip-section');
-        ipSection.hidden = false;
-        document.getElementById('ipNav').classList.add("active");
-      }
-      
-      function showSettingSection(){
-        hideEverything();
-        var settingSection = document.getElementById('setting-section');
-        settingSection.hidden = false;
-        document.getElementById('settingNav').classList.add("active");
-      }
-      
-      function hideEverything(){
-        var homeSection = document.getElementById('home-section');
-        var messageSection = document.getElementById('message-section');
-        var userSection = document.getElementById('user-section');
-        var fileSection = document.getElementById('file-section');
-        var ipSection = document.getElementById('ip-section');
-        var settingSection = document.getElementById('setting-section');
-        
-        homeSection.hidden = true;
-        messageSection.hidden = true;
-        userSection.hidden = true;
-        fileSection.hidden = true;
-        ipSection.hidden = true;
-        settingSection.hidden = true;
-          
-        document.getElementById('homeNav').classList.remove("active");
-        document.getElementById('userNav').classList.remove("active");
-        document.getElementById('msgNav').classList.remove("active");
-        document.getElementById('fileNav').classList.remove("active");
-        document.getElementById('ipNav').classList.remove("active");
-        document.getElementById('settingNav').classList.remove("active");
-      }
       
     </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -656,19 +497,5 @@
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
     <script src="./js/admin.js"></script>
-    <script>
-      $('#userNav').click(function(){
-        listUsers();
-      });
-      $('#msgNav').click(function(){
-        listMessages();
-      });
-      $('#fileNav').click(function(){
-        listFiles();
-      });
-      $('#ipNav').click(function(){
-        listIPs();
-      });
-    </script>
   </body>
 </html>
