@@ -626,9 +626,9 @@
                   {
                       echo "<tr>";
                       echo "<td>".$setting["g_name"]."</td>";
-                      echo "<td><input type='text' id='setting-id' name='setting-id[]' value='".$setting["g_value"]."'/></td>";
+                      echo "<td><input type='text' id='setting-id-".$setting["id"]."' name='setting-id[]' value='".$setting["g_value"]."'/></td>";
                       echo "<td>".$setting["modified"]."</td>";
-                      echo "<td><input type='submit' name='submit' class='btn btn-primary' value='update'>";
+                      echo "<td><input type='submit' name='submit' class='btn btn-primary' value='update' onclick='updateSetting(".$setting["id"].")'>";
                       echo "</tr>";
                   }
                 ?>
