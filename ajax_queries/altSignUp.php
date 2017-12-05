@@ -16,8 +16,8 @@
     $password= time() + $_REQUEST["id"];
     $id = $_REQUEST["id"];
 	
-	$sql = sprintf("Select 1 FROM users WHERE username = '%s'",
-    $connection->real_escape_string($username));
+	$sql = sprintf("Select * FROM users WHERE id = '%s'",
+    $connection->real_escape_string($id));
             
     // execute query
     $result = $connection->query($sql) or die(mysqli_error($connection));           
