@@ -104,11 +104,11 @@ function printUserTable($query){
   while ($user= $result->fetch_assoc())
   {
       echo "<tr>";
-      echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".$connection->real_escape_string($user["id"])."'/></td>";
-      echo "<td>".$connection->real_escape_string($user["username"])."</td>";
-      echo "<td>".$connection->real_escape_string($user["name"])."</td>";
-      echo "<td>".$connection->real_escape_string($user["email"])."</td>";
-      echo "<td>".$connection->real_escape_string($user["dateActive"])."</td>";
+      echo "<td><input type='checkbox' id='user-id' name='user-id[]' value='".htmlspecialchars($user["id"])."'/></td>";
+      echo "<td>".htmlspecialchars($user["username"])."</td>";
+      echo "<td>".htmlspecialchars($user["name"])."</td>";
+      echo "<td>".htmlspecialchars($user["email"])."</td>";
+      echo "<td>".htmlspecialchars($user["dateActive"])."</td>";
       echo "</tr>";
   }
  
