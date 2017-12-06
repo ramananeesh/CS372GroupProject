@@ -243,7 +243,7 @@
             <p class="card-text">Email: <?php echo htmlspecialchars($emailID);?><label id="emailID"></label></p>
             <p class="card-text"><label id="passwordField" type></label></p>
             <!--<a href="#" class="btn btn-primary" id="changePassword">Change Password</a>-->
-            <button class="btn btn-primary" id="changePassword">Change Password</button>
+            <button class="btn btn-primary" id="changePassword" onclick="changePassword();">Change Password</button>
           </div>
         </div>
         <br>

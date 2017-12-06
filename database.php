@@ -104,10 +104,6 @@ function addFile($connection,$file,$userid){
     return $uuid;
 }
 
-function getFilesList(){
-    
-}
-
 function checkIP($connection){
     
     // Check if user is using a banned IP

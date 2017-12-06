@@ -3,6 +3,64 @@ var fileList = [];
 var iterator = 0;
 var tabOpen = 'f';
 
+function changePassword(){
+  
+  var p = document.getElementById("passwordField").parentElement;
+  
+  // <input type="text" name="fname">
+  var one = document.createElement("input");
+  one.setAttribute("type","password"); one.setAttribute("id","pass");
+  var two = document.createElement("input");
+  two.setAttribute("type","password"); two.setAttribute("id","confirm");
+  var three = document.createElement("input")
+  three.setAttribute("type","password"); three.setAttribute("id","confirm2");
+  
+  p.appendChild(one); p.appendChild(document.createElement("br"));
+  p.appendChild(two); p.appendChild(document.createElement("br"));
+  p.appendChild(three);
+  
+  document.getElementById("changePassword").setAttribute("onclick","submitPassword();");
+  
+}
+
+function submitPassword(){
+  
+  var pass = document.getElementById("pass").value;
+  
+  var newpass;
+  
+  if(document.getElementById("confirm").value == document.getElementById("confirm2").value){
+    newpass = document.getElementById("confirm").value;
+    
+    var type = "POST", url = "./ajax_queries/changePass.php", 
+    info = {
+      user: sessionStorage.getItem("userID"),
+      confirm: pass,
+      update: newpass
+    },
+    func = function(data){ 
+          if(data === 'true'){alert("Password was changed!");revertPass();}
+          else{alert("Password change failed!");}
+    };
+  
+    makeAjaxRequest(type, url, info, func);
+    
+  }
+  else{
+    alert("Your new passwords are not the same");
+  }
+}
+
+function revertPass(){
+  var p = document.getElementById("passwordField").parentElement;
+  var l = p.childNodes.length;
+  
+  for (var i = 0; i < l - 1; i++) {
+    p.removeChild(document.getElementById("passwordField").nextSibling);
+  }
+  
+}
+
 function downloadRequest(){
   // Check which files are selected
   var collection = document.getElementsByName("checkbox[]");
