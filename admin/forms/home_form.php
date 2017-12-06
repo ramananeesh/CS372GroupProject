@@ -193,9 +193,9 @@
             gridlines:{color:'transparent'},
           }
         };
-        //var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         
-        //chart2.draw(data2, option2);
+        chart2.draw(data2, option2);
         
       }
       </script>";
