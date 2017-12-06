@@ -175,6 +175,10 @@
     <script src="./admin/vendor/chart.js/Chart.min.js"></script>
     <script src="./admin/js/charts-home.js"></script>
     <script src="./admin/js/front.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/sweetalert2/4.2.4/sweetalert2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/4.2.4/sweetalert2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/admin.js"></script>
   </body>
 </html>
