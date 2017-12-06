@@ -29,6 +29,11 @@
     else{
         $row = mysqli_fetch_assoc($result);
         $_SESSION['pro'] = $row['pro'];
+        if($row['banned'] == 1){
+            echo 'ban';
+            session_destroy();
+        }
+            
     }
 	
 	$_SESSION['userName'] =  $_REQUEST["username"];

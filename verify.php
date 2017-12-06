@@ -57,14 +57,21 @@
                     email: sessionStorage.getItem("emailID")
                 },
                 func = function(data){
-                    window.open("dashboard.php", "_self");
+                    if(data != 'ban')
+                        window.open("dashboard.php", "_self");
+                    else if(data == 'ban'){
+                      alert("You have been banned!");
+                      window.open("sessionEnd.php", "_self");
+                    }
+                    else{
+                        alert("Error with sign-in!");
+                      window.open("sessionEnd.php", "_self");
+                    }
                 };
                 
                 makeAjaxRequest(type, url, info, func);
             }
         }
-        
-        init();
         </script>
         
     </head>
