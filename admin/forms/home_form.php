@@ -13,7 +13,7 @@
     $row=mysqli_fetch_assoc($result);
     $noFiles=htmlspecialchars($row['noFiles']);
     
-    $sql="select count(id) as noNewFiles from files where upload_date=CURRENT_DATE";
+    $sql="select count(id) as noNewFiles from files where date(upload_date)=CURRENT_DATE";
     $result=$connection->query($sql) or die(mysqli_error($connection));
     $row=mysqli_fetch_assoc($result);
     $noNewFiles=htmlspecialchars($row['noNewFiles']);
