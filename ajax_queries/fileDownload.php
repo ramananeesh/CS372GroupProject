@@ -25,7 +25,7 @@
         
         // Insert transaction
         // if(!($userid == NULL) && isset($user_id)){
-        if(!($userid == "NULL")){
+        if(!($userid == "NULL") && !($userid == NULL)){
          $sql="Insert into transactions(upload, ipv6, file_id, user_id, fname, fsize, fuploadDate)" . "
                         values (0, \"" . $_SERVER['REMOTE_ADDR'] . "\", \"" .  $conn->real_escape_string($_REQUEST['file']) ."\", \"" . $_SESSION['userUuid'] . "\", \"$file\", \"$size\",\"$uDate\")";
         }

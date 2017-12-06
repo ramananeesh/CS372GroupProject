@@ -28,6 +28,7 @@
                     try{
                         var auth2 = gapi.auth2.getAuthInstance();
                         auth2.signOut().then(function() {
+                                sessionStorage.clear();
                                 window.open("./login.php", "_self");
                         });
                         tries += 3;
@@ -35,6 +36,7 @@
                     catch(e){setTimeout(signOut, 500);}
                 }
                 else{
+                    sessionStorage.clear();
                     window.open("./login.php", "_self");
                 }
             }
