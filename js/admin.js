@@ -176,12 +176,18 @@ function updateSetting(id)
 }
 
 function makeAjaxRequest(type, url, data, func){
-    
+    sweetAlert({
+      title: 'Loading...',
+      text: 'Making ajax call.',
+      onOpen: () => {
+        swal.showLoading()
+      }
+    });
     $.ajax({
         type: type,                                           // GET or POST
         url: url,                                               // Path to file
         data: data,
-        timeout: 2000,                                          // Waiting time
+        timeout: 10000,                                          // Waiting time
         beforeSend: function() {                                // Before Ajax 
           //$content.append('<div id="load">Loading</div>');      // Load message
         },
@@ -189,6 +195,7 @@ function makeAjaxRequest(type, url, data, func){
           //$('#load').remove();                               // Clear message
         },
         success: function(data){
+            swal.close();
             func(data);
         },
         fail: function() {                                      // Show error msg 
