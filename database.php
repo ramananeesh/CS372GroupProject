@@ -28,7 +28,9 @@ function addUser($connection, $details, $idOverride = NULL){
     // check whether we found a row
     if ($result->num_rows == 1)
     {
-        echo "<script type='text/javascript'> alert(\"Username is already used!\"); </script>";
+        $row = mysqli_fetch_assoc($result);
+        $row = $row['username'];
+        echo "<script type='text/javascript'> alert(\"Username: $row is already taken!\"); </script>";
     }
     else
     {

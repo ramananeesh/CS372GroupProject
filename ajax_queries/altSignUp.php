@@ -24,7 +24,11 @@
 
     // check whether we found a row
     if ($result->num_rows == 0){
-        addUser($connection,array('password' => $password,'username' => $username, 'email' => $email, 'name' => $name), $id);
+        addUser($connection,array('password' => $password,'username' => $_REQUEST["username"], 'email' => $_REQUEST["email"], 'name' => $_REQUEST["name"]), $id);
+    }
+    else{
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['pro'] = $row['pro'];
     }
 	
 	$_SESSION['userName'] =  $_REQUEST["username"];

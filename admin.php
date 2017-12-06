@@ -20,12 +20,22 @@
     header('Location: login.php');
   }
   
-  // this is bad, please fix!!!
-  	if($_SESSION['userName']=="ramaa02"||$_SESSION['userName']=="staujd02"||$_SESSION['userName']=="huntmj01"){
-  	  
+    // Verify an admin is sigining in
+  	$sql="select userid from developers";
+	  $pass = false;
+	  
+		if($result=$connection->query($sql)){
+			while($row=mysqli_fetch_assoc($result)){
+				if($row['userid'] == $adminid){
+  				$pass = true;
+  				break;
+				}
+			}
 		}
-		else{
-			header("Location: ./dashboard.php");
+		
+		if($pass == false){
+		  header("Location: ./dashboard.php");
+		  exit;
 		}
     
 ?>

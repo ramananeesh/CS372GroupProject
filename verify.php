@@ -14,28 +14,29 @@
         <script type="text/javascript" src="./js/admin.js"></script>
         <script type="text/javascript">
         
+        var tries = 3;
+        
         function makeAjaxRequest(type, url, data, func){
-    $.ajax({
-        type: type,                                           // GET or POST
-        url: url,                                               // Path to file
-        data: data,
-        timeout: 10000,                                          // Waiting time
-        beforeSend: function() {                                // Before Ajax 
-          //$content.append('<div id="load">Loading</div>');      // Load message
-        },
-        complete: function() {                                  // Once finished
-          //$('#load').remove();                               // Clear message
-        },
-        success: function(data){
-            //swal.close();
-            func(data);
-        },
-        fail: function() {                                      // Show error msg 
-            alert("Error with Ajax call!");
-          //$('#panel').html('<div class="loading">Please try again soon.</div>');
+            $.ajax({
+                type: type,                                           // GET or POST
+                url: url,                                               // Path to file
+                data: data,
+                timeout: 10000,                                          // Waiting time
+                beforeSend: function() {                                // Before Ajax 
+                  //$content.append('<div id="load">Loading</div>');      // Load message
+                },
+                complete: function() {                                  // Once finished
+                  //$('#load').remove();                               // Clear message
+                },
+                success: function(data){
+                    func(data);
+                },
+                fail: function() {                                      // Show error msg 
+                    alert("Error with Ajax call!");
+                  //$('#panel').html('<div class="loading">Please try again soon.</div>');
+                }
+            });
         }
-    });
-}
         
         function init(){
             if(sessionStorage.getItem("userName") === null ||
@@ -52,10 +53,12 @@
                 info = {
                     name: sessionStorage.getItem("userName"),
                     id: sessionStorage.getItem("userID"),
-                    username: "alt",
+                    username: sessionStorage.getItem("emailID"),
                     email: sessionStorage.getItem("emailID")
                 },
-                func = function(data){ window.open("dashboard.php", "_self");};
+                func = function(data){
+                    window.open("dashboard.php", "_self");
+                };
                 
                 makeAjaxRequest(type, url, info, func);
             }
@@ -66,9 +69,8 @@
         
     </head>
     
-    <body>
-        <h1>Verifying... You will be redirected shortly...</h1
-        
+    <body onload="init();">
+        <h1>Verifying... You will be redirected shortly...</h1>
     </body>
     
 </html>
