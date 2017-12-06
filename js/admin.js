@@ -181,7 +181,7 @@ function makeAjaxRequest(type, url, data, func){
         type: type,                                           // GET or POST
         url: url,                                               // Path to file
         data: data,
-        timeout: 2000,                                          // Waiting time
+        timeout: 5000,                                          // Waiting time
         beforeSend: function() {                                // Before Ajax 
           //$content.append('<div id="load">Loading</div>');      // Load message
         },
