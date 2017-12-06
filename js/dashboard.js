@@ -52,12 +52,12 @@ function submitPassword(){
 }
 
 function revertPass(){
-  var p = document.getElementById("passwordField").parentElement;
-  var l = p.childNodes.length;
+  // var p = document.getElementById("passwordField").parentElement;
+  // var l = p.childNodes.length;
   
-  for (var i = 0; i < l - 1; i++) {
-    p.removeChild(document.getElementById("passwordField").nextSibling);
-  }
+  // for (var i = 0; i < l - 1; i++) {
+  //   p.removeChild(document.getElementById("passwordField").nextSibling);
+  // }
   
 }
 

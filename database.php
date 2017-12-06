@@ -105,29 +105,33 @@ function addFile($connection,$file,$userid){
 }
 
 function checkIP($connection){
-    
+    $var = $_SERVER['HTTP_X_FORWARDED_FOR'];
     // Check if user is using a banned IP
 	$sql=sprintf("SELECT * from ip_ban where ipv6='%s'",
-			$connection->real_escape_string($_SERVER['HTTP_CLIENT_IP']['HTTP_X_FORWARDED_FOR']));
+<<<<<<< HEAD
+			$connection->real_escape_string($var));
+=======
+			$connection->real_escape_string($var));
+>>>>>>> 170537ec21d424dffb38995aaf81908f2497544e
 			
 	// Execute SQL
-	$result=$connection->query($sql) or die(mysqli_error());
-	if($result->num_rows==1){
+	$result=$connection->query($sql) or die(mysqli_error($connection));
+	if($result->num_rows > 0){
 		
 		// Loop through results
 		 while ($row1 = $result->fetch_assoc())
 		 {
-		 	if (time() >= strtotime($row1['time_out'])) {
-				// Over time limit - Delete row
-				$sql=sprintf("DELETE FROM ip_ban
-									WHERE id=%s",$row1['id']);
-				$connection->query($sql) or die(mysqli_error());
-			}
-			else{
+// 		 	if (time() >= strtotime($row1['time_out'])) {
+// 				// Over time limit - Delete row
+// 				$sql=sprintf("DELETE FROM ip_ban
+// 									WHERE id=%s",$row1['id']);
+// 				$connection->query($sql) or die(mysqli_error());
+// 			}
+// 			else{
 				echo "<h1>Your IP has been flagged as banned. Check back later or contest the ban through the contact page.</h1>";
 				echo "<h3><a href=\"./contact.php\">Contact Us</a></h3>";
 				exit;
-			}
+			//}
 		 }
 	}
 }
