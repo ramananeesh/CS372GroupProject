@@ -108,11 +108,9 @@ function checkIP($connection){
     $var = $_SERVER['HTTP_X_FORWARDED_FOR'];
     // Check if user is using a banned IP
 	$sql=sprintf("SELECT * from ip_ban where ipv6='%s'",
-<<<<<<< HEAD
+
 			$connection->real_escape_string($var));
-=======
-			$connection->real_escape_string($var));
->>>>>>> 170537ec21d424dffb38995aaf81908f2497544e
+
 			
 	// Execute SQL
 	$result=$connection->query($sql) or die(mysqli_error($connection));
